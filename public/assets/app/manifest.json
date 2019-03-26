@@ -1,0 +1,22 @@
+{
+    "short_name": "App Name",
+    "name": "App Name",
+    "icons": [
+      {
+        "src": "App Image",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "App Image",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "../../",
+    "background_color": "put color here", // Put Color Here
+    "display": "standalone",
+    "scope": "../../",
+    "theme_color": "put color here", // Put Color Here
+    "orientation": "portrait"
+  }

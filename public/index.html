@@ -1,41 +1,92 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<head>
+    <!-- Initialize -->
+    <meta http-equiv="content-type" content="text/html, charset=utf8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1 , maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <!-- Search Engine -->
+    <title>Opener Pro</title>
+    <meta name="title" content="Title">
+    <meta name="description" content="Web's description">
+    <meta name="author" content="Author Name">
+    <link rel="icon" href="Web's icon">
+    <link rel="shortcut icon" href="Web's icon">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <!-- Open Graph -->
+    <link rel="canonical" href="Your absolute web path">
+    <meta property="og:title" content="Open Graph title">
+    <meta property="og:description" content="Open Graph description">
+    <meta property='article:author' content="Author Name">
+    <meta property='og:site_name' content="Web name">
+    <meta property="og:image" content="Open graph image, absolute web path to image">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Title which will be appeared on Twitter">
+    <meta name="twitter:description" content="Description which will be appeared on Twitter">
+    <meta name="twitter:site" content="@yourtwitteraccount">
+    <meta name="twitter:image" content="Absoulute web path to image">
+    <meta name="twitter:creator" content="@yourtwitteraccount">
+
+    <!-- Web App -->
+    <link rel="manifest" href="assets/app/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="Put your theem color here">
+    <!-- <script src="assets/app/js/register.js"></script> -->
+
+    <!-- MS Web App -->
+    <meta name="application-name" content="App name">
+    <meta name="mssmarttagspreventparsing" content="true">
+    <meta name="msapplication-window" content="width=800;height=600"> 
+    <meta name="msapplication-navbutton-color" content="Put your theme Color Here">
+    <meta name="msapplication-tooltip" content="Text that appears when you hover over the pinned shortcut.">
+
+    <!-- Apple Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="App name">
+    <link rel="apple-touch-icon" href="Image which appear on iOS device">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name='format-detection' content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    
+    <!-- Apple Devices Splash Screen -->
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation:portrait)"   href="assets/splash/iPhoneX.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation:landscape)"   href="assets/splash/iPhoneXL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation:portrait)"   href="assets/splash/iPhone.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation:landscape)"   href="assets/splash/iPhoneL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation:portrait)"   href="assets/splash/iPhone.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation:landscape)"   href="assets/splash/iPhoneL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation:portrait)"   href="assets/splash/iPhoneSE.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation:landscape)"   href="assets/splash/iPhoneSEL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation:portrait)"  href="assets/splash/iPad.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation:landscape)"  href="assets/splash/iPadL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation:portrait)"  href="assets/splash/iPadLarge.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation:landscape)"  href="assets/splash/iPadLargeL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation:portrait)" href="assets/splash/iPadPro.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation:landscape)" href="assets/splash/iPadProL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation:portrait)" href="assets/splash/iPhoneXR.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation:landscape)" href="assets/splash/iPhoneXRL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation:portrait)" href="assets/splash/iPhoneX.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation:landscape)" href="assets/splash/iPhoneXL.png">
+
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation:portrait)" href="assets/splash/iPhoneXSMax.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation:landscape)" href="assets/splash/iPhoneXSMaxL.png">
+</head>
+<body>
+    <div id="opener-pro"></div>
+</body>
 </html>
