@@ -23,7 +23,6 @@
   --text-alter-1: #222;
   --text-alter-2: #444;
 
-
   --success: #4cd964;
   --warning: #f1c205;
   --danger: #bb0000;
@@ -31,6 +30,16 @@
 }
 
 ::selection, ::-webkit-selection { background-color: rgba(0,123,255,.25); }
+::-webkit-scrollbar {
+  background-color:var(--root-2);
+  width:7px;
+  padding-right:3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:var(--primary-2);
+  border-radius: 3px;
+}
 
 * {box-sizing: border-box; transition: filter .275s ease-out;}
 

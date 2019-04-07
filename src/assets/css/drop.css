@@ -1,0 +1,68 @@
+#drop-placeholder {
+    width:calc(100% - 30px);
+    height:calc(100vh - 88px);
+    padding:15px;
+    background-color:transparent;
+    margin:auto;
+    margin-top: 15px;
+    border:2px solid var(--secondary);
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: expand 4.5s ease-in-out 0s infinite;
+    transition: border-color .2s ease-out;
+}
+
+@keyframes expand {
+    0% {
+        width:calc(100% - 30px);
+        height:calc(100vh - 88px);
+    }
+    50% {
+        width:calc(100% - 50px);
+        height:calc(100vh - 108px);
+        margin-top: 25px;
+    }
+    100% {
+        width:calc(100% - 30px);
+        height:calc(100vh - 88px);
+    }
+}
+
+#drop-icon {
+    font-size: 144px;
+    text-shadow: 5px 5px 5px rgba(0,0,0,.25);
+    margin:0 0 30px 0;
+    transition:font-size .2s ease-out;
+}
+
+#drop-label {
+    font-size: 16px;
+    color:var(--text-2);
+}
+
+#drop-input {
+    position:absolute;
+    top:58px;
+    left:65px;
+    width:calc(100% - 65px);
+    height:calc(100% - 58px);
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    color: transparent;
+    border:0;
+    opacity:0;
+    cursor:pointer;
+    outline:none;
+}
+
+#drop-input:hover ~ #drop-placeholder, #drop-input:focus ~ #drop-placeholder {
+    border-color: var(--primary);
+}
+
+#drop-input:hover ~ #drop-placeholder > #drop-icon {
+    font-size: 160px;
+}
