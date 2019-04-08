@@ -8,6 +8,13 @@
     left:0;
     padding-bottom:58px;
     background-color:var(--root-2);
+    animation: load-in 2.5s ease-out 0s 1;
+}
+
+@keyframes load-in {
+  0% {opacity:0}
+  90% {opacity:0}
+  100% {opacity:1}
 }
 
 .loader {

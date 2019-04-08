@@ -1,0 +1,79 @@
+#generate-page {
+    height:calc(100vh - 58px);
+    display:flex;
+    flex:1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#generate-preview {
+    width:300px;
+    height:300px;
+    border-radius: 7px;
+    appearance: none;
+    -webkit-appearance: none;
+    margin:0 0 30px 0;
+    box-shadow: 0 15px 50px rgba(0,0,0,.75);
+}
+
+#generate-input-wrapper {
+    width:300px;
+    margin:30px 0;
+    border-bottom:4px solid var(--primary);
+    padding:8px 15px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#generate-label {
+    width:40px;
+    height:40px;
+    font-size:36px;
+    color:var(--primary-2);
+    font-weight: bold;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+#generate-input {
+    appearance: none;
+    -webkit-appearance: none;
+    border:0;
+    border-radius: 0;
+    width:calc(100% - 60px);
+    height:40px;
+    background-color: transparent;
+    color: var(--text);
+    font-size: 32px;
+    font-weight: bold;
+    outline:none;
+    text-align: center;
+    padding-right: 60px;
+    letter-spacing: 2px;
+}
+
+#generate-input::placeholder {
+    color: var(--text-2);
+}
+
+#generate-detail {
+    display:flex;
+    flex-direction: row;
+    width:450px;
+}
+
+#generate-detail > button {
+    width:calc(50% - 30px);
+    margin:0 15px;
+}
+
+#generate-detail > button > a {
+    width:100%;
+    padding-left:0;
+    padding-right:0;
+}

@@ -2,7 +2,7 @@
     appearance: none;
     -webkit-appearance: none;
     opacity:0;
-    width:calc((100% - 65px) / 2);
+    width:calc((100vw - 65px) / 2);
     height:calc(50vh + 58px);
     position:absolute;
     cursor:pointer;
@@ -27,7 +27,7 @@
     text-decoration: none;
 }
 
-#panel-drop {
+#panel-drop-ripple {
     width:50%;
     height:calc(50vh + 58px);
     background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
@@ -38,21 +38,25 @@
     flex:1;
 }
 
-.panel > i.material-icons {
+.panel > a {
+    text-decoration: none;
+}
+
+.panel > i.material-icons, .panel > a > i.material-icons {
     font-size: 66px;
     margin-bottom: 25px;
     color:var(--text);
     text-shadow: 5px 5px 3px rgba(0,0,0,.325);
 }
 
-.panel > h1 {
+.panel > h1, .panel > a > h1 {
     font-size: 24px;
     font-weight: normal;
     color:var(--text);
     text-align: center;
 }
 
-.panel > p {
+.panel > p, .panel > a > p {
     font-size: 18px;
     color:var(--text);
     text-shadow: 3px 3px 3px rgba(0,0,0,.25);
@@ -75,7 +79,18 @@
 }
 
 #panel-generate {
+    width:100%;
     text-decoration: none;
+}
+
+#panel-generate > div.panel.slice {
+    margin-bottom:0;
+}
+
+#panel-generate-ripple {
+    margin-bottom:10px;
+    color:black;
+    cursor:pointer;
 }
 
 #panel-generate > div.panel {
@@ -113,28 +128,35 @@
     margin-right: 15px;
 }
 
-#panel-last-visit {
+#panel-last-visit-ripple {
     margin-right: 15px;
     flex:1;
     background: linear-gradient(215deg, #00C9FF 30%, #92FE9D 90%);     
     box-shadow: 0 7px 20px rgba(108,240,102,.25);
+    color:black;
 }
 
-#panel-settings {
+#panel-last-visit, #panel-settings, #panel-drop {
+    background-color:transparent;
+    box-shadow:unset;
+}
+
+#panel-settings-ripple {
     flex:0;
     background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); 
     box-shadow: 0 7px 20px rgba(254,107,139,.325);
+    color:black;
+    padding:0 30px;
 }
 
-#panel-history {
+#panel-history-ripple {
     background: linear-gradient(45deg, #0575E6 25%, #00F260 95%); 
     box-shadow: 0 7px 20px rgba(5,129,217,.25);
+    color:black;
 }
 
-#panel-cloud {
+#panel-cloud-ripple {
     background: linear-gradient(215deg, #00c6ff 30%, #0072ff 90%); 
     box-shadow: 0 7px 20px rgba(0,138,255,.25);
+    color:black;
 }
-
-
-/* background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); */

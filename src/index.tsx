@@ -3,7 +3,6 @@ import {
     Loadable, 
     Loading, 
     useReducer,
-    useContext,
     storeContext
 } from './react/bridge'
 import ReactDOM from 'react-dom'
@@ -31,6 +30,10 @@ Redirect:any = Loadable({
 }),
 Drop:any = Loadable({
     loader: () => import('./react/pages/drop'),
+    loading: Loading
+}),
+Generate:any = Loadable({
+    loader: () => import('./react/pages/generate'),
     loading: Loading
 });
 
@@ -69,6 +72,15 @@ const Root = () => {
                     render={() => (
                         <storeContext.Provider value={dispatch}>
                             <Drop store={state} />
+                        </storeContext.Provider>
+                    )}
+                />
+                <Route
+                    exact
+                    path="/generate" 
+                    render={() => (
+                        <storeContext.Provider value={dispatch}>
+                            <Generate store={state} />
                         </storeContext.Provider>
                     )}
                 />

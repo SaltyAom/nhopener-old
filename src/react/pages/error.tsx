@@ -8,8 +8,8 @@ export default () => {
         <div id="error">
             <h1>404</h1>
             <p>pages not found...</p>
-            <ButtonBase className="button-primary-wrapper">
-                <Link className="button-primary" to="/">
+            <ButtonBase className="button-wrapper">
+                <Link className="button" to="/">
                     Return <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                 </Link>
             </ButtonBase>

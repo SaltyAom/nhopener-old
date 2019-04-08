@@ -6,3 +6,12 @@
     justify-content: center;
     align-items: center;
 }
+
+#redirect-code {
+    font-size: 16px;
+    font-weight: 300;
+    color:var(--text-2);
+    margin:0 0 10px 0;
+    opacity:.5;
+    text-decoration: underline;
+}

@@ -1,10 +1,10 @@
-.button-primary-wrapper {
+.button-wrapper {
     margin-top: 25px;
     border-radius: 3px;
     color:black;
 }
 
-.button-primary {
+.button {
     appearance: none;
     -webkit-appearance: none;
     text-decoration: none;
@@ -19,4 +19,10 @@
     justify-content: center;
     align-items: center;
     font-weight: bolder;
+    outline:none;
+}
+
+.button.secondary {
+    background: linear-gradient(225deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    box-shadow: 0 2px 8px 2px rgba(0, 123, 255, .3);
 }
