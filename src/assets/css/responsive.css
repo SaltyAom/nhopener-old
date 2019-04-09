@@ -3,6 +3,9 @@
         flex-direction: column;
         overflow:hidden;
     }
+    #error {
+        padding-left:0;
+    }
     #panel-drop-ripple {
         width:unset !important;
         height:40vh;
