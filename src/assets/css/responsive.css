@@ -4,7 +4,7 @@
         overflow:hidden;
     }
     #error {
-        padding-left:0;
+        padding-left:0 !important;
     }
     #panel-drop-ripple {
         width:unset !important;
