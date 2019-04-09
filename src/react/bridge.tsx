@@ -4,6 +4,7 @@ import store from './store/redux-store'
 import Loadable from 'react-loadable'
 import Loading from './component/loading'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import Axios from "axios"
 
 const storeContext:any = React.createContext<null>(null)
 
@@ -21,5 +22,6 @@ export {
     store, 
     Loadable, 
     Loading, 
-    ButtonBase, 
+    ButtonBase,
+    Axios
 }

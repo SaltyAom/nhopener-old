@@ -1,4 +1,10 @@
-import { React, ButtonBase, NavLink } from '../bridge'
+import { 
+    React, 
+    ButtonBase, 
+    NavLink,
+    useState,
+    useEffect
+} from '../bridge'
 import '../../assets/css/sidebar.css'
 
 interface props {
@@ -16,9 +22,19 @@ const SidebarIcon = (props: props) => {
     )
 }
 
-export default () => {
+export default (props: any) => {
+    const [sidebarClass, setSidebarClass] = useState("active");
+
+    useEffect(() => {
+        if(props.store.toggleMenu === true){
+            setSidebarClass("active");
+        } else {
+            setSidebarClass("");
+        }
+    });
+
     return(
-        <aside id="sidebar">
+        <aside id="sidebar" className={sidebarClass}>
             <div id="sidebar-body">
                 <SidebarIcon to="/" icon="apps" />
                 <SidebarIcon to="/drop" icon="flip_to_front" />

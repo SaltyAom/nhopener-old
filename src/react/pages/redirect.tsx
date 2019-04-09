@@ -4,7 +4,8 @@ import {
     Loading,
     ButtonBase,
     useState,
-    useEffect
+    useEffect,
+    Axios
 } from "../bridge"
 
 import "../../assets/css/redirect.css"
@@ -17,33 +18,38 @@ const Error = Loadable({
 
 export default (props: any) => {
     if(props.store.redirectURL !== undefined){    
-        /*
-        const [og, setOg]:any = useState("Fetchin...");
+        const [og, setOg]:any = useState("Fetching...");
 
         useEffect(() => {
-            let urlEncoded:string = encodeURIComponent('https://nhentai.net/g/229345'),
-                apiKey:string = 'b4d295c7-ef4e-498a-8743-a303ca3eeb7f',
-                requestUrl:string = `https://opengraph.io/api/1.1/site/${urlEncoded}?app_id=${apiKey}`;
+            let requestUrl:string = `https://opener.now.sh/api/g/${props.store.redirectURL}`;
 
-            fetch(requestUrl).then((res:any) => { return res.json() }).then((data:any) => {
-                setOg(data);
-                console.log(data);
+            Axios(requestUrl).then((ogData:any) => {
+                setOg(ogData.data.data);
             });
-
         },[]);
-        */
         
         return (
             <div id="pages">
                 <link rel="prefetch" href={`https://nhentai.net/g/${props.store.redirectURL}`} />
                 <div id="redirect-page">
-                    <h6 id="redirect-code">{props.store.redirectURL}</h6>
-                    <h2>You're about to being redirected</h2>
-                    <ButtonBase className="button-wrapper">
-                        <a className="button secondary" href={`https://nhentai.net/g/${props.store.redirectURL}`} rel="noreferrer external nofollow">
-                            Go to link <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
-                        </a>
-                    </ButtonBase>
+                    <div id="redirect-image-wrapper">
+                        { og.ogImage !== undefined ? 
+                            <img id="redirect-preview-image" src={og.ogImage.url} />
+                        : null }
+                    </div>
+                    <div id="redirect-detail">
+                        { og === "Fetching..." ? <h6 id="preview-fetching">Fetching...</h6>
+                        : <h6 id="redirect-code">{props.store.redirectURL}</h6> }
+                        <h2>{og.ogTitle}</h2>
+                        <h3>{og.ogDescription}</h3>
+                        { og === "Fetching..." ? null :
+                        <ButtonBase id="redirect-button">
+                            <a className="button secondary" href={`https://nhentai.net/g/${props.store.redirectURL}`} rel="noreferrer external nofollow">
+                                Read <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
+                            </a>
+                        </ButtonBase>
+                        }
+                    </div>
                 </div>
             </div>
         )

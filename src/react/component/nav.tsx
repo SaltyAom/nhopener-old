@@ -2,7 +2,9 @@ import {
     React,
     NavLink,
     Link,
-    ButtonBase
+    ButtonBase,
+    useContext,
+    storeContext
 } from '../bridge'
 import '../../assets/css/nav.css'
 
@@ -21,10 +23,20 @@ const NavProps = (props:props) => {
     )
 }
 
-export default () => {
+export default (props: any) => {
+    const dispatch:any = useContext(storeContext);
+
+    const toggleMenu = ():void => {
+        dispatch({
+            type: "toggleMenu",
+            toggleMenu: !props.store.toggleMenu
+        })
+    }
+
     return(
         <nav id="nav">
             <div className="nav-section" style={{justifyContent:"flex-start"}}>
+                <a id="nav-menu" className="material-icons" onClick={() => toggleMenu()}>menu</a>
                 <Link id="nav-title" to="/">
                     Opener
                     <sup id="nav-title-sup">Pro</sup>

@@ -1,17 +1,20 @@
 interface initState {
     redirectURL: string|undefined,
-    code: string
+    code: string,
+    toggleMenu: boolean
 }
 
 export const initState:initState = {
     redirectURL: undefined,
-    code: "007aff"
+    code: "007aff",
+    toggleMenu: false
 }
 
 type Action = { 
     type: string, 
     newURL: string,
-    code: string
+    code: string,
+    toggleMenu: boolean
 }
 
 export const reducers = (state: initState, action: Action) => {
@@ -20,6 +23,8 @@ export const reducers = (state: initState, action: Action) => {
             return { ...state, redirectURL: action.newURL }
         case "updateCode":
             return { ...state, code: action.code }
+        case "toggleMenu":
+            return { ...state, toggleMenu: action.toggleMenu }
         default:
             return { ...state }
     }

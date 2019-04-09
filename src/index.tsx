@@ -35,9 +35,14 @@ Drop:any = Loadable({
 Generate:any = Loadable({
     loader: () => import('./react/pages/generate'),
     loading: Loading
-});
+}),
+Settings:any = Loadable({
+    loader: () => import('./react/pages/settings'),
+    loading: Loading
+})
 
 import './assets/css/init.css'
+import './assets/css/responsive.css'
 import './assets/material-icon/material-icons.css'
 
 const Root = () => {
@@ -45,8 +50,10 @@ const Root = () => {
 
     return (
         <Router>
-            <Nav />
-            <Sidebar />
+            <storeContext.Provider value={dispatch}>
+                <Nav store={state} />
+                <Sidebar store={state} />
+            </storeContext.Provider>
             <Switch>
                 <Route 
                     exact 
@@ -81,6 +88,15 @@ const Root = () => {
                     render={() => (
                         <storeContext.Provider value={dispatch}>
                             <Generate store={state} />
+                        </storeContext.Provider>
+                    )}
+                />
+                <Route
+                    exact
+                    path="/settings"
+                    render={() => (
+                        <storeContext.Provider value={dispatch}>
+                            <Settings store={state} />
                         </storeContext.Provider>
                     )}
                 />

@@ -1,10 +1,29 @@
 #redirect-page {
-    width:100%;
+    width:750px;
+    margin-left:auto;
+    margin-right:auto;
     height:calc(100vh - 58px);
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+#redirect-image-wrapper {
+    padding: 30px;
+}
+
+#redirect-detail {
+    width:450px;
+    display:flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+#redirect-preview-image {
+    border-radius: 5px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.8);
+    width:100%;
 }
 
 #redirect-code {
@@ -14,4 +33,20 @@
     margin:0 0 10px 0;
     opacity:.5;
     text-decoration: underline;
+}
+
+#redirect-preview {
+    width:350px;
+}
+
+#redirect-button {
+    width:198px;
+    border-radius: 5px;
+    margin-top:15px;
+}
+
+#preview-fetching {
+    width:100%;
+    text-align: center;
+    font-size: 18px;
 }

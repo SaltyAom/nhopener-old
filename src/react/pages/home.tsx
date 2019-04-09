@@ -45,7 +45,7 @@ export default () => {
 
             { redirectState ? <Redirect to="redirect" push /> : null }
 
-            <div className="panel-wrapper">
+            <div id="panel-main" className="panel-wrapper">
 
                 <ButtonBase id="panel-drop-ripple" className="panel">
                     <input
@@ -87,7 +87,7 @@ export default () => {
                 </div>
 
             </div>
-            <div className="panel-wrapper" style={{paddingRight:15}}>
+            <div id="panel-control" className="panel-wrapper" style={{paddingRight:15}}>
 
                 <ButtonBase id="panel-history-ripple" className="panel panel-flex">
                     <Link to="/history" id="panel-history">

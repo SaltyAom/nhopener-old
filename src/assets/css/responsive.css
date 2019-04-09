@@ -1,0 +1,95 @@
+@media screen and (max-width: 767.9px){
+    #panel-main {
+        flex-direction: column;
+        overflow:hidden;
+    }
+    #panel-drop-ripple {
+        width:unset !important;
+        height:40vh;
+        margin-bottom:0;
+    }
+    #drop-ghost {
+        width: calc(100% - 125px) !important;
+    }
+    #panel-main-slice {
+        margin:10px 30px !important;
+        width:unset !important;
+    }
+    #panel-history-ripple {
+        margin-top:5px;
+        margin-right:5px;
+    }
+    #panel-cloud-ripple {
+        margin-top:5px;
+        margin-left:5px;
+        margin-right:15px;
+    }
+    #redirect-page {
+        display: block;
+        margin-bottom: 50px;
+        height: auto !important;
+    }
+    #redirect-page, #redirect-detail {
+        width:100% !important;
+        flex-direction: column !important;
+        padding: 0 5%;
+    }
+}
+
+@media screen and (max-width: 568px){
+    #sidebar {
+        left: -65px;
+        transition: left .25s ease-out;
+    }
+    #sidebar.active {
+        left: 0;
+    }
+    #pages {
+        padding-left:0;
+    }
+    #panel-last-visit {
+        flex-direction: column;
+    }
+    #panel-last-visit > i.material-icons {
+        font-size: 60px;
+    }
+    #panel-control {
+        flex-direction: column;
+        padding-right:0 !important;
+    }
+    #panel-history-ripple, #panel-cloud-ripple {
+        width:85%;
+        margin:10px auto;
+    }
+    #search {
+        display:none;
+    }
+    #nav {
+        padding: 0 15px;
+    }
+
+    #nav-menu {
+        width:35px;
+        height:35px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    #generate-detail {
+        flex-direction: column !important;
+        width:100%;
+        padding: 0 30%;
+    }
+    #generate-detail > button {
+        width: 100% !important;
+        margin:5px 0 !important;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width: 960px){
+    #panel-last-visit {
+        flex-direction: column;
+    }
+}
