@@ -76,7 +76,7 @@ h1,h2,h3,h4,h5,h6,p { margin:8px; }
   -webkit-overflow-scrolling: touch;
 }
 
-input[type="text"], input[type="password"], textarea {
+input, textarea {
   -webkit-user-select: all !important;
   -moz-user-select: all !important;
   -ms-user-select: all !important;
