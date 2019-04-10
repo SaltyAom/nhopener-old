@@ -48,7 +48,7 @@ export default (props:any) => {
     }
 
     const handleCode = (evt:any) => {
-        if(evt.target.value.length > 6 || evt.target.value.length < 1) return false;
+        if(evt.target.value.length > 6 ) return false;
         dispatch({
             type: "updateCode",
             code: evt.target.value
@@ -79,6 +79,7 @@ export default (props:any) => {
                         type="tel"
                         placeholder="000000"
                         onBlur={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
+                        value={}
                     />
                 </div>
                 <div id="generate-detail">
