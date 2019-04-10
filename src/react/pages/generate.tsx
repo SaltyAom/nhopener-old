@@ -15,15 +15,22 @@ export default (props:any) => {
     const dispatch:any = useContext(storeContext);
 
     const [uri, setUri] = useState("data:image/png;base64,a"),
-        [redirectState, setRedirectState]:any = useState(false);
+        [redirectState, setRedirectState]:any = useState(false);    
 
     const generate = () => {
         let canvas:any = document.getElementById("generate-canvas"),
             ctx:any = canvas.getContext("2d"),
-            color:string = props.store.code;
+            color:string = props.store.code,
+            colorLength:number = color.length;
 
-            canvas.width = 300;
-            canvas.height = 300;
+        canvas.width = 300;
+        canvas.height = 300;
+
+        if(colorLength < 6){
+            for(let i=colorLength; i<6; i++){
+                color += "f"
+            }
+        }
 
         ctx.fillStyle = `#${color}`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -51,7 +58,7 @@ export default (props:any) => {
     }
 
     const handleCode = (evt:any) => {
-        if(evt.target.value.length < 6) return false;
+        if(evt.target.value.length > 6 || evt.target.value.length < 1) return false;
         dispatch({
             type: "updateCode",
             code: evt.target.value
@@ -81,7 +88,7 @@ export default (props:any) => {
                         id="generate-input"
                         type="tel"
                         placeholder="000000"
-                        onChange={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
+                        onBlur={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
                     />
                 </div>
                 <div id="generate-detail">

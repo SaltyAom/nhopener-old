@@ -28,10 +28,12 @@ export default () => {
 
         const fac:any = new FastAverageColor();
         setTimeout(_ => {
-            let color:any = fac.getColor(opener);
+            let color:any = fac.getColor(opener),
+                hexCode:string = ((color.hex).substring(1)).replace(/f/g, '');
+                
             dispatch({
                 type: "updateURL",
-                newURL: (color.hex).substring(1)
+                newURL: hexCode
             });
             setRedirectState(true);
         },350);
