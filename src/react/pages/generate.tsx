@@ -45,16 +45,6 @@ export default (props:any) => {
     const handleKey = (evt:any) => {
         if(evt.target.value.length >= 6 && (evt.keyCode !== 8 && evt.keyCode !== 9) && evt.keyCode !== 17 && evt.keyCode !== 65
             && evt.keyCode !== 36 && evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39) evt.target.blur();
-        if(evt.keyCode !== 65 && evt.keyCode !== 66 && evt.keyCode !== 67 && evt.keyCode !== 68 &&
-            evt.keyCode !== 69 && evt.keyCode !== 70){
-            return ( evt.ctrlKey || evt.altKey 
-                || (47<evt.keyCode && evt.keyCode<58 && evt.shiftKey==false) 
-                || (95<evt.keyCode && evt.keyCode<106)
-                || (evt.keyCode==8) || (evt.keyCode==9) 
-                || (evt.keyCode>34 && evt.keyCode<40) 
-                || (evt.keyCode==46)
-            )
-        }
     }
 
     const handleCode = (evt:any) => {

@@ -36,6 +36,7 @@ export default (props: any) => {
             return (
                 <div id="pages">
                     <link rel="prefetch" href={`https://nhentai.net/g/${props.store.redirectURL}`} />
+                    <link rel="dns-prefetch" href={`https://nhentai.net/g/${props.store.redirectURL}`} />
                     <div id="redirect-page">
                         <div id="redirect-image-wrapper">
                             { og.ogImage !== undefined ? 
@@ -43,9 +44,9 @@ export default (props: any) => {
                             : null }
                         </div>
                         <div id="redirect-detail">
+                            <h6 id="redirect-code">{props.store.redirectURL}</h6> 
                             <h2>{og.ogTitle}</h2>
                             <h3>{og.ogDescription}</h3>
-                            <h6 id="redirect-code">{props.store.redirectURL}</h6> 
                             <ButtonBase id="redirect-button">
                                 <a className="button secondary" href={`https://nhentai.net/g/${props.store.redirectURL}`} rel="noreferrer external nofollow">
                                     Read <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
@@ -62,6 +63,7 @@ export default (props: any) => {
         } else {
             return (
                 <div id="error">
+                    <h6 id="redirect-code">{props.store.redirectURL}</h6> 
                     <h1>404</h1>
                     <p>Stories not found...</p>
                     <ButtonBase className="button-wrapper">

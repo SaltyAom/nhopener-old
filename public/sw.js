@@ -1,3 +1,4 @@
+/*
 let cacheName = 'v1',
     filesToCache = [
   'index.html'
@@ -43,3 +44,4 @@ self.addEventListener('activate', evt => {
     })
   );
 });
+*/
