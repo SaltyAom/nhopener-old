@@ -1,20 +1,72 @@
 import { 
     React,
     useState,
+    useEffect,
     useContext,
     storeContext,
     Link,
-    Redirect,
-    ButtonBase
+    Axios
 } from '../bridge'
 const FastAverageColor = require('fast-average-color/dist/index');
-import '../../assets/css/panel.css'
+import '../../assets/css/dashboard.css'
 
-export default () => {
+interface cardProps {
+    overlayTitle?: string,
+    image?: string,
+    title?: string,
+    detail?: string,
+    footer?: string,
+    onClick?: any,
+    to?: string
+}
 
+const Card = (props: any) => (
+    <Link to={props.to} className="main-card">
+        { props.image ?
+            <div className="main-card-image-wrapper">
+                <div className="main-card-overlay">
+                    <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
+                </div>
+                <div className="main-card-image" style={{backgroundImage: `url(${props.image})`}}></div>
+            </div>
+        : null }
+        { props.title ?
+            <h1 className="main-card-header">{props.title}</h1>
+        : null }
+        { props.detail ?
+            <p className="main-card-detail">
+                {props.detail}
+            </p>
+        : null }
+        {props.footer ?
+            <footer className="main-card-footer">
+                <p>{props.footer}</p>
+            </footer>
+        : null }
+    </Link>
+)
+
+export default (props: any) => {
     const [redirectState, setRedirectState]:any = useState(false),
+        [random, setRandom]:any = useState([]),
+        randomInit:number = Math.floor(Math.random() * (229345 - 1)) + 1,
         dispatch:any = useContext(storeContext);
 
+    useEffect(() => {
+        if(props.store.suggestStories[0] === undefined){
+            Axios(`https://opener.now.sh/api/relate/${randomInit}`).then((data:any) => {
+                dispatch({
+                    type: "newSuggestStories",
+                    suggestStories: data.data.result
+                })
+                setRandom(data.data.result);
+                console.log(data.data.result);
+            });
+        } else {
+            setRandom(props.store.suggestStories);
+        }
+    }, []);
+        
     const redirect = (evt:any) => {
         let tgt = evt.target, files = tgt.files,
             opener = (document.getElementById("opener-image") as HTMLImageElement);
@@ -43,68 +95,89 @@ export default () => {
 
     return(
         <div id="pages">
-            <img id="opener-image" style={{display:"none"}} />
-
-            { redirectState ? <Redirect to="redirect" push /> : null }
-
-            <div id="panel-main" className="panel-wrapper">
-
-                <ButtonBase id="panel-drop-ripple" className="panel">
-                    <input
-                        type="file" 
-                        accept="image/png, image/jpeg" 
-                        id="drop-ghost" 
-                        onChange={(e:any) => redirect(e)} 
-                    />
-                    <div className="panel" id="panel-drop">
-                        <i className="material-icons" style={{fontSize: 108}}>flip_to_front</i>
-                        <p>Drag and drop images or click here.</p>
+            <div id="home-page">
+                <div id="main-dashboard">
+                    <div id="main-card-container">
+                        <div className="main-card-wrapper">
+                            <Card
+                                title="Hello There!"
+                                detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
+                                footer="Opener Pro"
+                                onClick={(e:any) => e.preventDefault()}
+                            />
+                            {random !== [] ?
+                                <>
+                                    {random.map((data:any, index:number) => 
+                                        <>
+                                            {index < 2 ?
+                                                <>
+                                                <Card
+                                                    key={index}
+                                                    detail={`${data.title.english}`}
+                                                    footer={`ID: ${data.id} - ${data.num_pages} pages`}
+                                                    image={`https://t.nhentai.net/galleries/${data.media_id}/cover.jpg`}
+                                                    to={`/redirect/${data.id}`}
+                                                />
+                                                {index === 1 ?
+                                                    <>
+                                                        <Card
+                                                            key={6}
+                                                            title="Encrypt hexcode to image"
+                                                            detail="Secure your favourite stories' id with image and share with your friend"
+                                                            to="/generate"
+                                                        />
+                                                        <Card
+                                                            key={7}
+                                                            title="Decrypt secret code"
+                                                            detail="Decrypt secure codes' image to link and read stories"
+                                                            to="/drop"
+                                                        />
+                                                    </>
+                                                    : null
+                                                }
+                                            </>
+                                            : null }
+                                        </>
+                                    )}
+                                </>
+                            : null}
+                        </div>
+                        <div className="main-card-wrapper">
+                            {random !== [] ?
+                                <>
+                                    {random.map((data:any, index:number) => 
+                                        <>
+                                            {index >= 2 ?
+                                                <>
+                                                    <Card
+                                                        key={index}
+                                                        detail={`${data.title.english}`}
+                                                        footer={`ID: ${data.id} - ${data.num_pages} pages`}
+                                                        overlayTitle={data.title.pretty}
+                                                        image={`https://t.nhentai.net/galleries/${data.media_id}/cover.jpg`}
+                                                        to={`/redirect/${data.id}`}
+                                                    />
+                                                    {index === 3 ?
+                                                        <Card
+                                                            key={8}
+                                                            title="Manage what you read"
+                                                            detail="Easily view/manage read story's history"
+                                                            to="/generate"
+                                                        />
+                                                        : null
+                                                    }
+                                                </>
+                                            : null }
+                                        </>
+                                    )}
+                                </>
+                            : null}
+                        </div>
                     </div>
-                </ButtonBase>
-
-                <div id="panel-main-slice">
-
-                    <ButtonBase id="panel-generate-ripple">
-                        <Link to="/generate" id="panel-generate">
-                            <div className="panel slice">
-                                <i className="material-icons">burst_mode</i>
-                                <p>Generate image from number.</p>
-                            </div>
-                        </Link>
-                    </ButtonBase>
-                    <div id="panel-sub-slice">
-                        <ButtonBase id="panel-last-visit-ripple">
-                            <Link to="/" className="panel sub-slice panel-inline" id="panel-last-visit">
-                                <i className="material-icons">replay</i>
-                                <p>Go to last visited.</p>
-                            </Link>
-                        </ButtonBase>
-                        <ButtonBase id="panel-settings-ripple">
-                            <Link to="/settings" id="panel-settings" className="panel sub-slice">
-                                <i className="material-icons" style={{marginBottom:0, fontSize:48}}>settings</i>
-                            </Link>
-                        </ButtonBase>
-                    </div>
-
                 </div>
-
-            </div>
-            <div id="panel-control" className="panel-wrapper" style={{paddingRight:15}}>
-
-                <ButtonBase id="panel-history-ripple" className="panel panel-flex">
-                    <Link to="/history" id="panel-history">
-                        <i className="material-icons">restore</i>
-                        <p>Check history and replay.</p>
-                    </Link>
-                </ButtonBase>
-
-                <ButtonBase id="panel-cloud-ripple" className="panel panel-flex">
-                    <Link to="/user">
-                        <i className="material-icons">cloud</i>
-                        <p>Save history across platform.</p>
-                    </Link>
-                </ButtonBase>
-                
+                <div id="notify-container">
+                    
+                </div>    
             </div>
         </div>
     )

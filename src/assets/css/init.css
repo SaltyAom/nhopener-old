@@ -16,6 +16,9 @@
   --root-1: #1c2130;
   --root-2: #25283b;
 
+  --card: #1d1f2e;
+  --snack: #313235;
+
   --text: #fff;
   --text-1: #ddd;
   --text-2: #bbb;
@@ -33,6 +36,7 @@
 ::-webkit-scrollbar {
   background-color:var(--root-2);
   width:7px;
+  height:7px;
   padding-right:3px;
 }
 

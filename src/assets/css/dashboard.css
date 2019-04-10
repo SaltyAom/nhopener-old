@@ -1,0 +1,136 @@
+#home-page, #main-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width:100%;
+    padding: 35px 7.5%;
+}
+
+#main-dashboard {
+    display:flex;
+    flex:1;
+    padding:1%;
+}
+
+#notify-container {
+    padding:15px;
+    width: 250px;
+}
+
+#main-card-container {
+    padding:0;
+}
+
+.main-card-wrapper {
+    display:flex;
+    flex-direction: column;
+    flex:1;
+    padding:0 3% 45px 3%;
+}
+
+.main-card {
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    background-color:var(--card);
+    border-radius: 5px;
+    box-shadow:0 5px 15px rgba(0,0,0,.275);
+    text-decoration: none;
+    color:var(--text);
+    outline:none;
+    padding-bottom: 5px;
+    transition: transform .25s ease-out, box-shadow .25s ease-out;
+    margin: 15px 0;
+}
+
+.main-card:hover, .main-card:focus {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,.4);
+}
+
+.main-card-image-wrapper, .main-card-image, .main-card-overlay {
+    width:100%;
+    height: 30vh;
+}
+
+.main-card-image-wrapper {
+    position: relative;
+}
+
+.main-card-overlay {
+    position:absolute;
+    background-color: rgba(0,0,0,.6);
+    opacity:.4;
+    transition: opacity .2s ease-out;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 6.25%;
+}
+
+.main-card:hover > .main-card-image-wrapper > .main-card-overlay,
+.main-card:focus > .main-card-image-wrapper > .main-card-overlay {
+    opacity:1;
+}
+
+.main-card-overlay-title {
+    font-size: 24px;
+    color: #fff;
+    display:none;
+}
+
+@keyframes overlay-title-in {
+    from {opacity:0; margin-top:15px;}
+}
+
+.main-card:hover > .main-card-image-wrapper > .main-card-overlay > .main-card-overlay-title,
+.main-card:focus > .main-card-image-wrapper > .main-card-overlay > .main-card-overlay-title {
+    display:block;
+    animation: overlay-title-in .25s ease-out 0s 1;
+}
+
+.main-card-image {
+    background-size: cover;
+    background-position: center top;
+}
+
+.main-card-header {
+    font-size: 28px;
+    display:block;
+    padding: 10px 20px 5px 20px;
+}
+
+.main-card-detail {
+    padding: 10px 20px;
+    color:var(--text-1);
+    font-size: 16px;
+}
+
+.main-card-tag {
+    display:block;
+    padding: 0 15px;
+    margin-bottom:10px;
+}
+
+.main-card-tag > div {
+    display: inline-block;
+    float:left;
+    padding:3px 12px;
+    border-radius: 15px;
+    margin:10px 5px;
+    background-color:rgba(255,255,255,.0425);
+    box-shadow:0 3px 5px rgba(0,0,0,.1);
+    font-size: 13px;
+    color: var(--text-2);
+}
+
+.main-card-footer {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    border-top: 1.5px solid rgba(255,255,255,0.0275);
+}

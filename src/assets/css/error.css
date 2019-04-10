@@ -1,4 +1,4 @@
-#error {
+#error, #warning {
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -6,4 +6,26 @@
     height: 100vh;
     padding-top:58px;
     padding-left:65px;
+}
+
+#error > h1, #error > p,
+#warning > h1, #warning > p {
+    text-align: center;
+    display:block;
+    padding: 0 27.5%;
+}
+
+#error > p, #warning > p {
+    padding: 0 30%;
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+#warning > h1 {
+    font-size: 36px !important;
+}
+
+#error > button.button-wrapper,
+#warning > button.button-wrapper {
+    margin-top: 30px;
 }

@@ -1,22 +1,22 @@
 {
-    "short_name": "App Name",
-    "name": "App Name",
+    "short_name": "Opener",
+    "name": "Opener Pro",
     "icons": [
       {
         "src": "App Image",
-        "type": "image/png",
+        "type": "../../assets/app/icon/Opener ProX192.png",
         "sizes": "192x192"
       },
       {
         "src": "App Image",
-        "type": "image/png",
+        "type": "../../assets/app/icon/Opener Pro.png",
         "sizes": "512x512"
       }
     ],
     "start_url": "../../",
-    "background_color": "put color here", // Put Color Here
+    "background_color": "#25283b",
     "display": "standalone",
     "scope": "../../",
-    "theme_color": "put color here", // Put Color Here
+    "theme_color": "#ec5e69",
     "orientation": "portrait"
   }

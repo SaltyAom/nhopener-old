@@ -68,7 +68,7 @@ export default (props:any) => {
     
     return(
         <div id="pages">
-            { redirectState ? <Redirect to="redirect" push /> : null }
+            { redirectState ? <Redirect to={`/redirect/${props.store.code}`} push /> : null }
             <div id="generate-page">
                 <canvas id="generate-canvas" style={{display:"none"}}></canvas>
                 <img id="generate-preview" src={uri} />

@@ -3,9 +3,11 @@ import {
     Loadable, 
     Loading, 
     useReducer,
-    storeContext
+    storeContext,
+    useState
 } from './react/bridge'
 import ReactDOM from 'react-dom'
+
 import { 
     BrowserRouter as Router,
     Route,
@@ -39,14 +41,17 @@ Generate:any = Loadable({
 Settings:any = Loadable({
     loader: () => import('./react/pages/settings'),
     loading: Loading
-})
+});
+
+import Warning from './react/pages/warning'
 
 import './assets/css/init.css'
 import './assets/css/responsive.css'
 import './assets/material-icon/material-icons.css'
 
 const Root = () => {
-    const [state, dispatch]:any = useReducer(reducers, initState);
+    const [state, dispatch]:any = useReducer(reducers, initState),
+        [warning, setWarning] = useState(false);
 
     return (
         <Router>
@@ -54,55 +59,61 @@ const Root = () => {
                 <Nav store={state} />
                 <Sidebar store={state} />
             </storeContext.Provider>
-            <Switch>
-                <Route 
-                    exact 
-                    path="/" 
-                    render={() => (
-                        <storeContext.Provider value={dispatch}>
-                            <Home store={state} />
-                        </storeContext.Provider>
-                    )}
-                />
-                <Route
-                    exact 
-                    path="/redirect"
-                    render={() => (
-                        <storeContext.Provider value={dispatch}>
-                            <Redirect store={state} />
-                        </storeContext.Provider>
-                    )}
-                />
-                <Route
-                    exact
-                    path="/drop" 
-                    render={() => (
-                        <storeContext.Provider value={dispatch}>
-                            <Drop store={state} />
-                        </storeContext.Provider>
-                    )}
-                />
-                <Route
-                    exact
-                    path="/generate" 
-                    render={() => (
-                        <storeContext.Provider value={dispatch}>
-                            <Generate store={state} />
-                        </storeContext.Provider>
-                    )}
-                />
-                <Route
-                    exact
-                    path="/settings"
-                    render={() => (
-                        <storeContext.Provider value={dispatch}>
-                            <Settings store={state} />
-                        </storeContext.Provider>
-                    )}
-                />
+            { warning ?
+                <Switch>
+                    <Route 
+                        exact 
+                        path="/" 
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <Home store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact 
+                        path="/redirect/:id"
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <Redirect store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/drop" 
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <Drop store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/generate" 
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <Generate store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/settings"
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <Settings store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
 
-                <Route exact component={Error} />
-            </Switch>
+                    <Route exact component={Error} />
+                </Switch>
+            : 
+            <storeContext.Provider value={dispatch}>
+                <Warning function={() => setWarning(true)} />
+            </storeContext.Provider>
+            }
         </Router>
     )
 }
