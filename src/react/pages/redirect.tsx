@@ -57,7 +57,7 @@ export default withRouter((props: props) => {
                         <h2>{og.ogTitle}</h2>
                         <h3>{og.ogDescription}</h3>
                         <ButtonBase id="redirect-button">
-                            <a className="button secondary" href={`https://nhentai.net/g/${props.store.redirectURL}`} rel="noreferrer external nofollow">
+                            <a className="button secondary" href={`https://nhentai.net/g/${props.match.params.id}`} rel="noreferrer external nofollow">
                                 Read <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
                         </ButtonBase>
