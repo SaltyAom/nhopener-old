@@ -79,7 +79,6 @@ export default (props:any) => {
                         type="tel"
                         placeholder="000000"
                         onBlur={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
-                        value={}
                     />
                 </div>
                 <div id="generate-detail">
