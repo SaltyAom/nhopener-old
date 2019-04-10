@@ -15,11 +15,6 @@ import "../../assets/css/redirect.css"
 import '../../assets/css/button.css'
 import '../../assets/css/error.css'
 
-const Error = Loadable({
-    loader: () => import('./error'),
-    loading: Loading
-});
-
 type PathParamsType = {
     id: string,
 }
