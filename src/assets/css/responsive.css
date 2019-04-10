@@ -100,6 +100,10 @@
     #generate-preview {
         margin-bottom:0 !important;
     }
+    #generate-detail {
+        width:100% !important;
+        padding: 0 15%;
+    }
 }
 
 @media screen and (min-width:768px) and (max-width: 960px){
