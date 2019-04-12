@@ -15,12 +15,16 @@ export default () => {
     useEffect(() => {
         openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
             setBlurDashboard(data[0].value);
+        }).catch((err:any) => {
+            openerIDB.table("settings").put({
+                title: "blurDashboard",
+                value: false
+            });    
         });
     }, []);
 
     const saveBlurDashboard = () => {
         openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
-            console.log(data[0].value);
             openerIDB.table("settings").put({
                 title:"blurDashboard",
                 value:!data[0].value

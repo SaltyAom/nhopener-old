@@ -6,7 +6,6 @@ import {
     storeContext,
     Link,
     Axios,
-    LazyLoad,
     openerIDB
 } from '../bridge'
 import '../../assets/css/dashboard.css'
@@ -14,6 +13,7 @@ import '../../assets/css/dashboard.css'
 interface cardProps {
     overlayTitle?: string,
     image?: string,
+    imageType?: string
     title?: string,
     detail?: string,
     footer?: string,
@@ -22,59 +22,161 @@ interface cardProps {
     blur?: boolean
 }
 
-const Card = (props: cardProps) => (
-    <Link to={props.to} className="main-card">
-        { props.image ?
-            <div className="main-card-image-wrapper">
-                <div className="main-card-overlay">
-                    <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
-                </div>
-                <LazyLoad>
+const Card = (props: cardProps) => {
+    let imageType;
+
+    switch(props.imageType){
+        case "p":
+            imageType = "png"
+            break;
+        case "j":
+            imageType = "jpg"
+            break;
+        default:
+            imageType = "jpg"
+            break;
+    }
+
+    return(
+        <Link to={props.to} className="main-card">
+            { props.image ?
+                <div className="main-card-image-wrapper">
+                    <div className="main-card-overlay">
+                        <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
+                    </div>
                     { props.blur ?
-                    <div className="main-card-image blur" style={{backgroundImage: `url(${props.image})`}}></div>
+                        <div className="main-card-image blur" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
                     :
-                    <div className="main-card-image" style={{backgroundImage: `url(${props.image})`}}></div>
+                        <div className="main-card-image" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
                     }
-                </LazyLoad>
-            </div>
-        : null }
-        { props.title ?
-            <h1 className="main-card-header">{props.title}</h1>
-        : null }
-        { props.detail ?
-            <p className="main-card-detail">
-                {props.detail}
-            </p>
-        : null }
-        {props.footer ?
-            <footer className="main-card-footer">
-                <p>{props.footer}</p>
-            </footer>
-        : null }
-    </Link>
-)
+                </div>
+            : null }
+            { props.title ?
+                <h1 className="main-card-header">{props.title}</h1>
+            : null }
+            { props.detail ?
+                <p className="main-card-detail">
+                    {props.detail}
+                </p>
+            : null }
+            {props.footer ?
+                <footer className="main-card-footer">
+                    <p>{props.footer}</p>
+                </footer>
+            : null }
+        </Link>
+    )
+}
 
 export default (props: any) => {
     const [blurDashboard, setBlurDashboard]:any = useState(true),
-        [random, setRandom]:any = useState([]),
-        randomInit:number = Math.floor(Math.random() * (229345 - 1)) + 1,
+        [stories, setStories]:any = useState([]),
         dispatch:any = useContext(storeContext);
 
     useEffect(() => {
-        if(props.store.suggestStories[0] === undefined){
-            Axios(`https://opener.now.sh/api/relate/${randomInit}`).then((data:any) => {
-                dispatch({
-                    type: "newSuggestStories",
-                    suggestStories: data.data.result
-                })
-                setRandom(data.data.result);
+        (async() => {
+
+            openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any):void => {
+                setBlurDashboard(data[0].value);
+            }).catch((err:any):void => {
+                openerIDB.table("settings").put({
+                    title: "blurDashboard",
+                    value: false
+                });    
             });
-        } else {
-            setRandom(props.store.suggestStories);
-        }
-        openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
-            setBlurDashboard(data[0].value);
-        });
+
+            let visitState:number = Date.now();
+            let fetchVisitState:Promise<boolean> = new Promise((resolve, reject) => {
+
+                openerIDB.table("settings").where("title").equals("visitState").toArray(async (data:any) => {
+                    visitState = data[0].value;
+                    resolve(true);
+
+                }).catch((err:any):void => {
+                    openerIDB.table("settings").put({
+                        title: "visitState",
+                        value: Date.now()
+                    });
+                    resolve(true);
+                });
+
+            });
+
+            await fetchVisitState;
+
+            let randomStoriesID:number = Math.floor(Math.random() * (229345 - 1)) + 1;
+            let fetchStoriesID:Promise<boolean> = new Promise(async (resolve, reject) => {
+
+                openerIDB.table("settings").where("title").equals("suggestedStoriesID").toArray(async (data:any) => {
+                    if(Date.now() > (visitState + 300000)){
+                        await openerIDB.table("settings").put({
+                            title: "suggestedStoriesID",
+                            value: randomStoriesID
+                        });
+                        await openerIDB.table("settings").put({
+                            title: "visitState",
+                            value: Date.now()
+                        });
+                        resolve(true);
+                    } else {
+                        randomStoriesID = data[0].value;
+                        resolve(true);
+                    }
+
+                }).catch(async (err:any) => {
+                    openerIDB.table("settings").put({
+                        title: "suggestedStoriesID",
+                        value: randomStoriesID
+                    });
+                    resolve(true);
+                });
+
+            });
+
+            await fetchStoriesID;
+
+            let fetchStories:Promise<boolean> = new Promise(async (resolve, reject) => {
+                openerIDB.table("settings").where("title").equals("suggestedStories").toArray(async (data:any) => {
+
+                    if(!(Date.now() > (visitState + 300000)) && ((data[0].value)[0] !== undefined || navigator.onLine === false)){
+                        // Stories in IndexedDB exists
+                        setStories(data[0].value);
+                        resolve(true);
+                    } else {
+                        // Stories in IndexedEB not exists
+                        if(props.store.suggestStories[0] === undefined){
+                            // Haven't fetched stories yet
+                            Axios(`https://opener.now.sh/api/relate/${randomStoriesID}`).then(async (stories:any) => {
+                                dispatch({
+                                    type: "newSuggestStories",
+                                    suggestStories: stories.data.result
+                                });
+                                setStories(stories.data.result);
+                                await openerIDB.table("settings").put({
+                                    title: "suggestedStories",
+                                    value: stories.data.result
+                                });
+                                resolve(true);
+                            });
+                        } else {
+                            // Once fetched
+                            setStories(props.store.suggestStories);
+                            resolve(true);
+                        }
+                    }
+
+                }).catch((err:any) => {
+                    openerIDB.table("settings").put({
+                        title: "suggestedStories",
+                        value: []
+                    })
+                });
+
+            });
+
+            await fetchStories;
+
+        })();
     }, []);
 
     return(
@@ -89,17 +191,18 @@ export default (props: any) => {
                                 footer="Opener Pro"
                                 onClick={(e:any) => e.preventDefault()}
                             />
-                            {random !== [] ?
+                            {stories !== [] ?
                                 <>
-                                    {random.map((data:any, index:number) => 
+                                    {stories.map((data:any, index:number) => 
                                         <>
                                             {index < 2 ?
                                                 <>
                                                 <Card
                                                     key={index}
-                                                    detail={`${data.title.english}`}
+                                                    detail={data.title.english}
                                                     footer={`ID: ${data.id} - ${data.num_pages} pages`}
-                                                    image={`https://t.nhentai.net/galleries/${data.media_id}/cover.jpg`}
+                                                    image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
+                                                    imageType={data.images.cover.t}
                                                     to={`/redirect/${data.id}`}
                                                     blur={blurDashboard}
                                                 />
@@ -128,18 +231,18 @@ export default (props: any) => {
                             : null}
                         </div>
                         <div className="main-card-wrapper">
-                            {random !== [] ?
+                            {stories !== [] ?
                                 <>
-                                    {random.map((data:any, index:number) => 
+                                    {stories.map((data:any, index:number) => 
                                         <>
                                             {index >= 2 ?
                                                 <>
                                                     <Card
                                                         key={index}
-                                                        detail={`${data.title.english}`}
+                                                        detail={data.title.english}
                                                         footer={`ID: ${data.id} - ${data.num_pages} pages`}
-                                                        overlayTitle={data.title.pretty}
-                                                        image={`https://t.nhentai.net/galleries/${data.media_id}/cover.jpg`}
+                                                        image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
+                                                        imageType={data.images.cover.t}
                                                         to={`/redirect/${data.id}`}
                                                         blur={blurDashboard}
                                                     />

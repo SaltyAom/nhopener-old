@@ -40,7 +40,6 @@ export default (props: any) => {
                 <SidebarIcon to="/drop" icon="flip_to_front" />
                 <SidebarIcon to="/generate" icon="burst_mode" />
                 <SidebarIcon to="/history" icon="restore" />
-                <SidebarIcon to="/cloud" icon="cloud" />
             </div>
             <div id="sidebar-footer">
                 <SidebarIcon to="/settings" icon="settings" />

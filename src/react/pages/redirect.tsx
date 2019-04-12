@@ -56,6 +56,13 @@ export default withRouter((props: props) => {
                                 Read <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
                         </ButtonBase>
+                        {/*
+                        <ButtonBase id="h-rayriffy-button">
+                            <a className="button success has-wrapper" href={`https://h.rayriffy.com/r/${props.match.params.id}`} rel="noreferrer external nofollow">
+                                h.rayriffy <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
+                            </a>
+                        </ButtonBase>
+                        */}
                     </div>
                 </div>
             </div>

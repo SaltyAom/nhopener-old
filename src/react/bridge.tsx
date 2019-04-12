@@ -5,7 +5,6 @@ import Loading from './component/loading'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Axios from 'axios'
 import openerIDB from './store/dexie-indexeddb'
-import LazyLoad from 'react-lazy-load'
 
 const storeContext:any = React.createContext<null>(null)
 
@@ -24,6 +23,5 @@ export {
     Loading, 
     ButtonBase,
     Axios,
-    openerIDB,
-    LazyLoad
+    openerIDB
 }

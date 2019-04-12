@@ -61,6 +61,7 @@
 
 .main-card-image-wrapper {
     position: relative;
+    overflow:hidden;
 }
 
 .main-card-overlay {
@@ -102,6 +103,8 @@
 .main-card-image {
     background-size: cover;
     background-position: center top;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
 }
 
 .main-card-header {
@@ -145,10 +148,4 @@
 
 .blur {
     filter: blur(10px) !important;
-}
-
-.LazyLoad {
-    overflow:hidden;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
