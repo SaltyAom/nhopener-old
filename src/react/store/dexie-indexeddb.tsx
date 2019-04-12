@@ -1,9 +1,10 @@
 import Dexie from 'dexie'
 
-const opener = new Dexie("opener");
+const openerIDB = new Dexie("opener");
 
-opener.version(1).stores({
-    history: 'id++, title, timestamp' 
+openerIDB.version(1).stores({
+    history: 'id++, title, timestamp',
+    settings: 'title, value'
 });
 
-export default opener
+export default openerIDB

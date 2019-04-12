@@ -42,6 +42,11 @@
     padding-bottom: 5px;
     transition: transform .25s ease-out, box-shadow .25s ease-out;
     margin: 15px 0;
+    animation: card-in .375s ease-out 0s 1;
+}
+
+@keyframes card-in {
+    from { transform: translateY(10px); opacity:0 }
 }
 
 .main-card:hover, .main-card:focus {
@@ -61,6 +66,9 @@
 .main-card-overlay {
     position:absolute;
     background-color: rgba(0,0,0,.6);
+    z-index:1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     opacity:.4;
     transition: opacity .2s ease-out;
     display:flex;
@@ -133,4 +141,14 @@
     align-items: center;
     padding: 5px 15px;
     border-top: 1.5px solid rgba(255,255,255,0.0275);
+}
+
+.blur {
+    filter: blur(10px) !important;
+}
+
+.LazyLoad {
+    overflow:hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }

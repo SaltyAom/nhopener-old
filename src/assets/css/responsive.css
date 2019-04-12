@@ -15,6 +15,9 @@
     #notify-container {
         display:none;
     }
+    #settings {
+        width: 90% !important;
+    }
 }
 
 @media screen and (max-width: 568px){
@@ -76,6 +79,12 @@
     }
     #warning > p {
         padding: 0 6.25%;
+    }
+    #settings > div {
+        padding:20px 15px;
+    }
+    #settings > div > div {
+        padding:10px 0;
     }
 }
 

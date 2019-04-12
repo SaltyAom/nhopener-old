@@ -5,9 +5,10 @@ import {
     useContext,
     storeContext,
     Link,
-    Axios
+    Axios,
+    LazyLoad,
+    openerIDB
 } from '../bridge'
-const FastAverageColor = require('fast-average-color/dist/index');
 import '../../assets/css/dashboard.css'
 
 interface cardProps {
@@ -17,17 +18,24 @@ interface cardProps {
     detail?: string,
     footer?: string,
     onClick?: any,
-    to?: string
+    to?: string,
+    blur?: boolean
 }
 
-const Card = (props: any) => (
+const Card = (props: cardProps) => (
     <Link to={props.to} className="main-card">
         { props.image ?
             <div className="main-card-image-wrapper">
                 <div className="main-card-overlay">
                     <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
                 </div>
-                <div className="main-card-image" style={{backgroundImage: `url(${props.image})`}}></div>
+                <LazyLoad>
+                    { props.blur ?
+                    <div className="main-card-image blur" style={{backgroundImage: `url(${props.image})`}}></div>
+                    :
+                    <div className="main-card-image" style={{backgroundImage: `url(${props.image})`}}></div>
+                    }
+                </LazyLoad>
             </div>
         : null }
         { props.title ?
@@ -47,7 +55,7 @@ const Card = (props: any) => (
 )
 
 export default (props: any) => {
-    const [redirectState, setRedirectState]:any = useState(false),
+    const [blurDashboard, setBlurDashboard]:any = useState(true),
         [random, setRandom]:any = useState([]),
         randomInit:number = Math.floor(Math.random() * (229345 - 1)) + 1,
         dispatch:any = useContext(storeContext);
@@ -60,38 +68,14 @@ export default (props: any) => {
                     suggestStories: data.data.result
                 })
                 setRandom(data.data.result);
-                console.log(data.data.result);
             });
         } else {
             setRandom(props.store.suggestStories);
         }
+        openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
+            setBlurDashboard(data[0].value);
+        });
     }, []);
-        
-    const redirect = (evt:any) => {
-        let tgt = evt.target, files = tgt.files,
-            opener = (document.getElementById("opener-image") as HTMLImageElement);
-        if (FileReader && files && files.length) {
-            let fr:any = new FileReader();
-            fr.onload = ():any => {
-                opener.src = fr.result;
-            }
-            fr.readAsDataURL(files[0]);
-        } else {
-            console.error(`error`);
-        }
-
-        const fac:any = new FastAverageColor();
-        setTimeout(_ => {
-            let color:any = fac.getColor(opener),
-                hexCode:string = ((color.hex).substring(1)).replace(/f/g, '');
-                
-            dispatch({
-                type: "updateURL",
-                newURL: hexCode
-            });
-            setRedirectState(true);
-        },1000);
-    }
 
     return(
         <div id="pages">
@@ -117,6 +101,7 @@ export default (props: any) => {
                                                     footer={`ID: ${data.id} - ${data.num_pages} pages`}
                                                     image={`https://t.nhentai.net/galleries/${data.media_id}/cover.jpg`}
                                                     to={`/redirect/${data.id}`}
+                                                    blur={blurDashboard}
                                                 />
                                                 {index === 1 ?
                                                     <>
@@ -156,6 +141,7 @@ export default (props: any) => {
                                                         overlayTitle={data.title.pretty}
                                                         image={`https://t.nhentai.net/galleries/${data.media_id}/cover.jpg`}
                                                         to={`/redirect/${data.id}`}
+                                                        blur={blurDashboard}
                                                     />
                                                     {index === 3 ?
                                                         <Card
