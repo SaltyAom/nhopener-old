@@ -43,7 +43,7 @@ const HistoryList = (props:historyProps) => {
                 onChange={() => toggleCheck()}
                 value="checkedA"
             />
-            <Link to={`/redirect/${props.id}`} className="history-name">{props.title}</Link>
+            <Link to={`/redirect/${props.link}`} className="history-name">{props.title}</Link>
             <IconButton
                 className="history-selector"
                 aria-owns={popup ? 'History management' : undefined}
