@@ -99,3 +99,15 @@
         display:none;
     }
 }
+
+@media screen and (max-height: 578px){
+    #pages, #generate-page {
+        justify-content: flex-start;
+    }
+}
+
+@supports (-webkit-overflow-scrolling: touch){
+    #nav { height:78px; padding-top:20px !important; }
+    #sidebar { height:calc(100vh - 58px); }
+    #pages, #error {padding-top:68px !important;}
+}

@@ -11,6 +11,7 @@ import '../../assets/css/drop.css'
 
 export default () => {
     const [redirectState, setRedirectState]:any = useState(false),
+        [redirectID, setRedirectID]:any = useState(0),
         dispatch:any = useContext(storeContext);
 
     const redirect = (evt:any) => {
@@ -27,9 +28,10 @@ export default () => {
         }
 
         const fac:any = new FastAverageColor();
-        setTimeout(_ => {
+        setTimeout(() => {
             let color:any = fac.getColor(opener),
                 hexCode:string = ((color.hex).substring(1)).replace(/f/g, '');
+                setRedirectID(hexCode);
                 
             dispatch({
                 type: "updateURL",
@@ -53,7 +55,7 @@ export default () => {
                 <p id="drop-label">Drag and drop images or click here.</p>
             </div>
 
-            { redirectState ? <Redirect to="redirect" push /> : null }
+            { redirectState ? <Redirect to={`redirect/${redirectID}`} push /> : null }
         </div>
     )
 }
