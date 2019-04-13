@@ -138,7 +138,7 @@ export default (props: any) => {
             let fetchStories:Promise<boolean> = new Promise(async (resolve, reject) => {
                 openerIDB.table("settings").where("title").equals("suggestedStories").toArray(async (data:any) => {
 
-                    if(!(Date.now() > (visitState + 300000)) && ((data[0].value)[0] !== undefined || navigator.onLine === false)){
+                    if((!(Date.now() > (visitState + 300000)) && (data[0].value)[0] !== undefined) || navigator.onLine === false){
                         // Stories in IndexedDB exists
                         setStories(data[0].value);
                         resolve(true);
@@ -186,10 +186,12 @@ export default (props: any) => {
                     <div id="main-card-container">
                         <div className="main-card-wrapper">
                             <Card
+                                key={5}
                                 title="Hello There!"
                                 detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
                                 footer="Opener Pro"
                                 onClick={(e:any) => e.preventDefault()}
+                                to="/"
                             />
                             {stories !== [] ?
                                 <>

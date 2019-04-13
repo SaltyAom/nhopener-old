@@ -37,6 +37,7 @@
     flex:1;
 }
 
-.setting-check.check > span > svg {
+.check > span,
+.check > span > svg {
     color:#f50057;
 }

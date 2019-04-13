@@ -43,6 +43,7 @@
     transition: transform .25s ease-out, box-shadow .25s ease-out;
     margin: 15px 0;
     animation: card-in .375s ease-out 0s 1;
+    cursor:pointer;
 }
 
 @keyframes card-in {
@@ -57,6 +58,7 @@
 .main-card-image-wrapper, .main-card-image, .main-card-overlay {
     width:100%;
     height: 30vh;
+    cursor:pointer;
 }
 
 .main-card-image-wrapper {
@@ -111,18 +113,21 @@
     font-size: 28px;
     display:block;
     padding: 10px 20px 5px 20px;
+    cursor:pointer;
 }
 
 .main-card-detail {
     padding: 10px 20px;
     color:var(--text-1);
     font-size: 16px;
+    cursor:pointer;
 }
 
 .main-card-tag {
     display:block;
     padding: 0 15px;
     margin-bottom:10px;
+    cursor:pointer;
 }
 
 .main-card-tag > div {
@@ -135,6 +140,7 @@
     box-shadow:0 3px 5px rgba(0,0,0,.1);
     font-size: 13px;
     color: var(--text-2);
+    cursor:pointer;
 }
 
 .main-card-footer {
@@ -144,6 +150,7 @@
     align-items: center;
     padding: 5px 15px;
     border-top: 1.5px solid rgba(255,255,255,0.0275);
+    cursor:pointer;
 }
 
 .blur {

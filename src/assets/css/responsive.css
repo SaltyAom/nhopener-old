@@ -15,7 +15,7 @@
     #notify-container {
         display:none;
     }
-    #settings {
+    #settings, #history-container {
         width: 90% !important;
     }
 }
@@ -106,8 +106,10 @@
     }
 }
 
-@supports (-webkit-overflow-scrolling: touch){
-    #nav { height:78px; padding-top:20px !important; }
-    #sidebar { height:calc(100vh - 58px); }
-    #pages, #error {padding-top:68px !important;}
+@media all and (display-mode: standalone){
+    @supports (-webkit-overflow-scrolling: touch){
+        #nav { height:78px; padding-top:20px !important; }
+        #sidebar { height:calc(100vh - 78px); top:78px; }
+        #pages, #error {padding-top:68px !important;}
+    }
 }

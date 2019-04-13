@@ -6,7 +6,8 @@ import {
     useState,
     useEffect,
     Axios,
-    Link
+    Link,
+    openerIDB
 } from "../bridge"
 import { RouteComponentProps } from "react-router"
 import { withRouter } from "react-router-dom"
@@ -31,6 +32,11 @@ export default withRouter((props: props) => {
 
         Axios(requestUrl).then((ogData:any) => {
             setOg(ogData.data.data);
+            openerIDB.table("history").add({
+                title: ogData.data.data.ogTitle,
+                link: props.match.params.id,
+                timestamp: Date.now()
+            })
         }).catch(() => {
             setOg(undefined);
         })

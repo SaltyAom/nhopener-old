@@ -2,9 +2,8 @@ import {
     React,
     useState,
     useEffect,
-    openerIDB,
+    openerIDB
 } from '../bridge'
-
 import { Checkbox } from '@material-ui/core'
 
 import '../../assets/css/settings.css'
@@ -40,20 +39,12 @@ export default () => {
                     <h1>Privacy</h1>
                     <div>
                         <p>Blur an preview image on dashboard</p>
-                        { blurDashboard ?
                         <Checkbox
-                            className="setting-check"
-                            checked={blurDashboard}
-                            onChange={() => saveBlurDashboard()}
-                            value="checkedA"
-                        /> :
-                        <Checkbox
-                            className="setting-check check"
+                            className="check"
                             checked={blurDashboard}
                             onChange={() => saveBlurDashboard()}
                             value="checkedA"    
-                        />                    
-                        }
+                        />
                     </div>
                 </div>
             </div>

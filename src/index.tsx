@@ -41,9 +41,15 @@ Generate:any = Loadable({
 Settings:any = Loadable({
     loader: () => import('./react/pages/settings'),
     loading: Loading
+}),
+History:any = Loadable({
+    loader: () => import('./react/pages/history'),
+    loading: Loading
+}),
+Warning:any = Loadable({
+    loader: () => import('./react/pages/warning'),
+    loading: Loading
 });
-
-import Warning from './react/pages/warning'
 
 import './assets/css/init.css'
 import './assets/css/responsive.css'
@@ -55,7 +61,7 @@ const Root = () => {
 
     return (
         <Router>
-            <storeContext.Provider value={dispatch}>
+            <storeContext.Provider key={99} value={dispatch}>
                 <Nav store={state} />
                 <Sidebar store={state} />
             </storeContext.Provider>
@@ -64,8 +70,9 @@ const Root = () => {
                     <Route 
                         exact 
                         path="/" 
+                        key={0}
                         render={() => (
-                            <storeContext.Provider value={dispatch}>
+                            <storeContext.Provider key={0} value={dispatch}>
                                 <Home store={state} />
                             </storeContext.Provider>
                         )}
@@ -73,8 +80,9 @@ const Root = () => {
                     <Route
                         exact 
                         path="/redirect/:id"
+                        key={1}
                         render={() => (
-                            <storeContext.Provider value={dispatch}>
+                            <storeContext.Provider key={1} value={dispatch}>
                                 <Redirect store={state} />
                             </storeContext.Provider>
                         )}
@@ -82,8 +90,9 @@ const Root = () => {
                     <Route
                         exact
                         path="/drop" 
+                        key={2}
                         render={() => (
-                            <storeContext.Provider value={dispatch}>
+                            <storeContext.Provider key={2} value={dispatch}>
                                 <Drop store={state} />
                             </storeContext.Provider>
                         )}
@@ -91,26 +100,38 @@ const Root = () => {
                     <Route
                         exact
                         path="/generate" 
+                        key={3}
                         render={() => (
-                            <storeContext.Provider value={dispatch}>
+                            <storeContext.Provider key={3} value={dispatch}>
                                 <Generate store={state} />
                             </storeContext.Provider>
                         )}
                     />
                     <Route
                         exact
-                        path="/settings"
+                        path="/history"
+                        key={4}
                         render={() => (
-                            <storeContext.Provider value={dispatch}>
+                            <storeContext.Provider key={4} value={dispatch}>
+                                <History store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/settings"
+                        key={5}
+                        render={() => (
+                            <storeContext.Provider key={5} value={dispatch}>
                                 <Settings store={state} />
                             </storeContext.Provider>
                         )}
                     />
 
-                    <Route exact component={Error} />
+                    <Route exact key={6} component={Error} />
                 </Switch>
             : 
-            <storeContext.Provider value={dispatch}>
+            <storeContext.Provider key={6} value={dispatch}>
                 <Warning function={() => setWarning(true)} />
             </storeContext.Provider>
             }

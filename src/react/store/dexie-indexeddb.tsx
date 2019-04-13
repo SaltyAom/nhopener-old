@@ -4,7 +4,7 @@ const openerIDB = new Dexie("opener");
 
 Dexie.exists("opener").then(async (exists:boolean) => {
     await openerIDB.version(1).stores({
-        history: 'id++, title, timestamp',
+        history: 'id++, title, link, timestamp',
         settings: 'title, value',
     });
     if(!exists){

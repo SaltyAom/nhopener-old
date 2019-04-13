@@ -38,6 +38,10 @@
     border-left-color: var(--primary-1) !important;
 }
 
+.sidebar-nav-link-active > button.sidebar-nav-wrapper > i.material-icons {
+    color: var(--text) !important;
+}
+
 .sidebar-nav-wrapper > i.material-icons {
     font-size: 32px;
     color:var(--text-1);
