@@ -29,7 +29,7 @@
         left: 0;
     }
     #pages, #error, #warning {
-        padding-left:0;
+        padding-left:0 !important;
     }
     #search {
         display:none;
@@ -74,11 +74,11 @@
         padding-bottom:0 !important;
     }
     #warning > h1 {
-        padding: 0 5%;
+        padding: 0 5% !important;
         font-size: 32px !important;
     }
     #warning > p {
-        padding: 0 6.25%;
+        padding: 0 6.25% !important;
     }
     #settings > div {
         padding:20px 15px;
