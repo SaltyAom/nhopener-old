@@ -3,20 +3,20 @@
     "name": "Opener Pro",
     "icons": [
       {
-        "src": "App Image",
-        "type": "../../assets/app/icon/Opener ProX192.png",
+        "src": "/assets/app/icon/Opener ProX192.png",
+        "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "App Image",
-        "type": "../../assets/app/icon/Opener Pro.png",
+        "src": "/assets/app/icon/Opener Pro.png",
+        "type": "image/png",
         "sizes": "512x512"
       }
     ],
-    "start_url": "../../",
+    "start_url": "/",
     "background_color": "#25283b",
     "display": "standalone",
-    "scope": "../../",
+    "scope": "/",
     "theme_color": "#ec5e69",
     "orientation": "portrait"
   }

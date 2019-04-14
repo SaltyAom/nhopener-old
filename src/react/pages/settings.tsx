@@ -6,7 +6,8 @@ import React, {
 } from 'react'
 import {
     openerIDB,
-    ButtonBase
+    ButtonBase,
+    Loading
 } from '../bridge'
 import { Checkbox } from '@material-ui/core'
 
@@ -14,7 +15,8 @@ import '../../assets/css/settings.css'
 
 const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
-        [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false);
+        [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false),
+        [showLoading, setShowLoading] = useState<boolean | any>(false);
 
     let isAndroid = /(android)/i.test(navigator.userAgent);
 
@@ -83,8 +85,53 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         });
     }
 
+    const clearCache = () => {
+        setShowLoading(true);
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            caches.keys().then(names => {
+                for (let name of names)
+                caches.delete(name);
+            });
+            for(let registration of registrations) {
+                registration.unregister()
+            }
+        }).then(() => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 375);
+        })
+    }
+
+    const forceUpdate = () => {
+        setShowLoading(true);
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            caches.keys().then(names => {
+                for (let name of names)
+                caches.delete(name);
+            });
+            for(let registration of registrations) {
+                registration.unregister()
+            } 
+        }).then(():void => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js', {
+                    scope: "/"
+                }).then(registration => {
+                    console.info('Registered:', registration);
+                }).catch(err => {
+                    console.error('Registration failed: ', err);
+                });
+            }
+        }).then(():void => {
+            setInterval(() => {
+                window.location.replace("/")
+            }, 275);
+        });
+    }
+
     return(
         <div id="pages">
+            {showLoading ? <Loading instant /> : null}
             <div id="settings">
                 <div className="setting-card">
                     <h1>Privacy</h1>
@@ -124,6 +171,18 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         <p>Reload data</p>
                         <ButtonBase className="setting-button" onClick={() => window.location.reload()}>
                             Reload
+                        </ButtonBase>
+                    </div>
+                    <div>
+                        <p>Clear all caches (Reload)</p>
+                        <ButtonBase className="setting-button" onClick={() => clearCache()}>
+                            Clear
+                        </ButtonBase>
+                    </div>
+                    <div>
+                        <p>Recache every files</p>
+                        <ButtonBase className="setting-button" onClick={() => forceUpdate()}>
+                            Force update
                         </ButtonBase>
                     </div>
                 </div>
