@@ -18,4 +18,5 @@ export {
     ButtonBase,
     Axios,
     openerIDB,
+    /* webpackChunkName: "bridge" */
 }

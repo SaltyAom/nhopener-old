@@ -5,7 +5,8 @@ import React, {
     ReactElement
 } from 'react'
 import {
-    openerIDB
+    openerIDB,
+    ButtonBase
 } from '../bridge'
 import { Checkbox } from '@material-ui/core'
 
@@ -14,6 +15,8 @@ import '../../assets/css/settings.css'
 const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
         [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false);
+
+    let isAndroid = /(android)/i.test(navigator.userAgent);
 
     useEffect(() => {
         openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
@@ -65,12 +68,27 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         });
     }
 
+    const addToHomescreen = () => {
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e:any) => {
+            e.preventDefault();
+
+            deferredPrompt = e;
+            deferredPrompt.prompt();
+
+            deferredPrompt.userChoice.then((choiceResult:any) => {
+                deferredPrompt = null;
+            });
+        });
+    }
 
     return(
         <div id="pages">
             <div id="settings">
                 <div className="setting-card">
                     <h1>Privacy</h1>
+
                     <div>
                         <p>Blur an preview image on dashboard</p>
                         <Checkbox
@@ -88,7 +106,26 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                             onChange={() => savedontSaveHistory()}
                             value="Set save history"
                         />
-                        </div>
+                    </div>
+
+                </div>
+                <div className="setting-card">
+                    <h1>Progressive</h1>
+
+                    {isAndroid && !window.matchMedia('(display-mode: standalone)').matches ?
+                    <div>
+                        <p>Add to homescreen</p>
+                        <ButtonBase className="setting-button" onClick={() => addToHomescreen()}>
+                            Add
+                        </ButtonBase>
+                    </div> : null
+                    }
+                    <div>
+                        <p>Reload data</p>
+                        <ButtonBase className="setting-button" onClick={() => window.location.reload()}>
+                            Reload
+                        </ButtonBase>
+                    </div>
                 </div>
             </div>
         </div>

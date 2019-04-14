@@ -11,6 +11,7 @@
     flex-direction: column;
     width:100%;
     padding:25px;
+    margin-bottom: 20px;
     border-radius: 5px;
     box-shadow: 0 5px 15px rgba(0,0,0,.275);
     background-color: var(--card);
@@ -29,6 +30,7 @@
     width:100%;
     padding:0 30px 0 10px;
     margin:0 10px;
+    height:40px;
     justify-content: space-between;
     align-items: center
 }
@@ -40,4 +42,12 @@
 .check > span,
 .check > span > svg {
     color:#f50057;
+}
+
+.setting-button {
+    height:40px;
+    padding: 0 10px;
+    font-size: 16px;
+    color:#f50057;
+    text-transform: uppercase;
 }

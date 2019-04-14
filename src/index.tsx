@@ -18,38 +18,38 @@ import {
 
 import { reducers, initState } from "./react/store/hooks-reducers"
 import Nav from './react/component/nav'
-import Sidebar from './react/component/sidebar'
+import Sidebar from './react/component/sidebar' /* webpackChunkName: "sidebar" */
 
 const Home:any = Loadable({
-    loader: () => import('./react/pages/home'),
+    loader: () => import('./react/pages/home' /* webpackChunkName: "home" */),
     loading: Loading
 }),
 Error = Loadable({
-    loader: () => import('./react/pages/error'),
+    loader: () => import('./react/pages/error' /* webpackChunkName: "error" */),
     loading: Loading
 }),
 Redirect:any = Loadable({
-    loader: () => import('./react/pages/redirect'),
+    loader: () => import('./react/pages/redirect' /* webpackChunkName: "redirect" */),
     loading: Loading
 }),
 Drop:any = Loadable({
-    loader: () => import('./react/pages/drop'),
+    loader: () => import('./react/pages/drop' /* webpackChunkName: "drop" */),
     loading: Loading
 }),
 Generate:any = Loadable({
-    loader: () => import('./react/pages/generate'),
+    loader: () => import('./react/pages/generate' /* webpackChunkName: "generate" */),
     loading: Loading
 }),
 Settings:any = Loadable({
-    loader: () => import('./react/pages/settings'),
+    loader: () => import('./react/pages/settings' /* webpackChunkName: "settings" */),
     loading: Loading
 }),
 History:any = Loadable({
-    loader: () => import('./react/pages/history'),
+    loader: () => import('./react/pages/history' /* webpackChunkName: "history" */),
     loading: Loading
 }),
 Warning:any = Loadable({
-    loader: () => import('./react/pages/warning'),
+    loader: () => import('./react/pages/warning' /* webpackChunkName: "warning" */),
     loading: Loading
 });
 
@@ -59,11 +59,11 @@ import './assets/material-icon/material-icons.css'
 
 const Root:FunctionComponent = () => {
     const [state, dispatch]:any = useReducer(reducers, initState),
-        [warning, setWarning]:any = useState(false);
+        [warning, setWarning] = useState<boolean | any>(false);
 
     return (
         <Router>
-            <storeContext.Provider key={99} value={dispatch}>
+            <storeContext.Provider value={dispatch}>
                 <Nav store={state} />
                 <Sidebar store={state} />
             </storeContext.Provider>
@@ -72,7 +72,6 @@ const Root:FunctionComponent = () => {
                     <Route 
                         exact 
                         path="/" 
-                        key={0}
                         render={() => (
                             <storeContext.Provider key={0} value={dispatch}>
                                 <Home store={state} />
@@ -82,7 +81,6 @@ const Root:FunctionComponent = () => {
                     <Route
                         exact 
                         path="/redirect/:id"
-                        key={1}
                         render={() => (
                             <storeContext.Provider key={1} value={dispatch}>
                                 <Redirect store={state} />
@@ -92,7 +90,6 @@ const Root:FunctionComponent = () => {
                     <Route
                         exact
                         path="/drop" 
-                        key={2}
                         render={() => (
                             <storeContext.Provider key={2} value={dispatch}>
                                 <Drop store={state} />
@@ -102,7 +99,6 @@ const Root:FunctionComponent = () => {
                     <Route
                         exact
                         path="/generate" 
-                        key={3}
                         render={() => (
                             <storeContext.Provider key={3} value={dispatch}>
                                 <Generate store={state} />
@@ -112,7 +108,6 @@ const Root:FunctionComponent = () => {
                     <Route
                         exact
                         path="/history"
-                        key={4}
                         render={() => (
                             <storeContext.Provider key={4} value={dispatch}>
                                 <History store={state} />
@@ -122,7 +117,6 @@ const Root:FunctionComponent = () => {
                     <Route
                         exact
                         path="/settings"
-                        key={5}
                         render={() => (
                             <storeContext.Provider key={5} value={dispatch}>
                                 <Settings store={state} />
@@ -130,10 +124,10 @@ const Root:FunctionComponent = () => {
                         )}
                     />
 
-                    <Route exact key={6} component={Error} />
+                    <Route exact component={Error} />
                 </Switch>
             : 
-            <storeContext.Provider key={6} value={dispatch}>
+            <storeContext.Provider value={dispatch}>
                 <Warning function={() => setWarning(true)} />
             </storeContext.Provider>
             }

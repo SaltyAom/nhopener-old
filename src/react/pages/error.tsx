@@ -2,7 +2,10 @@ import React,{
     FunctionComponent,
     ReactElement
 } from 'react'
-import { Link, ButtonBase } from '../bridge'
+import { 
+    Link, 
+    ButtonBase 
+} from '../bridge'
 
 import '../../assets/css/error.css'
 import '../../assets/css/button.css'

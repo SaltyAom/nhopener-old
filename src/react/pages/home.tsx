@@ -4,6 +4,7 @@ import React, {
     useContext,
     FunctionComponent,
     ReactElement,
+    Fragment
 } from 'react'
 import { 
     storeContext,
@@ -199,7 +200,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             {stories !== [] ?
                                 <>
                                     {stories.map((data:any, index:number) => 
-                                        <>
+                                        <Fragment key={index}>
                                             {index < 2 ?
                                             <>
                                                 <Card
@@ -230,7 +231,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                                 }
                                             </>
                                             : null }
-                                        </>
+                                        </Fragment>
                                     )}
                                 </>
                             : null}
@@ -239,7 +240,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             {stories !== [] ?
                                 <>
                                     {stories.map((data:any, index:number) => 
-                                        <>
+                                        <Fragment key={index}>
                                             {index >= 2 ?
                                                 <>
                                                     <Card
@@ -262,7 +263,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                                     }
                                                 </>
                                             : null }
-                                        </>
+                                        </Fragment>
                                     )}
                                 </>
                             : null}

@@ -64,6 +64,7 @@
 
 .history-popup-menu > div:last-child > ul > li {
     color: var(--text-1);
+    text-transform: uppercase;
 }
 
 #history-manage {
@@ -84,19 +85,24 @@
 #history-manage-cancel, #history-manage-remove {
     flex:1;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     padding:15px;
     font-weight: bold;
+    font-size: 16px;
+    padding-left:5px;
+    padding-right:5px;
 }
 
 #history-manage-cancel {
     color:var(--text-2);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    text-transform: uppercase;
 }
 
 #history-manage-remove {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     color:var(--danger);
+    text-transform: uppercase;
 }

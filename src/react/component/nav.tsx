@@ -4,7 +4,6 @@ import React, {
     ReactElement
 } from 'react'
 import {
-    NavLink,
     Link,
     ButtonBase,
     storeContext
