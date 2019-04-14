@@ -1,9 +1,12 @@
-import { 
-    React, 
-    ButtonBase, 
-    NavLink,
+import React, {
     useState,
-    useEffect
+    useEffect,
+    FunctionComponent,
+    ReactElement
+} from 'react'
+import { 
+    ButtonBase,
+    NavLink,
 } from '../bridge'
 import '../../assets/css/sidebar.css'
 
@@ -12,7 +15,7 @@ interface props {
     to: string
 }
 
-const SidebarIcon = (props: props) => {
+const SidebarIcon:FunctionComponent<props> = (props: props):ReactElement<any> => {
     return(
         <NavLink exact to={`${props.to}`} className="sidebar-nav-link" activeClassName="sidebar-nav-link-active">
             <ButtonBase className="sidebar-nav-wrapper" style={{color: "#ccc"}}>
@@ -22,8 +25,8 @@ const SidebarIcon = (props: props) => {
     )
 }
 
-export default (props: any) => {
-    const [sidebarClass, setSidebarClass] = useState("active");
+const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
+    const [sidebarClass, setSidebarClass] = useState<string | any>("active");
 
     useEffect(() => {
         if(props.store.toggleMenu === true){
@@ -47,3 +50,5 @@ export default (props: any) => {
         </aside>
     )
 }
+
+export default Sidebar;

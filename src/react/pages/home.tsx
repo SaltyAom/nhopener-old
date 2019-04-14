@@ -1,8 +1,11 @@
-import { 
-    React,
+import React, {
     useState,
     useEffect,
     useContext,
+    FunctionComponent,
+    ReactElement,
+} from 'react'
+import { 
     storeContext,
     Link,
     Axios,
@@ -22,8 +25,8 @@ interface cardProps {
     blur?: boolean
 }
 
-const Card = (props: cardProps) => {
-    let imageType;
+const Card:FunctionComponent<any> = (props: cardProps):ReactElement<any> => {
+    let imageType:string;
 
     switch(props.imageType){
         case "p":
@@ -68,9 +71,9 @@ const Card = (props: cardProps) => {
     )
 }
 
-export default (props: any) => {
-    const [blurDashboard, setBlurDashboard]:any = useState(true),
-        [stories, setStories]:any = useState([]),
+const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
+    const [blurDashboard, setBlurDashboard]:any = useState<Boolean | any>(true),
+        [stories, setStories]:any = useState<any>([]),
         dispatch:any = useContext(storeContext);
 
     useEffect(() => {
@@ -273,3 +276,5 @@ export default (props: any) => {
         </div>
     )
 }
+
+export default Home;

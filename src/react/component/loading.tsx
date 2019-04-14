@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {
+    FunctionComponent,
+    ReactElement
+} from 'react'
 import '../../assets/css/loading.css'
 
-export default (props: any) => {
+const Loading:FunctionComponent<any> = (props: any):ReactElement<any> => {
     if(props.type === "transparent") return (
         <div id="loadscreen" style={{backgroundColor: "transparent"}}>
             <div className="loader">
@@ -39,3 +42,5 @@ export default (props: any) => {
         </div>
     )
 }
+
+export default Loading;

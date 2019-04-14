@@ -1,16 +1,19 @@
-import {
-    React,
+import React, {
     useState,
     useEffect,
+    FunctionComponent,
+    ReactElement
+} from 'react'
+import {
     openerIDB
 } from '../bridge'
 import { Checkbox } from '@material-ui/core'
 
 import '../../assets/css/settings.css'
 
-export default () => {
-    const [blurDashboard, setBlurDashboard] = useState(false),
-        [dontSaveHistory, setdontSaveHistory] = useState(false);
+const Settings:FunctionComponent<any> = ():ReactElement<null> => {
+    const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
+        [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false);
 
     useEffect(() => {
         openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
@@ -91,3 +94,5 @@ export default () => {
         </div>
     )
 }
+
+export default Settings

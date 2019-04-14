@@ -1,8 +1,11 @@
-import {
-    React,
+import React, {
     useState,
     useEffect,
     useContext,
+    ReactElement,
+    FunctionComponent
+} from 'react'
+import {
     storeContext,
     ButtonBase,
     Redirect
@@ -11,11 +14,11 @@ import {
 import '../../assets/css/generate.css'
 import '../../assets/css/button.css'
 
-export default (props:any) => {
+const Generate:FunctionComponent<any> = (props:any):ReactElement => {
     const dispatch:any = useContext(storeContext);
 
-    const [uri, setUri] = useState("data:image/png;base64,a"),
-        [redirectState, setRedirectState]:any = useState(false);    
+    const [uri, setUri] = useState<string | any>("data:image/png;base64,a"),
+        [redirectState, setRedirectState]:any = useState<boolean | any>(false);
 
     const generate = () => {
         let canvas:any = document.getElementById("generate-canvas"),
@@ -42,7 +45,7 @@ export default (props:any) => {
         generate();
     });
 
-    const handleKey = (evt:any) => {
+    const handleKey = (evt:any):void => {
         if(evt.target.value.length >= 6 && (evt.keyCode !== 8 && evt.keyCode !== 9) && evt.keyCode !== 17 && evt.keyCode !== 65
             && evt.keyCode !== 36 && evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39) evt.target.blur();
     }
@@ -97,3 +100,5 @@ export default (props:any) => {
         </div>
     )
 }
+
+export default Generate;

@@ -1,18 +1,20 @@
-import { 
-    React, 
-    Loadable, 
-    Loading, 
+import React, {
+    useState,
     useReducer,
-    storeContext,
-    useState
-} from './react/bridge'
+    FunctionComponent
+} from 'react'
 import ReactDOM from 'react-dom'
-
 import { 
     BrowserRouter as Router,
     Route,
     Switch
 } from 'react-router-dom'
+
+import { 
+    Loadable, 
+    Loading, 
+    storeContext,
+} from './react/bridge'
 
 import { reducers, initState } from "./react/store/hooks-reducers"
 import Nav from './react/component/nav'
@@ -55,7 +57,7 @@ import './assets/css/init.css'
 import './assets/css/responsive.css'
 import './assets/material-icon/material-icons.css'
 
-const Root = () => {
+const Root:FunctionComponent = () => {
     const [state, dispatch]:any = useReducer(reducers, initState),
         [warning, setWarning]:any = useState(false);
 

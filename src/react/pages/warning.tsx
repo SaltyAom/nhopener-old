@@ -1,15 +1,18 @@
-import {
-    React,
+import React, {
     useContext,
+    FunctionComponent,
+    ReactElement
+} from 'react'
+import {
     storeContext,
     ButtonBase,
-    Link
+    Link,
 } from '../bridge'
 
 import '../../assets/css/button.css'
 import '../../assets/css/error.css'
 
-export default (props: any) => {
+const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
     const dispatch:any = useContext(storeContext);
 
     const allow = (e:any) => {
@@ -32,3 +35,5 @@ export default (props: any) => {
         </div>
     )
 }
+
+export default Warning;

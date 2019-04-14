@@ -1,4 +1,4 @@
-import React, { Component, useState, useReducer, useContext, useEffect } from 'react'
+import React from 'react'
 import { NavLink, Link, Redirect } from 'react-router-dom'
 import Loadable from 'react-loadable'
 import Loading from './component/loading'
@@ -9,12 +9,6 @@ import openerIDB from './store/dexie-indexeddb'
 const storeContext:any = React.createContext<null>(null)
 
 export { 
-    React, 
-    Component, 
-    useState,
-    useEffect,
-    useReducer,
-    useContext,
     storeContext,
     NavLink, 
     Link, 
@@ -23,5 +17,5 @@ export {
     Loading, 
     ButtonBase,
     Axios,
-    openerIDB
+    openerIDB,
 }

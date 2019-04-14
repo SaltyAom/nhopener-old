@@ -1,9 +1,13 @@
-import { React, Link, ButtonBase } from '../bridge'
+import React,{
+    FunctionComponent,
+    ReactElement
+} from 'react'
+import { Link, ButtonBase } from '../bridge'
 
 import '../../assets/css/error.css'
 import '../../assets/css/button.css'
 
-export default () => {
+const Error:FunctionComponent<null> = ():ReactElement<null> => {
     return(
         <div id="error">
             <h1>404</h1>
@@ -16,3 +20,5 @@ export default () => {
         </div>
     )
 }
+
+export default Error;

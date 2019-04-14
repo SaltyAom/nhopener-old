@@ -1,9 +1,12 @@
+import React, {
+    useContext,
+    FunctionComponent,
+    ReactElement
+} from 'react'
 import {
-    React,
     NavLink,
     Link,
     ButtonBase,
-    useContext,
     storeContext
 } from '../bridge'
 import '../../assets/css/nav.css'
@@ -13,7 +16,8 @@ interface props {
     icon: String
 }
 
-const NavProps = (props:props) => {
+/*
+const NavProps:FunctionComponent<props> = (props:props):ReactElement => {
     return(
         <NavLink to={`${props.to}`} className="nav-selector-link" activeClassName="nav-selector-active">
             <div className="nav-selector">
@@ -22,11 +26,12 @@ const NavProps = (props:props) => {
         </NavLink>
     )
 }
+*/
 
-export default (props: any) => {
+const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
     const dispatch:any = useContext(storeContext);
 
-    const toggleMenu = ():void => {
+    const toggleMenu:any = ():any => {
         dispatch({
             type: "toggleMenu",
             toggleMenu: !props.store.toggleMenu
@@ -57,3 +62,5 @@ export default (props: any) => {
         </nav>
     )
 }
+
+export default Nav;

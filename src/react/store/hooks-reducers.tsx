@@ -1,4 +1,4 @@
-interface initState {
+export interface initStoreType {
     redirectURL: string|undefined,
     code: string,
     toggleMenu: boolean,
@@ -6,7 +6,7 @@ interface initState {
     suggestStories: any
 }
 
-export const initState:initState = {
+export const initState:initStoreType = {
     redirectURL: undefined,
     code: "007aff",
     toggleMenu: false,
@@ -23,7 +23,7 @@ type Action = {
     suggestStories: any
 }
 
-export const reducers = (state: initState, action: Action) => {
+export const reducers = (state: initStoreType, action: Action) => {
     switch(action.type){
         case "updateURL":
             return { ...state, redirectURL: action.newURL }

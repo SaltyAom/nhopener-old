@@ -1,7 +1,10 @@
-import { 
-    React,
-    useContext,
+import React, {
     useState,
+    useContext,
+    FunctionComponent,
+    ReactElement
+} from 'react'
+import { 
     storeContext,
     Redirect
 } from "../bridge"
@@ -9,14 +12,14 @@ const FastAverageColor = require('fast-average-color/dist/index');
 
 import '../../assets/css/drop.css'
 
-export default () => {
-    const [redirectState, setRedirectState]:any = useState(false),
-        [redirectID, setRedirectID]:any = useState(0),
+const Drop:FunctionComponent<null> = ():ReactElement<null> => {
+    const [redirectState, setRedirectState] = useState<boolean | any>(false),
+        [redirectID, setRedirectID] = useState<number | any>(0),
         dispatch:any = useContext(storeContext);
 
-    const redirect = (evt:any) => {
-        let tgt = evt.target, files = tgt.files,
-            opener = (document.getElementById("opener-image") as HTMLImageElement);
+    const redirect:Function = (evt:any):void => {
+        let tgt:HTMLInputElement = evt.target, files = tgt.files,
+            opener:HTMLImageElement = (document.getElementById("opener-image") as HTMLImageElement);
         if (FileReader && files && files.length) {
             let fr:any = new FileReader();
             fr.onload = ():any => {
@@ -24,7 +27,6 @@ export default () => {
             }
             fr.readAsDataURL(files[0]);
         } else {
-            console.error(`error`);
         }
 
         const fac:any = new FastAverageColor();
@@ -59,3 +61,5 @@ export default () => {
         </div>
     )
 }
+
+export default Drop

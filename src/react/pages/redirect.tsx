@@ -1,10 +1,13 @@
+import React, {
+    useState,
+    useEffect,
+    ReactElement,
+    FunctionComponent
+} from 'react'
 import {
-    React,
     Loadable,
     Loading,
     ButtonBase,
-    useState,
-    useEffect,
     Axios,
     Link,
     openerIDB
@@ -24,8 +27,8 @@ type props = RouteComponentProps<PathParamsType> & {
     store: any
 }
 
-export default withRouter((props: props) => {
-    const [og, setOg]:any = useState("Fetching...");
+const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
+    const [og, setOg] = useState<string | boolean | any>("Fetching...");
 
     useEffect(() => {
         let requestUrl:string = `https://opener.now.sh/api/g/${props.match.params.id}`;
@@ -109,4 +112,6 @@ export default withRouter((props: props) => {
             </div>
         )
     }
-});
+}
+
+export default withRouter(Redirect);

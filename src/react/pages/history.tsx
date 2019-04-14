@@ -1,8 +1,11 @@
-import {
-    React,
+import React, {
     useState,
     useEffect,
     useContext,
+    FunctionComponent,
+    ReactElement,
+} from 'react'
+import {
     Link,
     openerIDB,
     ButtonBase
@@ -26,10 +29,9 @@ interface historyProps {
     value: boolean
 }
 
-const HistoryList = (props:historyProps) => {
-    const [popup, setPopup] = useState(false),
-        [attachmentElement, setAttachmentElement] = useState(null),
-        [checkValue, setCheckValue] = useState(false);
+const HistoryList:FunctionComponent<any> = (props:historyProps):ReactElement => {
+    const [popup, setPopup] = useState<boolean | any>(false),
+        [attachmentElement, setAttachmentElement] = useState<HTMLElement | any>(null);
 
     const showPopup = (evt:any):void => {
         setAttachmentElement(evt.currentTarget);
@@ -81,7 +83,12 @@ interface historyType {
     timestamp:any
 }
 
-export default () => {
+interface tempHistory {
+    id: number,
+    value: boolean
+}
+
+const History:FunctionComponent<null> = ():ReactElement<any> => {
     const [history, setHistory]:any = useState(""),
         [selectedHistory, setSelectedHistory]:any = useState([]),
         [selected, setSelected]:any = useState(false),
@@ -126,16 +133,16 @@ export default () => {
     }
 
     const handleselectedHistory = (arrIndex:number, id:number) => {
-        let tempHistory = selectedHistory;
+        let tempHistory:Array<tempHistory> = selectedHistory;
 
         tempHistory[id] = { id: arrIndex, value: !tempHistory[id].value };
 
-        let filterHistory:any = tempHistory.filter((data:any) => {
+        let filterHistory:Array<tempHistory> = tempHistory.filter((data:any) => {
             return data !== null;
         })
         setSelectedHistory(filterHistory);
 
-        let filterHistoryLength = filterHistory.length - 1;
+        let filterHistoryLength:number = filterHistory.length - 1;
 
         filterHistory.every((data:any, index:number) => {
             if(data.value === true){
@@ -205,3 +212,5 @@ export default () => {
         )
     }
 }
+
+export default History;
