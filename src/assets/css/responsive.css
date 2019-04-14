@@ -15,7 +15,7 @@
     #notify-container {
         display:none;
     }
-    #settings, #history-container {
+    #settings, #history-container, #history-container-blank {
         width: 90% !important;
     }
 }

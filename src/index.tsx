@@ -57,7 +57,7 @@ import './assets/material-icon/material-icons.css'
 
 const Root = () => {
     const [state, dispatch]:any = useReducer(reducers, initState),
-        [warning, setWarning] = useState(false);
+        [warning, setWarning]:any = useState(false);
 
     return (
         <Router>

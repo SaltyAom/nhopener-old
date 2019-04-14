@@ -77,6 +77,20 @@ export default withRouter((props: props) => {
         return (
             <Loading />
         )
+    } else if(navigator.onLine === false) {
+        console.log("test");
+        return (
+            <div id="error">
+                <h6 id="redirect-code">{props.store.redirectURL}</h6> 
+                <h1>Offline</h1>
+                <p>Request couldn't been made</p>
+                <ButtonBase className="button-wrapper">
+                    <Link className="button" to="/generate">
+                        Return <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
+                    </Link>
+                </ButtonBase>
+            </div>
+        )
     } else {
         return (
             <div id="error">
