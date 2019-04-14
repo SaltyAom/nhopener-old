@@ -32,11 +32,15 @@ export default withRouter((props: props) => {
 
         Axios(requestUrl).then((ogData:any) => {
             setOg(ogData.data.data);
-            openerIDB.table("history").add({
-                title: ogData.data.data.ogTitle,
-                link: props.match.params.id,
-                timestamp: Date.now()
-            })
+            openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
+                if(data[0].value !== true){
+                    openerIDB.table("history").add({
+                        title: ogData.data.data.ogTitle,
+                        link: props.match.params.id,
+                        timestamp: Date.now()
+                    });
+                }
+            });
         }).catch(() => {
             setOg(undefined);
         })

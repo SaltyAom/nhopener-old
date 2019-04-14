@@ -196,45 +196,8 @@ export default (props: any) => {
                             {stories !== [] ?
                                 <>
                                     {stories.map((data:any, index:number) => 
-                                        {index < 2 ?
                                         <>
-                                            <Card
-                                                key={index}
-                                                detail={data.title.english}
-                                                footer={`ID: ${data.id} - ${data.num_pages} pages`}
-                                                image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
-                                                imageType={data.images.cover.t}
-                                                to={`/redirect/${data.id}`}
-                                                blur={blurDashboard}
-                                            />
-                                            {index === 1 ?
-                                                <>
-                                                    <Card
-                                                        key={6}
-                                                        title="Encrypt hexcode to image"
-                                                        detail="Secure your favourite stories' id with image and share with your friend"
-                                                        to="/generate"
-                                                    />
-                                                    <Card
-                                                        key={7}
-                                                        title="Decrypt secret code"
-                                                        detail="Decrypt secure codes' image to link and read stories"
-                                                        to="/drop"
-                                                    />
-                                                </>
-                                                : null
-                                            }
-                                        </>
-                                        : null }
-                                    )}
-                                </>
-                            : null}
-                        </div>
-                        <div className="main-card-wrapper">
-                            {stories !== [] ?
-                                <>
-                                    {stories.map((data:any, index:number) => 
-                                        {index >= 2 ?
+                                            {index < 2 ?
                                             <>
                                                 <Card
                                                     key={index}
@@ -245,17 +208,58 @@ export default (props: any) => {
                                                     to={`/redirect/${data.id}`}
                                                     blur={blurDashboard}
                                                 />
-                                                {index === 3 ?
-                                                    <Card
-                                                        key={8}
-                                                        title="Manage what you read"
-                                                        detail="Easily view/manage read story's history"
-                                                        to="/generate"
-                                                    />
+                                                {index === 1 ?
+                                                    <>
+                                                        <Card
+                                                            key={6}
+                                                            title="Encrypt hexcode to image"
+                                                            detail="Secure your favourite stories' id with image and share with your friend"
+                                                            to="/generate"
+                                                        />
+                                                        <Card
+                                                            key={7}
+                                                            title="Decrypt secret code"
+                                                            detail="Decrypt secure codes' image to link and read stories"
+                                                            to="/drop"
+                                                        />
+                                                    </>
                                                     : null
                                                 }
                                             </>
-                                        : null }
+                                            : null }
+                                        </>
+                                    )}
+                                </>
+                            : null}
+                        </div>
+                        <div className="main-card-wrapper">
+                            {stories !== [] ?
+                                <>
+                                    {stories.map((data:any, index:number) => 
+                                        <>
+                                            {index >= 2 ?
+                                                <>
+                                                    <Card
+                                                        key={index}
+                                                        detail={data.title.english}
+                                                        footer={`ID: ${data.id} - ${data.num_pages} pages`}
+                                                        image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
+                                                        imageType={data.images.cover.t}
+                                                        to={`/redirect/${data.id}`}
+                                                        blur={blurDashboard}
+                                                    />
+                                                    {index === 3 ?
+                                                        <Card
+                                                            key={8}
+                                                            title="Manage what you read"
+                                                            detail="Easily view/manage read story's history"
+                                                            to="/generate"
+                                                        />
+                                                        : null
+                                                    }
+                                                </>
+                                            : null }
+                                        </>
                                     )}
                                 </>
                             : null}

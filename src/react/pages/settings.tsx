@@ -9,7 +9,8 @@ import { Checkbox } from '@material-ui/core'
 import '../../assets/css/settings.css'
 
 export default () => {
-    const [blurDashboard, setBlurDashboard] = useState(false);
+    const [blurDashboard, setBlurDashboard] = useState(false),
+        [dontSaveHistory, setdontSaveHistory] = useState(false);
 
     useEffect(() => {
         openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
@@ -18,7 +19,16 @@ export default () => {
             openerIDB.table("settings").put({
                 title: "blurDashboard",
                 value: false
-            });    
+            });
+        });
+
+        openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
+            setdontSaveHistory(data[0].value);
+        }).catch((err:any) => {
+            openerIDB.table("settings").put({
+                title: "dontSaveHistory",
+                value: false
+            });
         });
     }, []);
 
@@ -29,8 +39,29 @@ export default () => {
                 value:!data[0].value
             });
             setBlurDashboard(!data[0].value);
+        }).catch((err:any) => {
+            openerIDB.table("settings").put({
+                title: "blurDashboard",
+                value: false
+            });
         });
     }
+
+    const savedontSaveHistory = () => {
+        openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
+            openerIDB.table("settings").put({
+                title: "dontSaveHistory",
+                value: !data[0].value
+            });
+            setdontSaveHistory(!data[0].value);
+        }).catch((err:any) => {
+            openerIDB.table("settings").put({
+                title: "dontSaveHistory",
+                value: false
+            });
+        });
+    }
+
 
     return(
         <div id="pages">
@@ -43,9 +74,18 @@ export default () => {
                             className="check"
                             checked={blurDashboard}
                             onChange={() => saveBlurDashboard()}
-                            value="checkedA"    
+                            value="Set blur dashboard"
                         />
                     </div>
+                    <div>
+                        <p>Don't save read history</p>
+                        <Checkbox
+                            className="check"
+                            checked={dontSaveHistory}
+                            onChange={() => savedontSaveHistory()}
+                            value="Set save history"
+                        />
+                        </div>
                 </div>
             </div>
         </div>

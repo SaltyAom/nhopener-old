@@ -23,7 +23,11 @@ Dexie.exists("opener").then(async (exists:boolean) => {
         openerIDB.table("settings").put({
             title: "suggestedStories",
             value: []
-        })
+        });
+        openerIDB.table("settings").put({
+            title: "dontSaveHistory",
+            value: false
+        });
     }
 });
 
