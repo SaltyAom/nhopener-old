@@ -253,7 +253,7 @@ export default (props: any) => {
                                                             key={8}
                                                             title="Manage what you read"
                                                             detail="Easily view/manage read story's history"
-                                                            to="/generate"
+                                                            to="/history"
                                                         />
                                                         : null
                                                     }

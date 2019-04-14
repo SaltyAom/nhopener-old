@@ -82,7 +82,7 @@ export default (props:any) => {
                     />
                 </div>
                 <div id="generate-detail">
-                    <ButtonBase className="button-wrapper">
+                    <ButtonBase id="generate-download" className="button-wrapper">
                         <a className="button secondary" href={uri} download>
                             Download <i className="material-icons" style={{cursor:"pointer"}}>vertical_align_bottom</i>
                         </a>
