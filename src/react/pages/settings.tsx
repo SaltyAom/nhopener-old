@@ -103,6 +103,7 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     }
 
     const forceUpdate = () => {
+        if(navigator.onLine === false) return;
         setShowLoading(true);
         navigator.serviceWorker.getRegistrations().then(registrations => {
             caches.keys().then(names => {

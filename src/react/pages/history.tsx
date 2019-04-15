@@ -130,6 +130,7 @@ const History:FunctionComponent<null> = ():ReactElement<any> => {
         openerIDB.table("history").orderBy("id").reverse().toArray((historyData:Array<historyType>) => {
             setHistory(historyData);
         });
+        reloadHistory();
     }
 
     const handleselectedHistory = (arrIndex:number, id:number) => {
@@ -200,6 +201,14 @@ const History:FunctionComponent<null> = ():ReactElement<any> => {
                     </div>
                     : null}
                 </div>
+            </div>
+        )
+    } else if(history === "") {
+        return(
+            <div id="pages">
+                <section id="history-container-blank">
+                    <p className="history-name">Fetching history...</p>
+                </section>
             </div>
         )
     } else {
