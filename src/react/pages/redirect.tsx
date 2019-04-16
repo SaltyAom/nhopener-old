@@ -84,7 +84,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                         </div>
                     </div>
                     <div id="redirect-detail">
-                        <h6 id="redirect-code">{props.store.redirectURL}</h6> 
+                        <h6 id="redirect-code">{props.match.params.id}</h6> 
                         <h2>{og.ogTitle}</h2>
                         <h3 id="redirect-description">{og.ogDescription}</h3>
                         <div id="redirect-tag">
@@ -111,10 +111,9 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
             <Loading />
         )
     } else if(navigator.onLine === false) {
-        console.log("test");
         return (
             <div id="error">
-                <h6 id="redirect-code">{props.store.redirectURL}</h6> 
+                <h6 id="redirect-code">{props.match.params.id}</h6> 
                 <h1>Offline</h1>
                 <p>Request couldn't been made</p>
                 <ButtonBase className="button-wrapper">
@@ -127,7 +126,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
     } else {
         return (
             <div id="error">
-                <h6 id="redirect-code">{props.store.redirectURL}</h6> 
+                <h6 id="redirect-code">{props.match.params.id}</h6> 
                 <h1>404</h1>
                 <p>Stories not found...</p>
                 <ButtonBase className="button-wrapper">
