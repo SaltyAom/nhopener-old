@@ -34,3 +34,28 @@
 #warning > button.button-wrapper {
     margin-top: 30px;
 }
+
+#warning-checkbox {
+    margin-right: 10px;
+}
+
+.check > span,
+.check > span > svg {
+    color:#f50057;
+}
+
+#warning-label {
+    color:var(--text-2);
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#warning-setting {
+    transform: scale(.925);
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 27.5%;
+    margin-top:15px;
+}

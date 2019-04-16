@@ -80,6 +80,7 @@
     #warning > p {
         padding: 0 6.25% !important;
     }
+    #warning-setting {padding: 0 6.25% !important;}
     #settings > div {
         padding:20px 15px;
     }

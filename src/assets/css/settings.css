@@ -39,6 +39,7 @@
     flex:1;
 }
 
+.check { margin-right: 5px;}
 .check > span,
 .check > span > svg {
     color:#f50057;
