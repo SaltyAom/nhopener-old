@@ -13,8 +13,43 @@ import { Checkbox } from '@material-ui/core'
 
 import '../../assets/css/settings.css'
 
+interface ButtonPanelInterface {
+    title: string,
+    buttonTitle: string,
+    function: any
+}
+
+const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactElement<any> => (
+    <div>
+        <p>{props.title}</p>
+        <ButtonBase className="setting-button" onClick={() => props.function()}>
+            {props.buttonTitle}
+        </ButtonBase>
+    </div>
+);
+
+interface CheckPanelInterface {
+    title: string,
+    aria: string,
+    checkValue: boolean,
+    function: any,
+}
+
+const CheckPanel:FunctionComponent<any> = (props:CheckPanelInterface):ReactElement<any> => (
+    <div>
+        <p>{props.title}</p>
+        <Checkbox
+            className="check"
+            checked={props.checkValue}
+            onChange={() => props.function()}
+            value={props.aria}
+        />
+    </div>
+)
+
 const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
+        [blurPreview, setBlurPreview] = useState<boolean | any>(false),
         [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false),
         [showLoading, setShowLoading] = useState<boolean | any>(false);
 
@@ -26,6 +61,15 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         }).catch((err:any) => {
             openerIDB.table("settings").put({
                 title: "blurDashboard",
+                value: false
+            });
+        });
+
+        openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
+            setBlurPreview(data[0].value);
+        }).catch((err:any) => {
+            openerIDB.table("settings").put({
+                title: "blurPreview",
                 value: false
             });
         });
@@ -55,7 +99,22 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         });
     }
 
-    const savedontSaveHistory = () => {
+    const saveBlurPreview = () => {
+        openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
+            openerIDB.table("settings").put({
+                title: "blurPreview",
+                value: !data[0].value
+            });
+            setBlurPreview(!data[0].value);
+        }).catch((err:any) => {
+            openerIDB.table("settings").put({
+                title: "blurPreview",
+                value: false
+            });
+        });
+    }
+
+    const saveDontSaveHistory = () => {
         openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
             openerIDB.table("settings").put({
                 title: "dontSaveHistory",
@@ -137,55 +196,53 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                 <div className="setting-card">
                     <h1>Privacy</h1>
 
-                    <div>
-                        <p>Blur an preview image on dashboard</p>
-                        <Checkbox
-                            className="check"
-                            checked={blurDashboard}
-                            onChange={() => saveBlurDashboard()}
-                            value="Set blur dashboard"
-                        />
-                    </div>
-                    <div>
-                        <p>Don't save read history</p>
-                        <Checkbox
-                            className="check"
-                            checked={dontSaveHistory}
-                            onChange={() => savedontSaveHistory()}
-                            value="Set save history"
-                        />
-                    </div>
+                    <CheckPanel
+                        title="Blur an preview image on dashboard"
+                        checkValue={blurDashboard}
+                        function={() => saveBlurDashboard()}
+                        aria="Set blur dashboard"
+                    />
+                    <CheckPanel
+                        title="Blur an preview image on redirect's image preview"
+                        checkValue={blurPreview}
+                        function={() => saveBlurPreview()}
+                        aria="Set save history"
+                    />
+                    <CheckPanel
+                        title="Don't save read history"
+                        checkValue={dontSaveHistory}
+                        function={() => saveDontSaveHistory()}
+                        aria="Set save history"
+                    />
 
                 </div>
                 <div className="setting-card">
-                    <h1>Progressive</h1>
 
+                    <h1>Progressive</h1>
                     {isAndroid && !window.matchMedia('(display-mode: standalone)').matches ?
-                    <div>
-                        <p>Add to homescreen</p>
-                        <ButtonBase className="setting-button" onClick={() => addToHomescreen()}>
-                            Add
-                        </ButtonBase>
-                    </div> : null
+                        <ButtonPanel 
+                            title="Add to homescreen"
+                            buttonTitle="Add"
+                            function={() => addToHomescreen()} 
+                        />
+                        : null
                     }
-                    <div>
-                        <p>Reload data</p>
-                        <ButtonBase className="setting-button" onClick={() => window.location.reload()}>
-                            Reload
-                        </ButtonBase>
-                    </div>
-                    <div>
-                        <p>Clear all caches (Reload)</p>
-                        <ButtonBase className="setting-button" onClick={() => clearCache()}>
-                            Clear
-                        </ButtonBase>
-                    </div>
-                    <div>
-                        <p>Recache every files</p>
-                        <ButtonBase className="setting-button" onClick={() => forceUpdate()}>
-                            Force update
-                        </ButtonBase>
-                    </div>
+                    <ButtonPanel
+                        title="Reload data"
+                        buttonTitle="Reload"
+                        function={() => window.location.reload()} 
+                    />
+                    <ButtonPanel
+                        title="Clear all caches (Reload)"
+                        buttonTitle="Clear"
+                        function={() => clearCache()}
+                    />
+                    <ButtonPanel
+                        title="Recache every files"
+                        buttonTitle="Force update"
+                        function={() => forceUpdate()}
+                    />
+
                 </div>
             </div>
         </div>

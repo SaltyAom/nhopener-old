@@ -45,7 +45,7 @@
     margin: 15px 0;
     animation: card-in .375s ease-out 0s 1;
     cursor:pointer;
-    overflow-y:auto;
+    overflow:hidden;
 }
 
 .main-card::after {

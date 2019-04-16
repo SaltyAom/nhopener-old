@@ -13,6 +13,14 @@ Dexie.exists("opener").then(async (exists:boolean) => {
             value: false
         });
         openerIDB.table("settings").put({
+            title: "blurPreview",
+            value: false
+        });
+        openerIDB.table("settings").put({
+            title: "dontSaveHistory",
+            value: false
+        });
+        openerIDB.table("settings").put({
             title: "visitState",
             value: Date.now()
         });
@@ -23,10 +31,6 @@ Dexie.exists("opener").then(async (exists:boolean) => {
         openerIDB.table("settings").put({
             title: "suggestedStories",
             value: []
-        });
-        openerIDB.table("settings").put({
-            title: "dontSaveHistory",
-            value: false
         });
     }
 });

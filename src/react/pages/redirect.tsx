@@ -28,42 +28,68 @@ type props = RouteComponentProps<PathParamsType> & {
 }
 
 const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
-    const [og, setOg] = useState<string | boolean | any>("Fetching...");
+    const [og, setOg] = useState<string | boolean | any>("Fetching..."),
+        [blurPreview, setBlurPreview] = useState<boolean | any>(true);
 
     useEffect(() => {
         let requestUrl:string = `https://opener.now.sh/api/g/${props.match.params.id}`;
+
+        openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
+            setBlurPreview(data[0].value);
+        });
 
         Axios(requestUrl).then((ogData:any) => {
             setOg(ogData.data.data);
             openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
                 if(data[0].value !== true){
-                    openerIDB.table("history").add({
-                        title: ogData.data.data.ogTitle,
-                        link: props.match.params.id,
-                        timestamp: Date.now()
-                    });
+                    openerIDB.table("history").toArray().then((data:Array<any>) => {
+                        if(data[data.length - 1].link !== props.match.params.id){
+                            openerIDB.table("history").add({
+                                title: ogData.data.data.ogTitle,
+                                link: props.match.params.id,
+                                timestamp: Date.now()
+                            });
+                        }
+                    }).catch(():void => {
+                        openerIDB.table("history").add({
+                            title: ogData.data.data.ogTitle,
+                            link: props.match.params.id,
+                            timestamp: Date.now()
+                        });
+                    })
                 }
             });
-        }).catch(() => {
+        }).catch(():void => {
             setOg(undefined);
         })
     },[]);
     
     if(og !== undefined && og !== "Fetching..."){
+        let tags = (og.twitterDescription).split(",");
         return (
             <div id="pages">
                 <link rel="prefetch" href={`https://nhentai.net/g/${props.match.params.id}`} />
                 <link rel="dns-prefetch" href={`https://nhentai.net/g/${props.match.params.id}`} />
                 <div id="redirect-page">
-                    <div id="redirect-image-wrapper">
-                        { og.ogImage !== undefined ? 
-                            <img id="redirect-preview-image" src={og.ogImage.url} />
-                        : null }
+                    <div id="redirect-image-container">
+                        <div id="redirect-image-wrapper">
+                            { og.ogImage !== undefined ?
+                                <>
+                                    { blurPreview ?
+                                        <img id="redirect-preview-image" className="blur" src={og.ogImage.url} /> :
+                                        <img id="redirect-preview-image" src={og.ogImage.url} />
+                                    }
+                                </>
+                            : null }
+                        </div>
                     </div>
                     <div id="redirect-detail">
                         <h6 id="redirect-code">{props.store.redirectURL}</h6> 
                         <h2>{og.ogTitle}</h2>
-                        <h3>{og.ogDescription}</h3>
+                        <h3 id="redirect-description">{og.ogDescription}</h3>
+                        <div id="redirect-tag">
+                            {tags.map((tag:string,index:number) => <div key={index}>{tag}</div>)}
+                        </div>
                         <ButtonBase id="redirect-button">
                             <a className="button secondary" href={`https://nhentai.net/g/${props.match.params.id}`} rel="noreferrer external nofollow">
                                 Read <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
