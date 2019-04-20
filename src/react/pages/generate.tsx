@@ -89,7 +89,7 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
                 </div>
                 <div id="generate-detail">
                     <ButtonBase id="generate-download" className="button-wrapper">
-                        <a className="button secondary" href={uri} download>
+                        <a className="button secondary" href={uri} download={`${props.store.code}.png`}>
                             Download <i className="material-icons" style={{cursor:"pointer"}}>vertical_align_bottom</i>
                         </a>
                     </ButtonBase>
