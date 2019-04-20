@@ -8,7 +8,8 @@ import React, {
 import {
     storeContext,
     ButtonBase,
-    Redirect
+    Redirect,
+    Helmet
 } from '../bridge'
 
 import '../../assets/css/generate.css'
@@ -73,34 +74,61 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
     }
     
     return(
-        <div id="pages">
-            { redirectState ? <Redirect to={`/redirect/${props.store.code}`} push /> : null }
-            <div id="generate-page">
-                <canvas id="generate-canvas" style={{display:"none"}}></canvas>
-                <img id="generate-preview" src={uri} />
-                <div id="generate-input-wrapper">
-                    <label id="generate-label">#</label>
-                    <input 
-                        id="generate-input"
-                        type="tel"
-                        placeholder="000000"
-                        onBlur={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
-                    />
-                </div>
-                <div id="generate-detail">
-                    <ButtonBase id="generate-download" className="button-wrapper">
-                        <a className="button secondary" href={uri} download={`${props.store.code}.png`}>
-                            Download <i className="material-icons" style={{cursor:"pointer"}}>vertical_align_bottom</i>
-                        </a>
-                    </ButtonBase>
-                    <ButtonBase className="button-wrapper" onClick={() => redirect()}>
-                        <a className="button">
-                            Redirect <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
-                        </a>
-                    </ButtonBase>
+        <>
+            <Helmet
+                title={"Decrypt"}
+                meta={[
+                    {
+                        name: 'title',
+                        content: 'Decrypt hentai code'
+                    },
+                    {
+                        name: 'description',
+                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
+                    },
+                    {
+                        name: 'og:title',
+                        content: 'Decrypt hentai code'
+                    },
+                    {
+                        name: 'og:description',
+                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
+                    },
+                    {
+                        name: 'twitter:description',
+                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
+                    }
+                ]}
+            />
+            <div id="pages">
+                { redirectState ? <Redirect to={`/redirect/${props.store.code}`} push /> : null }
+                <div id="generate-page">
+                    <canvas id="generate-canvas" style={{display:"none"}}></canvas>
+                    <img id="generate-preview" src={uri} />
+                    <div id="generate-input-wrapper">
+                        <label id="generate-label">#</label>
+                        <input 
+                            id="generate-input"
+                            type="tel"
+                            placeholder="000000"
+                            onBlur={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
+                        />
+                    </div>
+                    <div id="generate-detail">
+                        <ButtonBase id="generate-download" className="button-wrapper">
+                            <a className="button secondary" href={uri} download={`${props.store.code}.png`}>
+                                Download <i className="material-icons" style={{cursor:"pointer"}}>vertical_align_bottom</i>
+                            </a>
+                        </ButtonBase>
+                        <ButtonBase className="button-wrapper" onClick={() => redirect()}>
+                            <a className="button">
+                                Redirect <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
+                            </a>
+                        </ButtonBase>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

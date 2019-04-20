@@ -6,7 +6,8 @@ import React, {
 } from 'react'
 import { 
     storeContext,
-    Redirect
+    Redirect,
+    Helmet
 } from "../bridge"
 const FastAverageColor = require('fast-average-color/dist/index');
 
@@ -44,21 +45,48 @@ const Drop:FunctionComponent<null> = ():ReactElement<null> => {
     }
 
     return(
-        <div id="pages">
-            <img id="opener-image" style={{display:"none"}} />
-            <input
-                id="drop-input" 
-                type="file" 
-                accept="image/png, image/jpeg"
-                onChange={(e:any) => redirect(e)}
+        <>
+            <Helmet
+                title={"Encrypt"}
+                meta={[
+                    {
+                        name: 'title',
+                        content: 'Secure your hentai sharing'
+                    },
+                    {
+                        name: 'description',
+                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
+                    },
+                    {
+                        name: 'og:title',
+                        content: 'Secure your hentai sharing'
+                    },
+                    {
+                        name: 'og:description',
+                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
+                    },
+                    {
+                        name: 'twitter:description',
+                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
+                    }
+                ]}
             />
-            <div id="drop-placeholder">
-                <i className="material-icons" id="drop-icon">flip_to_front</i>
-                <p id="drop-label">Drag and drop images or click here.</p>
-            </div>
+            <div id="pages">
+                <img id="opener-image" style={{display:"none"}} />
+                <input
+                    id="drop-input" 
+                    type="file" 
+                    accept="image/png, image/jpeg"
+                    onChange={(e:any) => redirect(e)}
+                />
+                <div id="drop-placeholder">
+                    <i className="material-icons" id="drop-icon">flip_to_front</i>
+                    <p id="drop-label">Drag and drop images or click here.</p>
+                </div>
 
-            { redirectState ? <Redirect to={`redirect/${redirectID}`} push /> : null }
-        </div>
+                { redirectState ? <Redirect to={`redirect/${redirectID}`} push /> : null }
+            </div>
+        </>
     )
 }
 

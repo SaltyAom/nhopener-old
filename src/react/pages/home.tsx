@@ -10,7 +10,8 @@ import {
     storeContext,
     Link,
     Axios,
-    openerIDB
+    openerIDB,
+    Helmet
 } from '../bridge'
 import '../../assets/css/dashboard.css'
 
@@ -185,59 +186,49 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
 
     if(stories[0] !== undefined){
         return(
-            <div id="pages">
-                <div id="home-page">
-                    <div id="main-dashboard">
-                        <div id="main-card-container">
-                            <div className="main-card-wrapper">
-                                <Card
-                                    key={5}
-                                    title="Hello There!"
-                                    detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
-                                    footer="Opener Pro"
-                                    onClick={(e:any) => e.preventDefault()}
-                                    to="/"
-                                />
-                                {stories.map((data:any, index:number) => 
-                                    <Fragment key={index}>
-                                        {index < 2 ?
-                                        <Fragment>
-                                            <Card
-                                                key={index}
-                                                detail={data.title.english}
-                                                footer={`ID: ${data.id} - ${data.num_pages} pages`}
-                                                image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
-                                                imageType={data.images.cover.t}
-                                                to={`/redirect/${data.id}`}
-                                                blur={blurDashboard}
-                                            />
-                                            {index === 1 ?
-                                                <>
-                                                    <Card
-                                                        key={6}
-                                                        title="Encrypt hexcode to image"
-                                                        detail="Secure your favourite stories' id with image and share with your friend"
-                                                        to="/generate"
-                                                    />
-                                                    <Card
-                                                        key={7}
-                                                        title="Decrypt secret code"
-                                                        detail="Decrypt secure codes' image to link and read stories"
-                                                        to="/drop"
-                                                    />
-                                                </>
-                                                : null
-                                            }
-                                        </Fragment>
-                                        : null }
-                                    </Fragment>
-                                )}
-                            </div>
-                            <div className="main-card-wrapper">
-                                {stories.map((data:any, index:number) => 
-                                    <Fragment key={index}>
-                                        {index >= 2 ?
-                                            <>
+            <>
+                <Helmet
+                    title={"Opener Pro"}
+                    meta={[
+                        {
+                            name: 'title',
+                            content: 'Opener Pro'
+                        },
+                        {
+                            name: 'description',
+                            content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                        },
+                        {
+                            name: 'og:title',
+                            content: 'Opener Pro'
+                        },
+                        {
+                            name: 'og:description',
+                            content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                        },
+                        {
+                            name: 'twitter:description',
+                            content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                        }
+                    ]}
+                />
+                <div id="pages">
+                    <div id="home-page">
+                        <div id="main-dashboard">
+                            <div id="main-card-container">
+                                <div className="main-card-wrapper">
+                                    <Card
+                                        key={5}
+                                        title="Hello There!"
+                                        detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
+                                        footer="Opener Pro"
+                                        onClick={(e:any) => e.preventDefault()}
+                                        to="/"
+                                    />
+                                    {stories.map((data:any, index:number) => 
+                                        <Fragment key={index}>
+                                            {index < 2 ?
+                                            <Fragment>
                                                 <Card
                                                     key={index}
                                                     detail={data.title.english}
@@ -247,65 +238,129 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                                     to={`/redirect/${data.id}`}
                                                     blur={blurDashboard}
                                                 />
-                                                {index === 3 ?
-                                                    <Card
-                                                        key={8}
-                                                        title="Manage what you read"
-                                                        detail="Easily view/manage read story's history"
-                                                        to="/history"
-                                                    />
+                                                {index === 1 ?
+                                                    <>
+                                                        <Card
+                                                            key={6}
+                                                            title="Encrypt hexcode to image"
+                                                            detail="Secure your favourite stories' id with image and share with your friend"
+                                                            to="/generate"
+                                                        />
+                                                        <Card
+                                                            key={7}
+                                                            title="Decrypt secret code"
+                                                            detail="Decrypt secure codes' image to link and read stories"
+                                                            to="/drop"
+                                                        />
+                                                    </>
                                                     : null
                                                 }
-                                            </>
-                                        : null }
-                                    </Fragment>
-                                )}
+                                            </Fragment>
+                                            : null }
+                                        </Fragment>
+                                    )}
+                                </div>
+                                <div className="main-card-wrapper">
+                                    {stories.map((data:any, index:number) => 
+                                        <Fragment key={index}>
+                                            {index >= 2 ?
+                                                <>
+                                                    <Card
+                                                        key={index}
+                                                        detail={data.title.english}
+                                                        footer={`ID: ${data.id} - ${data.num_pages} pages`}
+                                                        image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
+                                                        imageType={data.images.cover.t}
+                                                        to={`/redirect/${data.id}`}
+                                                        blur={blurDashboard}
+                                                    />
+                                                    {index === 3 ?
+                                                        <Card
+                                                            key={8}
+                                                            title="Manage what you read"
+                                                            detail="Easily view/manage read story's history"
+                                                            to="/history"
+                                                        />
+                                                        : null
+                                                    }
+                                                </>
+                                            : null }
+                                        </Fragment>
+                                    )}
+                                </div>
                             </div>
                         </div>
+                        <div id="notify-container">                        
+                        </div>    
                     </div>
-                    <div id="notify-container">                        
-                    </div>    
                 </div>
-            </div>
+            </>
         )
     } else {
         return(
-            <div id="pages">
-                <div id="home-page">
-                    <div id="main-dashboard">
-                        <div id="main-card-container">
-                            <div className="main-card-wrapper">
-                                <Card
-                                    title="Hello There!"
-                                    detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
-                                    footer="Opener Pro"
-                                    onClick={(e:any) => e.preventDefault()}
-                                    to="/"
-                                />
-                                <Card
-                                    title="Encrypt hexcode to image"
-                                    detail="Secure your favourite stories' id with image and share with your friend"
-                                    to="/generate"
-                                />
-                                <Card
-                                    title="Decrypt secret code"
-                                    detail="Decrypt secure codes' image to link and read stories"
-                                    to="/drop"
-                                />
-                            </div>
-                            <div className="main-card-wrapper">
-                                <Card
-                                    title="Manage what you read"
-                                    detail="Easily view/manage read story's history"
-                                    to="/history"
-                                />
+            <>
+                <Helmet
+                    title={"Opener Pro"}
+                    meta={[
+                        {
+                            name: 'title',
+                            content: 'Opener Pro'
+                        },
+                        {
+                            name: 'description',
+                            content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                        },
+                        {
+                            name: 'og:title',
+                            content: 'Opener Pro'
+                        },
+                        {
+                            name: 'og:description',
+                            content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                        },
+                        {
+                            name: 'twitter:description',
+                            content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                        }
+                    ]}
+                />
+                <div id="pages">
+                    <div id="home-page">
+                        <div id="main-dashboard">
+                            <div id="main-card-container">
+                                <div className="main-card-wrapper">
+                                    <Card
+                                        title="Hello There!"
+                                        detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
+                                        footer="Opener Pro"
+                                        onClick={(e:any) => e.preventDefault()}
+                                        to="/"
+                                    />
+                                    <Card
+                                        title="Encrypt hexcode to image"
+                                        detail="Secure your favourite stories' id with image and share with your friend"
+                                        to="/generate"
+                                    />
+                                    <Card
+                                        title="Decrypt secret code"
+                                        detail="Decrypt secure codes' image to link and read stories"
+                                        to="/drop"
+                                    />
+                                </div>
+                                <div className="main-card-wrapper">
+                                    <Card
+                                        title="Manage what you read"
+                                        detail="Easily view/manage read story's history"
+                                        to="/history"
+                                    />
+                                </div>
                             </div>
                         </div>
+                        <div id="notify-container">
+                        </div>    
                     </div>
-                    <div id="notify-container">
-                    </div>    
                 </div>
-            </div>
+            </>
         )
     }
 }

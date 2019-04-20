@@ -7,7 +7,8 @@ import React, {
 import {
     openerIDB,
     ButtonBase,
-    Loading
+    Loading,
+    Helmet
 } from '../bridge'
 import { Checkbox } from '@material-ui/core'
 
@@ -207,72 +208,99 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     }
 
     return(
-        <div id="pages">
-            {showLoading ? <Loading instant /> : null}
-            <div id="settings">
-                <div className="setting-card">
-                    <h1>Privacy</h1>
-
-                    <CheckPanel
-                        title="Blur an preview image on dashboard"
-                        checkValue={blurDashboard}
-                        function={() => saveBlurDashboard()}
-                        aria="Set blur dashboard"
-                    />
-                    <CheckPanel
-                        title="Blur an preview image on redirect's image preview"
-                        checkValue={blurPreview}
-                        function={() => saveBlurPreview()}
-                        aria="Set save history"
-                    />
-                    <CheckPanel
-                        title="Don't save read history"
-                        checkValue={dontSaveHistory}
-                        function={() => saveDontSaveHistory()}
-                        aria="Set save history"
-                    />
-
-                </div>
-                <div className="setting-card">
-
-                    <h1>Progressive</h1>
-                    {isAndroid && !window.matchMedia('(display-mode: standalone)').matches ?
-                        <ButtonPanel 
-                            title="Add to homescreen"
-                            buttonTitle="Add"
-                            function={() => addToHomescreen()} 
-                        />
-                        : null
+        <>
+            <Helmet
+                title={"Settings"}
+                meta={[
+                    {
+                        name: 'title',
+                        content: 'Manage Opener Pro settings.'
+                    },
+                    {
+                        name: 'description',
+                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                    },
+                    {
+                        name: 'og:title',
+                        content: 'Manage Opener Pro settings.'
+                    },
+                    {
+                        name: 'og:description',
+                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                    },
+                    {
+                        name: 'twitter:description',
+                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
                     }
-                    <ButtonPanel
-                        title="Reload data"
-                        buttonTitle="Reload"
-                        function={() => window.location.reload()} 
-                    />
-                    <ButtonPanel
-                        title="Clear all caches (Reload)"
-                        buttonTitle="Clear"
-                        function={() => clearCache()}
-                    />
-                    <ButtonPanel
-                        title="Recache every files"
-                        buttonTitle="Force update"
-                        function={() => forceUpdate()}
-                    />
+                ]}
+            />
+            <div id="pages">
+                {showLoading ? <Loading instant /> : null}
+                <div id="settings">
+                    <div className="setting-card">
+                        <h1>Privacy</h1>
 
-                </div>
-                <div className="setting-card">
+                        <CheckPanel
+                            title="Blur an preview image on dashboard"
+                            checkValue={blurDashboard}
+                            function={() => saveBlurDashboard()}
+                            aria="Set blur dashboard"
+                        />
+                        <CheckPanel
+                            title="Blur an preview image on redirect's image preview"
+                            checkValue={blurPreview}
+                            function={() => saveBlurPreview()}
+                            aria="Set save history"
+                        />
+                        <CheckPanel
+                            title="Don't save read history"
+                            checkValue={dontSaveHistory}
+                            function={() => saveDontSaveHistory()}
+                            aria="Set save history"
+                        />
 
-                    <h1>Developer</h1>
-                    <LinkPanel
-                        title="Opener API's documentation"
-                        buttonTitle="See more"
-                        link="api.opener.mystiar.com"
-                    />
+                    </div>
+                    <div className="setting-card">
 
+                        <h1>Progressive</h1>
+                        {isAndroid && !window.matchMedia('(display-mode: standalone)').matches ?
+                            <ButtonPanel 
+                                title="Add to homescreen"
+                                buttonTitle="Add"
+                                function={() => addToHomescreen()} 
+                            />
+                            : null
+                        }
+                        <ButtonPanel
+                            title="Reload data"
+                            buttonTitle="Reload"
+                            function={() => window.location.reload()} 
+                        />
+                        <ButtonPanel
+                            title="Clear all caches (Reload)"
+                            buttonTitle="Clear"
+                            function={() => clearCache()}
+                        />
+                        <ButtonPanel
+                            title="Recache every files"
+                            buttonTitle="Force update"
+                            function={() => forceUpdate()}
+                        />
+
+                    </div>
+                    <div className="setting-card">
+
+                        <h1>Developer</h1>
+                        <LinkPanel
+                            title="Opener API's documentation"
+                            buttonTitle="See more"
+                            link="api.opener.mystiar.com"
+                        />
+
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

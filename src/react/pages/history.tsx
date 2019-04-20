@@ -8,7 +8,8 @@ import React, {
 import {
     Link,
     openerIDB,
-    ButtonBase
+    ButtonBase,
+    Helmet
 } from '../bridge'
 import { 
     IconButton,
@@ -41,38 +42,65 @@ const HistoryList:FunctionComponent<any> = (props:historyProps):ReactElement => 
     const handleselectedHistory:any = useContext(historyContext);
 
     return(
-        <div className="history-list">
-            {props.value !== undefined ?
+        <>
+            <Helmet
+                title={"History"}
+                meta={[
+                    {
+                        name: 'title',
+                        content: 'Manage your hentai reading history.'
+                    },
+                    {
+                        name: 'description',
+                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                    },
+                    {
+                        name: 'og:title',
+                        content: 'Manage your hentai reading history.'
+                    },
+                    {
+                        name: 'og:description',
+                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                    },
+                    {
+                        name: 'twitter:description',
+                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
+                    }
+                ]}
+            />
+            <div className="history-list">
+                {props.value !== undefined ?
+                    <Checkbox
+                        className="check"
+                        checked={props.value}
+                        onChange={() => handleselectedHistory()}
+                    />
+                : 
                 <Checkbox
                     className="check"
-                    checked={props.value}
+                    checked={false}
                     onChange={() => handleselectedHistory()}
                 />
-            : 
-            <Checkbox
-                className="check"
-                checked={false}
-                onChange={() => handleselectedHistory()}
-            />
-            }
-            <Link to={`/redirect/${props.link}`} className="history-name">{props.title}</Link>
-            <IconButton
-                className="history-selector"
-                aria-owns={popup ? 'History management' : undefined}
-                aria-haspopup="true"
-                onClick={(evt:any) => showPopup(evt)}
-            >
-                <i className="material-icons">more_vert</i>
-            </IconButton>
-            <Menu 
-                className="history-popup-menu"
-                anchorEl={attachmentElement} 
-                open={popup}
-                onClose={() => setPopup(false)}
-            >
-                <MenuItem onClick={() => props.removeHistory(props.id)}>Remove</MenuItem>
-            </Menu>
-        </div>
+                }
+                <Link to={`/redirect/${props.link}`} className="history-name">{props.title}</Link>
+                <IconButton
+                    className="history-selector"
+                    aria-owns={popup ? 'History management' : undefined}
+                    aria-haspopup="true"
+                    onClick={(evt:any) => showPopup(evt)}
+                >
+                    <i className="material-icons">more_vert</i>
+                </IconButton>
+                <Menu 
+                    className="history-popup-menu"
+                    anchorEl={attachmentElement} 
+                    open={popup}
+                    onClose={() => setPopup(false)}
+                >
+                    <MenuItem onClick={() => props.removeHistory(props.id)}>Remove</MenuItem>
+                </Menu>
+            </div>
+        </>
     )
 }
 

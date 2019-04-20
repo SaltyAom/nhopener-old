@@ -5,6 +5,7 @@ import Loading from './component/loading'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Axios from 'axios'
 import openerIDB from './store/dexie-indexeddb'
+import { Helmet } from 'react-helmet'
 
 const storeContext:any = React.createContext<null>(null)
 
@@ -18,5 +19,5 @@ export {
     ButtonBase,
     Axios,
     openerIDB,
-    /* webpackChunkName: "bridge" */
+    Helmet
 }
