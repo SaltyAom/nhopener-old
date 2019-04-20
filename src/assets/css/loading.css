@@ -69,7 +69,34 @@
     stroke: var(--primary-2) !important;
     opacity:.5;
 }
-  
+
+#reload-button {
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 16px;
+    color:var(--primary);
+    text-transform: uppercase;
+    width:100%;
+    position:absolute;
+    text-align: center;
+    bottom: calc(22.5% - 50px);
+    cursor:pointer;
+    border:1px solid var(--primary);
+    transition: background-color .25s ease-out;
+    animation: reload-in 5s ease-out 0s 1;
+}
+
+
+#reload-button:hover, #reload-button:focus {
+  background-color:rgba(236,94,105,.1);
+}
+
+@keyframes reload-in {
+  0% {opacity:0;}
+  92.5% {opacity:0;}
+  100% {opacity:1;}
+}
+
 @keyframes rotate {
     100% {
       transform: rotate(360deg);
