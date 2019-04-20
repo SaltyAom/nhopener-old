@@ -18,12 +18,12 @@
     #settings, #history-container, #history-container-blank {
         width: 90% !important;
     }
+    #warning > h1, #warning > p, #warning-setting { padding: 0 5% !important;}
 }
 
 @media screen and (max-width: 568px){
     #sidebar {
-        left: -65px;
-        transition: left .25s ease-out;
+        left: -300px;
     }
     #sidebar.active {
         left: 0;
@@ -87,6 +87,29 @@
     #settings > div > div {
         padding:10px 0;
     }
+    #sidebar {
+        width: 300px;
+    }
+    #sidebar-body, #sidebar-footer {
+        align-items: flex-start !important;
+        width:300px;
+    } 
+    .sidebar-nav-wrapper {
+        width:300px;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;    
+    }
+    .sidebar-detail {
+        flex:1;
+        display:block;
+        text-align: left;
+    }
+    .sidebar-nav-wrapper > i.material-icons {
+        padding:0 15px;
+    }
+    #sidebar-overlay.active { z-index:2800; opacity:1; }
 }
 
 @media screen and (min-width:768px) and (max-width: 959.9px){
@@ -105,6 +128,7 @@
     #pages, #generate-page {
         justify-content: flex-start;
     }
+    #warning, #error { margin: 50px 0;}
 }
 
 @media all and (display-mode: standalone){
