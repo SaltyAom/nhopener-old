@@ -3,7 +3,7 @@
 
 ## Safe platform for reading doujinshi hentai
 Opener Pro is an open-source platform for encrypting an doujinshi's code to image with `nhentai` and `h.rayriffy`.
-Platform is already running at [Opener Pro!](https://opener.mystiar.com).
+Platform is already running at [Opener Pro!](https://opener.mystiar.com)
 
 ### Encrypt image
 Instead of memorizing 6 digit codes, while not encrypt it to image and save to your gallery instead!  
