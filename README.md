@@ -6,7 +6,7 @@ Opener Pro is an open-source platform for encrypting an doujinshi's code to imag
 Platform is already running at [Opener Pro!](https://opener.mystiar.com).
 
 ### Encrypt image
-Instead of memorizing 6 digit codes, while not encrypt it to image and save to your gallery instead!
+Instead of memorizing 6 digit codes, while not encrypt it to image and save to your gallery instead!  
 Image resolution is at 256x256, png format and exceed around 1KB spaces only!
 
 ### Decrypt image
@@ -26,10 +26,14 @@ We concern about your privacy very much that we never stored any data to server,
 We are largly invested for the best User Experience so we made it consistency, fluid and most user-friendly as much as we can. Advertisement is annoying and we userstand that, we also annoyed at it to, so we made it ads free.
 
 ### Progressive
-We use `React.js` for the best web application performance since we have a LOT DOM changing in our site
-We use `Typescript`, correcting data structure, secure a element's type. Made it secure and fast.
-We have `Dynamic Routing` which based on client-side, so now we you request for the next page, it's all done in your browser which made it blazing fast.
-We use an `Indexed Database` which store every data at your browser, made it never request any data from server and can be fetched in your browser which made it faster than any cloud database and the most secure ever (Since there's no data sharing).
+We use `React.js` for the best web application performance since we have a LOT DOM changing in our site  
+
+We use `Typescript`, correcting data structure, secure a element's type. Made it secure and fast.  
+
+We have `Dynamic Routing` which based on client-side, so now we you request for the next page, it's all done in your browser which made it blazing fast.  
+
+We use an `Indexed Database` which store every data at your browser, made it never request any data from server and can be fetched in your browser which made it faster than any cloud database and the most secure ever (Since there's no data sharing).  
+
 We built an `Progressive Web App` which mean, you can add this web application to homescreen at your grab.
 We `cache` it and request it from your disk, made the web load faster at next level.
 
@@ -39,7 +43,7 @@ We care for developing experience so we provided an official API which can be al
 An documentation is on [doc.opener.mystiar.com](https://doc.opener.mystiar.com)
 
 ## Development
-While Opener has already set up but still is open-source which you can modify freely!
+While Opener has already set up but still is open-source which you can modify freely!  
 Written in `React.js` and `TypeScript`, bootstraped with `create-react-app` and set up with `yarn`
 
 ## Requirement
@@ -49,13 +53,13 @@ Node TLS
 
 ## Installation
 We recommeded using yarn as package manager.
-
+  
 To start development
 ```bash
 yarn
 yarn start
 ```
-
+  
 To build an production
 ```bash
 yarn build
