@@ -40,7 +40,7 @@ We `cache` it and request it from your disk, made the web load faster at next le
 ## Open-source
 ![Introducing Opener API](https://raw.githubusercontent.com/aomkirby123/opener-pro/master/public/assets/app/util/Opener%20API.png)
 We care for developing experience so we provided an official API which can be also used with Opener and nhentai.
-An documentation is on [doc.opener.mystiar.com](https://doc.opener.mystiar.com)
+An documentation is on [api.opener.mystiar.com](https://api.opener.mystiar.com)
 
 ## Development
 While Opener has already set up but still is open-source which you can modify freely!  
