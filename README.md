@@ -1,5 +1,5 @@
 # Opener Pro
-![Introducing Opener](https://github.com/aomkirby123/opener-pro/tree/master/public/assets/app/util/Introducing%20Opener.jpg)
+![Introducing Opener](https://raw.githubusercontent.com/aomkirby123/opener-pro/master/public/assets/app/util/Introducing%20Opener.jpg)
 
 ## Safe platform for reading doujinshi hentai
 Opener Pro is an open-source platform for encrypting an doujinshi's code to image with `nhentai` and `h.rayriffy`.
@@ -34,7 +34,7 @@ We built an `Progressive Web App` which mean, you can add this web application t
 We `cache` it and request it from your disk, made the web load faster at next level.
 
 ## Open-source
-![Introducing Opener API](https://github.com/aomkirby123/opener-pro/tree/master/public/assets/app/util/Opener%20API.png)
+![Introducing Opener API](https://raw.githubusercontent.com/aomkirby123/opener-pro/master/public/assets/app/util/Opener%20API.png)
 We care for developing experience so we provided an official API which can be also used with Opener and nhentai.
 An documentation is on [doc.opener.mystiar.com](https://doc.opener.mystiar.com)
 
