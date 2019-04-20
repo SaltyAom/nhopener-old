@@ -9,7 +9,7 @@ Platform is already running at [Opener Pro!](https://opener.mystiar.com).
 Instead of memorizing 6 digit codes, while not encrypt it to image and save to your gallery instead!
 Image resolution is at 256x256, png format and exceed around 1KB spaces only!
 
-### Decrpyt image
+### Decrypt image
 Decrypt an image to doujinshi's id code which is ready to be redirected to either `nhentai` or `h.rayriffy`!
 Without having to type at all!
 
