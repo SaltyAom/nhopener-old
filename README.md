@@ -25,7 +25,7 @@ We concern about your privacy very much that we never stored any data to server,
 ## No Advertisement
 We are largly invested for the best User Experience so we made it consistency, fluid and most user-friendly as much as we can. Advertisement is annoying and we userstand that, we also annoyed at it to, so we made it ads free.
 
-### Progressive
+## Progressive
 We use `React.js` for the best web application performance since we have a LOT DOM changing in our site  
 
 We use `Typescript`, correcting data structure, secure a element's type. Made it secure and fast.  
