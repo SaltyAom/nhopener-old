@@ -22,7 +22,7 @@ interface ButtonPanelInterface {
 const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactElement<any> => (
     <div>
         <p>{props.title}</p>
-        <ButtonBase className="setting-button" onClick={() => props.function()}>
+        <ButtonBase className="setting-button" onClick={(evt) => props.function(evt)}>
             {props.buttonTitle}
         </ButtonBase>
     </div>
@@ -44,6 +44,23 @@ const CheckPanel:FunctionComponent<any> = (props:CheckPanelInterface):ReactEleme
             onChange={() => props.function()}
             value={props.aria}
         />
+    </div>
+)
+
+interface LinkInterface {
+    title: string,
+    buttonTitle: string,
+    link: string,
+}
+
+const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any> => (
+    <div>
+        <p>{props.title}</p>
+        <a className="link-panel-button" href="https://api.opener.mystiar.com">
+            <ButtonBase className="setting-button">
+                {props.buttonTitle}
+            </ButtonBase>
+        </a>
     </div>
 )
 
@@ -241,6 +258,16 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         title="Recache every files"
                         buttonTitle="Force update"
                         function={() => forceUpdate()}
+                    />
+
+                </div>
+                <div className="setting-card">
+
+                    <h1>Developer</h1>
+                    <LinkPanel
+                        title="Opener API's documentation"
+                        buttonTitle="See more"
+                        link="api.opener.mystiar.com"
                     />
 
                 </div>

@@ -39,6 +39,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
         });
 
         Axios(requestUrl).then((ogData:any) => {
+            if(ogData.data === undefined) throw {"error":"not found"}
             setOg(ogData.data.data);
             openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
                 if(data[0].value !== true){
@@ -90,18 +91,16 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                         <div id="redirect-tag">
                             {tags.map((tag:string,index:number) => <div key={index}>{tag}</div>)}
                         </div>
-                        <ButtonBase id="redirect-button">
-                            <a className="button secondary" href={`https://nhentai.net/g/${props.match.params.id}`} rel="noreferrer external nofollow">
-                                Read <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
-                            </a>
-                        </ButtonBase>
-                        {/*
                         <ButtonBase id="h-rayriffy-button">
-                            <a className="button success has-wrapper" href={`https://h.rayriffy.com/r/${props.match.params.id}`} rel="noreferrer external nofollow">
+                            <a className="button success has-wrapper" href={`https://h.rayriffy.com/g/${props.match.params.id}`} rel="noreferrer external nofollow">
                                 h.rayriffy <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
                         </ButtonBase>
-                        */}
+                        <ButtonBase id="redirect-button">
+                            <a className="button secondary" href={`https://nhentai.net/g/${props.match.params.id}`} rel="noreferrer external nofollow">
+                                nhentai <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
+                            </a>
+                        </ButtonBase>
                     </div>
                 </div>
             </div>

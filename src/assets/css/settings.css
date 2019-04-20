@@ -53,3 +53,8 @@
     text-transform: uppercase;
     border-radius: 5px;
 }
+
+.link-panel-button {
+    color:inherit;
+    text-decoration: none;
+}

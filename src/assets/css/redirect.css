@@ -49,9 +49,13 @@
 }
 
 #redirect-button, #h-rayriffy-button {
-    width:198px;
+    width:200px !important;
     border-radius: 5px;
     margin-top:15px;
+}
+
+#redirect-button > a, #h-rayriffy-button {
+    width:100%;
 }
 
 #preview-fetching {

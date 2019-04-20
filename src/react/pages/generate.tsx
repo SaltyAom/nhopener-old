@@ -17,7 +17,7 @@ import '../../assets/css/button.css'
 const Generate:FunctionComponent<any> = (props:any):ReactElement => {
     const dispatch:any = useContext(storeContext);
 
-    const [uri, setUri] = useState<string | any>("data:image/png;base64,a"),
+    const [uri, setUri] = useState<string | any>("data:image/jpeg;base64,a"),
         [redirectState, setRedirectState]:any = useState<boolean | any>(false);
 
     const generate = () => {
@@ -26,8 +26,8 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
             color:string = props.store.code,
             colorLength:number = color.length;
 
-        canvas.width = 300;
-        canvas.height = 300;
+        canvas.width = 256;
+        canvas.height = 256;
 
         if(colorLength < 6){
             for(let i=colorLength; i<6; i++){
@@ -35,10 +35,13 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
             }
         }
 
+        ctx.scale(5,5);
+        
         ctx.fillStyle = `#${color}`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     
-        setUri(canvas.toDataURL("image/png"));
+        setUri(canvas.toDataURL("image/webp", 1));
     }
 
     useEffect(() => {
