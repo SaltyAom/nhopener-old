@@ -37,7 +37,11 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
         let canvas:any = document.getElementById("generate-canvas"),
             ctx:any = canvas.getContext("2d"),
             color:string = props.store.code,
-            colorLength:number = color.length;
+            colorLength:number;
+        
+        if(color){
+            colorLength = color.length;
+        }
 
         canvas.width = 256;
         canvas.height = 256;
@@ -53,8 +57,7 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
         ctx.fillStyle = `#${color}`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    
-        setUri(canvas.toDataURL("image/webp", 1));
+        setUri(canvas.toDataURL("image/png", 1));
     }
 
     useEffect(() => {
