@@ -107,6 +107,15 @@ const Root:FunctionComponent = () => {
                     />
                     <Route
                         exact
+                        path="/generate/:id"
+                        render={() => (
+                            <storeContext.Provider key={3} value={dispatch}>
+                                <Generate store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
                         path="/history"
                         render={() => (
                             <storeContext.Provider key={4} value={dispatch}>

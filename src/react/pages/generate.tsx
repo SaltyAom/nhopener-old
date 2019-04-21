@@ -12,19 +12,31 @@ import {
     Helmet
 } from '../bridge'
 
+import { RouteComponentProps } from "react-router"
+import { withRouter } from "react-router-dom"
+
 import '../../assets/css/generate.css'
 import '../../assets/css/button.css'
 
-const Generate:FunctionComponent<any> = (props:any):ReactElement => {
+
+type PathParamsType = {
+    id: string,
+}
+
+type props = RouteComponentProps<PathParamsType> & {
+    store: any
+}
+
+const Generate:FunctionComponent<any> = (props:props):ReactElement => {
     const dispatch:any = useContext(storeContext);
 
     const [uri, setUri] = useState<string | any>("data:image/jpeg;base64,a"),
         [redirectState, setRedirectState]:any = useState<boolean | any>(false);
 
-    const generate = () => {
+    const generate = (providedCode:string) => {
         let canvas:any = document.getElementById("generate-canvas"),
             ctx:any = canvas.getContext("2d"),
-            color:string = props.store.code,
+            color:string = (providedCode !== "") ? props.match.params.id : props.store.code,
             colorLength:number = color.length;
 
         canvas.width = 256;
@@ -46,7 +58,7 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
     }
 
     useEffect(() => {
-        generate();
+        (props.match.params.id) ? generate(props.match.params.id) : generate("")
     });
 
     const handleKey = (evt:any):void => {
@@ -60,7 +72,7 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
             type: "updateCode",
             code: evt.target.value
         });
-        generate();
+        generate("");
     }
 
     const redirect = ():void => {
@@ -132,4 +144,4 @@ const Generate:FunctionComponent<any> = (props:any):ReactElement => {
     )
 }
 
-export default Generate;
+export default withRouter(Generate);

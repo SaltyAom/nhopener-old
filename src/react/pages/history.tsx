@@ -98,6 +98,7 @@ const HistoryList:FunctionComponent<any> = (props:historyProps):ReactElement => 
                     onClose={() => setPopup(false)}
                 >
                     <MenuItem onClick={() => props.removeHistory(props.id)}>Remove</MenuItem>
+                    <MenuItem><Link to={`/generate/${props.id}`} className="link-menu-item">Generate</Link></MenuItem>
                 </Menu>
             </div>
         </>

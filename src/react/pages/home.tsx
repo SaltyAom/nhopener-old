@@ -76,7 +76,8 @@ const Card:FunctionComponent<any> = (props: cardProps):ReactElement<any> => {
 const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
     const [blurDashboard, setBlurDashboard]:any = useState<Boolean | any>(true),
         [stories, setStories]:any = useState<any>([]),
-        dispatch:any = useContext(storeContext);
+        dispatch:any = useContext(storeContext),
+        timeout = 20 * 60 * 1000;
 
     useEffect(() => {
         (async() => {
@@ -113,7 +114,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
             let fetchStoriesID:Promise<boolean> = new Promise(async (resolve, reject) => {
 
                 openerIDB.table("settings").where("title").equals("suggestedStoriesID").toArray(async (data:any) => {
-                    if(Date.now() > (visitState + 300000)){
+                    if(Date.now() > (visitState + timeout)){
                         await openerIDB.table("settings").put({
                             title: "suggestedStoriesID",
                             value: randomStoriesID
@@ -143,7 +144,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
             let fetchStories:Promise<boolean> = new Promise(async (resolve, reject) => {
                 openerIDB.table("settings").where("title").equals("suggestedStories").toArray(async (data:any) => {
 
-                    if((!(Date.now() > (visitState + 300000)) && (data[0].value)[0] !== undefined) || navigator.onLine === false){
+                    if((!(Date.now() > (visitState + timeout)) && (data[0].value)[0] !== undefined) || navigator.onLine === false){
                         // Stories in IndexedDB exists
                         setStories(data[0].value);
                         resolve(true);

@@ -96,3 +96,8 @@
     color:var(--danger);
     text-transform: uppercase;
 }
+
+.link-menu-item {
+    color:var(--text-1);
+    text-decoration: none;
+}
