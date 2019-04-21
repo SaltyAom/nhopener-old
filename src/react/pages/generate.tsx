@@ -33,10 +33,10 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
     const [uri, setUri] = useState<string | any>("data:image/jpeg;base64,a"),
         [redirectState, setRedirectState]:any = useState<boolean | any>(false);
 
-    const generate = (providedCode:string) => {
+    const generate = () => {
         let canvas:any = document.getElementById("generate-canvas"),
             ctx:any = canvas.getContext("2d"),
-            color:string = (providedCode !== "") ? props.match.params.id : props.store.code,
+            color:string = props.store.code,
             colorLength:number = color.length;
 
         canvas.width = 256;
@@ -58,7 +58,13 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
     }
 
     useEffect(() => {
-        (props.match.params.id) ? generate(props.match.params.id) : generate("")
+        dispatch({
+            type: "updateCode",
+            code: props.match.params.id
+        });
+    },[]);
+    useEffect(() => {
+        generate();
     });
 
     const handleKey = (evt:any):void => {
@@ -72,7 +78,7 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
             type: "updateCode",
             code: evt.target.value
         });
-        generate("");
+        generate();
     }
 
     const redirect = ():void => {
@@ -120,6 +126,7 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
                     <div id="generate-input-wrapper">
                         <label id="generate-label">#</label>
                         <input 
+                            autoComplete="off"
                             id="generate-input"
                             type="tel"
                             placeholder="000000"
