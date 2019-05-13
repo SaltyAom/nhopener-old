@@ -10,7 +10,6 @@ import {
     storeContext,
     openerIDB,
 } from '../bridge'
-import { ListItem } from '@material-ui/core'
 import '../../assets/css/nav.css'
 
 const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
@@ -114,7 +113,7 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             <div id="search-result-container">
                                 {searchResult.map(data =>
                                     <Link className="search-result" key={Math.random()} onClick={() => unFocusSearchbar()} to={`/redirect/${data.link}`}>
-                                        <ListItem button>{data.title}</ListItem>
+                                        <div className="search-result-list">{data.title}</div>
                                     </Link>
                                 )}
                             </div>
@@ -123,7 +122,7 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                     {searchResult === false ? 
                         <>
                             <div id="search-result-container">
-                                <ListItem button>Not found</ListItem>
+                                <div className="search-result-list">Not found</div>
                             </div>
                         </>
                     : null }

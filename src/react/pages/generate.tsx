@@ -63,14 +63,24 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
     }
 
     useEffect(() => {
-        dispatch({
-            type: "updateCode",
-            code: props.match.params.id
-        });
-    },[dispatch, props.match.params.id]);
+        if(props.match.params.id !== undefined){
+            dispatch({
+                type: "updateCode",
+                code: props.match.params.id
+            });
+        }
+        // eslint-disable-next-line
+    }, [props.match.params.id]);
     useEffect(() => {
         generate();
-    },[]);
+        // eslint-disable-next-line
+    }, []);
+    useEffect(() => {
+        if(props.store.code !== undefined){
+            generate();
+        }
+        // eslint-disable-next-line
+    }, [props.store.code]);
 
     const handleKey = (evt:any):void => {
         if(evt.target.value.length >= 6 && (evt.keyCode !== 8 && evt.keyCode !== 9) && evt.keyCode !== 17 && evt.keyCode !== 65
