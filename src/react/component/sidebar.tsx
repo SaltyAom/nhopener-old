@@ -48,7 +48,7 @@ const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
         } else {
             setSidebarClass("");
         }
-    });
+    }, [props.store.toggleMenu]);
 
     const closeSidebar = () => {
         dispatch({

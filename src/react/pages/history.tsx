@@ -127,7 +127,7 @@ const History:FunctionComponent<null> = ():ReactElement<any> => {
         openerIDB.table("history").orderBy("id").reverse().toArray(async (historyData:Array<historyType>) => {
             setHistory(historyData);
 
-            let tempHistory:any = new Array();
+            let tempHistory:any = [];
             await historyData.forEach(data => {
                 tempHistory[data.id] = {id: data.id, value: false};
             });

@@ -9,9 +9,11 @@ import {
     Redirect,
     Helmet
 } from "../bridge"
-const FastAverageColor = require('fast-average-color/dist/index');
 
 import '../../assets/css/drop.css'
+
+const FastAverageColor = require('fast-average-color/dist/index');
+
 
 const Drop:FunctionComponent<null> = ():ReactElement<null> => {
     const [redirectState, setRedirectState] = useState<boolean | any>(false),
@@ -55,7 +57,7 @@ const Drop:FunctionComponent<null> = ():ReactElement<null> => {
                     },
                     {
                         name: 'description',
-                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
+                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with NHentai Opener, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
                     },
                     {
                         name: 'og:title',
@@ -63,16 +65,16 @@ const Drop:FunctionComponent<null> = ():ReactElement<null> => {
                     },
                     {
                         name: 'og:description',
-                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
+                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with NHentai Opener, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
                     },
                     {
                         name: 'twitter:description',
-                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
+                        content: "Decrypt images' code to provide links of doujinshi hentai you discovered with NHentai Opener, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding."
                     }
                 ]}
             />
             <div id="pages">
-                <img id="opener-image" style={{display:"none"}} />
+                <img id="opener-image" style={{display:"none"}} alt="Preview" />
                 <input
                     id="drop-input" 
                     type="file" 

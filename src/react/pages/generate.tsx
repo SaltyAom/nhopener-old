@@ -33,7 +33,55 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
     const [uri, setUri] = useState<string | any>("data:image/jpeg;base64,a"),
         [redirectState, setRedirectState]:any = useState<boolean | any>(false);
 
-    const generate = () => {
+    useEffect(() => {
+        dispatch({
+            type: "updateCode",
+            code: props.match.params.id
+        });
+    },[dispatch, props.match.params.id]);
+    useEffect(() => {
+        if(props.store.code === undefined) return;
+
+        let canvas:any = document.getElementById("generate-canvas"),
+            ctx:any = canvas.getContext("2d"),
+            color:string = props.store.code,
+            colorLength:number;
+        
+        if(color){
+            colorLength = color.length;
+        }
+
+        canvas.width = 256;
+        canvas.height = 256;
+
+        if(colorLength < 6){
+            for(let i=colorLength; i<6; i++){
+                color += "f"
+            }
+        }
+
+        ctx.scale(5,5);
+        
+        ctx.fillStyle = `#${color}`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        setUri(canvas.toDataURL("image/png", 1));    }
+    ,[props.store.code]);
+
+    const handleKey = (evt:any):void => {
+        if(evt.target.value.length >= 6 && (evt.keyCode !== 8 && evt.keyCode !== 9) && evt.keyCode !== 17 && evt.keyCode !== 65
+            && evt.keyCode !== 36 && evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39) evt.target.blur();
+    }
+
+    const handleCode = (evt:any) => {
+        if(evt.target.value.length > 6 ) return false;
+        dispatch({
+            type: "updateCode",
+            code: evt.target.value
+        });
+
+        if(props.store.code === undefined) return;
+
         let canvas:any = document.getElementById("generate-canvas"),
             ctx:any = canvas.getContext("2d"),
             color:string = props.store.code,
@@ -60,30 +108,6 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
         setUri(canvas.toDataURL("image/png", 1));
     }
 
-    useEffect(() => {
-        dispatch({
-            type: "updateCode",
-            code: props.match.params.id
-        });
-    },[]);
-    useEffect(() => {
-        generate();
-    });
-
-    const handleKey = (evt:any):void => {
-        if(evt.target.value.length >= 6 && (evt.keyCode !== 8 && evt.keyCode !== 9) && evt.keyCode !== 17 && evt.keyCode !== 65
-            && evt.keyCode !== 36 && evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39) evt.target.blur();
-    }
-
-    const handleCode = (evt:any) => {
-        if(evt.target.value.length > 6 ) return false;
-        dispatch({
-            type: "updateCode",
-            code: evt.target.value
-        });
-        generate();
-    }
-
     const redirect = ():void => {
         setTimeout(_ => {
             dispatch({
@@ -105,7 +129,7 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
                     },
                     {
                         name: 'description',
-                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
+                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with NHentai Opener, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
                     },
                     {
                         name: 'og:title',
@@ -113,11 +137,11 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
                     },
                     {
                         name: 'og:description',
-                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
+                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with NHentai Opener, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
                     },
                     {
                         name: 'twitter:description',
-                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with Opener Pro, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
+                        content: 'Share your favorite doujinshi hentai safe and securely with code encryption to images with NHentai Opener, a safe and secure platform for reading doujinshi hentai. Alternative for nhentai stories finding.'
                     }
                 ]}
             />
@@ -125,7 +149,14 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
                 { redirectState ? <Redirect to={`/redirect/${props.store.code}`} push /> : null }
                 <div id="generate-page">
                     <canvas id="generate-canvas" style={{display:"none"}}></canvas>
-                    <img id="generate-preview" src={uri} />
+                    <img
+                        id="generate-preview" 
+                        src={uri} 
+                        alt="Generated Preview"
+                        style={{
+                            boxShadow: `0 12px 35px #${props.store.code}85`
+                        }}
+                    />
                     <div id="generate-input-wrapper">
                         <label id="generate-label">#</label>
                         <input 
@@ -143,7 +174,7 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
                             </a>
                         </ButtonBase>
                         <ButtonBase className="button-wrapper" onClick={() => redirect()}>
-                            <a className="button">
+                            <a className="button" href="#generate-page" onClick={evt => evt.preventDefault()}>
                                 Redirect <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
                         </ButtonBase>

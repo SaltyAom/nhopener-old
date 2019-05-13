@@ -7,14 +7,14 @@ const precacheFiles = [
 ];
 
 self.addEventListener("install", function (event) {
-  console.log("[Opener Pro] Install Event processing");
+  console.log("[NHentai Opener] Install Event processing");
 
-  console.log("[Opener Pro] Skip waiting on install");
+  console.log("[NHentai Opener] Skip waiting on install");
   self.skipWaiting();
 
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
-      console.log("[Opener Pro] Caching pages during install");
+      console.log("[NHentai Opener] Caching pages during install");
       return cache.addAll(precacheFiles);
     })
   );
@@ -22,7 +22,7 @@ self.addEventListener("install", function (event) {
 
 // Allow sw to control of current page
 self.addEventListener("activate", function (event) {
-  console.log("[Opener Pro] Claiming clients for current page");
+  console.log("[NHentai Opener] Claiming clients for current page");
   event.waitUntil(self.clients.claim());
 });
 
@@ -37,11 +37,13 @@ self.addEventListener("fetch", function (event) {
 
           // This is where we call the server to get the newest version of the
           // file to use the next time we show view
-          event.waitUntil(
-            fetch(event.request).then(function (response) {
-              return updateCache(event.request, response);
-            })
-          );
+          if(event.request.mode !== "no-cors"){
+            event.waitUntil(
+              fetch(event.request).then(function (response) {
+                return updateCache(event.request, response);
+              })
+            );
+          }
 
         return response;
       },
@@ -57,7 +59,7 @@ self.addEventListener("fetch", function (event) {
             return response;
           })
           .catch(function (error) {
-            console.log("[Opener Pro] Network request failed and no cache." + error);
+            console.log("[NHentai Opener] Network request failed and no cache." + error);
           });
       }
     )

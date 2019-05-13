@@ -214,7 +214,7 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                 meta={[
                     {
                         name: 'title',
-                        content: 'Manage Opener Pro settings.'
+                        content: 'Manage NHentai Opener settings.'
                     },
                     {
                         name: 'description',
@@ -222,7 +222,7 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                     },
                     {
                         name: 'og:title',
-                        content: 'Manage Opener Pro settings.'
+                        content: 'Manage NHentai Opener settings.'
                     },
                     {
                         name: 'og:description',

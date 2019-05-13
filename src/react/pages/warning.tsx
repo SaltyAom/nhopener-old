@@ -43,11 +43,11 @@ const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
     return(
         <>
             <Helmet
-                title={"Are you legally classified?"}
+                title={"NHentai Opener"}
                 meta={[
                     {
                         name: 'title',
-                        content: 'Opener Pro'
+                        content: 'NHentai Opener'
                     },
                     {
                         name: 'description',
@@ -55,7 +55,7 @@ const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
                     },
                     {
                         name: 'og:title',
-                        content: 'Opener Pro'
+                        content: 'NHentai Opener'
                     },
                     {
                         name: 'og:description',

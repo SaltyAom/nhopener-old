@@ -19,7 +19,7 @@ const Error:FunctionComponent<null> = ():ReactElement<null> => {
                 meta={[
                     {
                         name: 'title',
-                        content: 'Opener Pro'
+                        content: 'NHentai Opener'
                     },
                     {
                         name: 'description',
@@ -27,7 +27,7 @@ const Error:FunctionComponent<null> = ():ReactElement<null> => {
                     },
                     {
                         name: 'og:title',
-                        content: 'Opener Pro'
+                        content: 'NHentai Opener'
                     },
                     {
                         name: 'og:description',

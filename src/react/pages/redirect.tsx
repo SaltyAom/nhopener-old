@@ -5,7 +5,6 @@ import React, {
     FunctionComponent
 } from 'react'
 import {
-    Loadable,
     Loading,
     ButtonBase,
     Axios,
@@ -39,7 +38,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
         });
 
         Axios(requestUrl).then((ogData:any) => {
-            if(ogData.data === undefined) throw {"error":"not found"}
+            if(ogData.data.data.ogTitle === undefined) throw Object.assign({error:"not found"})
             setOg(ogData.data.data);
             openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
                 if(data[0].value !== true){
@@ -63,7 +62,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
         }).catch(():void => {
             setOg(undefined);
         })
-    },[]);
+    },[props.match.params.id]);
     
     if(og !== undefined && og !== "Fetching..."){
         let tags = (og.twitterDescription).split(",");
@@ -77,8 +76,8 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                             { og.ogImage !== undefined ?
                                 <>
                                     { blurPreview ?
-                                        <img id="redirect-preview-image" className="blur" src={og.ogImage.url} /> :
-                                        <img id="redirect-preview-image" src={og.ogImage.url} />
+                                        <img id="redirect-preview-image" className="blur" src={og.ogImage.url} alt="Preview Story" /> :
+                                        <img id="redirect-preview-image" src={og.ogImage.url} alt="Preview Story" />
                                     }
                                 </>
                             : null }

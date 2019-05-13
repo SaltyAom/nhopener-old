@@ -48,11 +48,15 @@
     color: var(--text-2);
 }
 
-.history-popup-menu > div:last-child {
+#history-popup-menu {
+    position:absolute !important;
+}
+
+#history-popup-menu > div:last-child {
     background-color: var(--root-2);
 }
 
-.history-popup-menu > div:last-child > ul > li {
+#history-popup-menu > div:last-child > ul > li {
     color: var(--text-1);
     text-transform: uppercase;
 }

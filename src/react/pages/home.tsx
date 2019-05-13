@@ -183,17 +183,17 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
             await fetchStories;
 
         })();
-    }, []);
+    }, [dispatch, props.store.suggestStories, timeout]);
 
     if(stories[0] !== undefined){
         return(
             <>
                 <Helmet
-                    title={"Opener Pro"}
+                    title={"NHentai Opener"}
                     meta={[
                         {
                             name: 'title',
-                            content: 'Opener Pro'
+                            content: 'NHentai Opener'
                         },
                         {
                             name: 'description',
@@ -201,7 +201,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         },
                         {
                             name: 'og:title',
-                            content: 'Opener Pro'
+                            content: 'NHentai Opener'
                         },
                         {
                             name: 'og:description',
@@ -221,8 +221,8 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                     <Card
                                         key={5}
                                         title="Hello There!"
-                                        detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
-                                        footer="Opener Pro"
+                                        detail="Welcome to NHentai Opener Alpha test! Hope you find our platform useful!"
+                                        footer="NHentai Opener"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
                                     />
@@ -301,11 +301,11 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
         return(
             <>
                 <Helmet
-                    title={"Opener Pro"}
+                    title={"NHentai Opener"}
                     meta={[
                         {
                             name: 'title',
-                            content: 'Opener Pro'
+                            content: 'NHentai Opener'
                         },
                         {
                             name: 'description',
@@ -313,7 +313,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         },
                         {
                             name: 'og:title',
-                            content: 'Opener Pro'
+                            content: 'NHentai Opener'
                         },
                         {
                             name: 'og:description',
@@ -332,8 +332,8 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                 <div className="main-card-wrapper">
                                     <Card
                                         title="Hello There!"
-                                        detail="Welcome to Opener Pro Alpha test! Hope you find our platform useful!"
-                                        footer="Opener Pro"
+                                        detail="Welcome to NHentai Opener Alpha test! Hope you find our platform useful!"
+                                        footer="NHentai Opener"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
                                     />

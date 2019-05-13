@@ -8,7 +8,7 @@ export interface initStoreType {
 
 export const initState:initStoreType = {
     redirectURL: undefined,
-    code: "007aff",
+    code: "000000",
     toggleMenu: false,
     allow: false,
     suggestStories: []

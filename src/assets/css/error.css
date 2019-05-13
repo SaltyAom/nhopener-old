@@ -33,6 +33,9 @@
 #error > button.button-wrapper,
 #warning > button.button-wrapper {
     margin-top: 30px;
+    appearance: none;
+    -webkit-appearance: none;
+    border:0;
 }
 
 #warning-checkbox {

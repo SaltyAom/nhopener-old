@@ -2,8 +2,7 @@ import React, {
     useContext,
     FunctionComponent,
     ReactElement,
-    useState,
-    useEffect
+    useState
 } from 'react'
 import {
     Link,
@@ -44,10 +43,11 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             if(keyword.includes(query)){
                                 if(tempHistory[0] !== undefined){
                                     tempHistory.some((tempData,index) => {
-                                        if(tempData == data.title){
+                                        if(tempData === data.title){
                                             return true
                                         }
                                         if(tempHistory.length - 1 === index) tempHistory.push(data);
+                                        return true;
                                     });
                                 } else {
                                     tempHistory.push(data);
@@ -57,6 +57,7 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                 resolve(true);
                                 return true;
                             }
+                            return null;
                         });
                     });
 
@@ -88,7 +89,7 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
     return(
         <nav id="nav">
             <div className="nav-section" style={{justifyContent:"flex-start"}}>
-                <a id="nav-menu" className="material-icons" onClick={() => toggleMenu()}>menu</a>
+                <button id="nav-menu" className="material-icons" onClick={() => toggleMenu()}>menu</button>
                 <Link id="nav-title" to="/">
                     Opener
                     <sup id="nav-title-sup">Pro</sup>
@@ -107,6 +108,7 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                     <ButtonBase id="search-go-wrapper">
                         <i id="search-go" className="material-icons">chevron_right</i>
                     </ButtonBase>
+                    {searchResult[0] !== undefined || searchResult === false ? <div id="search-overlay" onClick={() => unFocusSearchbar()}></div> : null }
                     {searchResult[0] !== undefined ?
                         <>
                             <div id="search-result-container">
@@ -116,7 +118,6 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                     </Link>
                                 )}
                             </div>
-                            <div id="search-overlay" onClick={() => unFocusSearchbar()}></div>
                         </>
                     : null }
                     {searchResult === false ? 
@@ -124,7 +125,6 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             <div id="search-result-container">
                                 <ListItem button>Not found</ListItem>
                             </div>
-                            <div id="search-overlay" onClick={() => unFocusSearchbar()}></div>
                         </>
                     : null }
                 </form>

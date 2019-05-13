@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom'
 
 import { 
-    Loadable, 
+    Loadable,
     Loading, 
     storeContext,
 } from './react/bridge'
@@ -19,6 +19,10 @@ import {
 import { reducers, initState } from "./react/store/hooks-reducers"
 import Nav from './react/component/nav'
 import Sidebar from './react/component/sidebar' /* webpackChunkName: "sidebar" */
+
+import './assets/css/init.css'
+import './assets/css/responsive.css'
+import './assets/material-icon/material-icons.css'
 
 const Home:any = Loadable({
     loader: () => import('./react/pages/home' /* webpackChunkName: "home" */),
@@ -52,10 +56,6 @@ Warning:any = Loadable({
     loader: () => import('./react/pages/warning' /* webpackChunkName: "warning" */),
     loading: Loading
 });
-
-import './assets/css/init.css'
-import './assets/css/responsive.css'
-import './assets/material-icon/material-icons.css'
 
 const Root:FunctionComponent = () => {
     const [state, dispatch]:any = useReducer(reducers, initState),

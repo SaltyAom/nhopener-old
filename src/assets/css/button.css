@@ -2,12 +2,17 @@
     margin-top: 25px;
     border-radius: 3px;
     color:black;
+    appearance: none;
+    -webkit-appearance: none;
+    border:0;
 }
 
 .button {
     appearance: none;
     -webkit-appearance: none;
+    border:0;
     text-decoration: none;
+    width:100%;
     font-size: 18px;
     padding: 8px 65px;
     border-radius: 3px;
