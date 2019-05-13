@@ -147,6 +147,19 @@
     from {opacity:0;transform: translateY(5px);}
 }
 
+.search-result-list {
+    display:block;
+    width:100%;
+    padding:15px;
+    background-color:transparent;
+    transition: background-color .25s ease-out;
+    cursor:pointer;
+}
+
+.search-result-list:hover, .search-result-list:focus {
+    background-color:rgba(0,0,0,.2);
+}
+
 #search-overlay {
     position: fixed;
     top:58px;

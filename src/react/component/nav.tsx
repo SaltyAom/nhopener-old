@@ -42,13 +42,17 @@ const Nav:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             if(keyword.includes(query)){
                                 if(tempHistory[0] !== undefined){
                                     tempHistory.some((tempData,index) => {
-                                        if(tempData === data.title){
-                                            return true
+                                        if(tempData.link === data.link){
+                                            return true;
                                         }
-                                        if(tempHistory.length - 1 === index) tempHistory.push(data);
-                                        return true;
+                                        if(index === tempHistory.length - 1){
+                                            tempHistory.push(data);
+                                            return true;
+                                        }
+                                        return false;
                                     });
                                 } else {
+                                    console.log(data);
                                     tempHistory.push(data);
                                 }
                             }

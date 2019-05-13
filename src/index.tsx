@@ -67,6 +67,9 @@ const Root:FunctionComponent = () => {
                 <Nav store={state} />
                 <Sidebar store={state} />
             </storeContext.Provider>
+            { process.env.NODE_ENV !== "development" ?
+            <script defer src="/assets/app/js/register.js"></script> :
+            null }
             { warning ?
                 <Switch>
                     <Route 

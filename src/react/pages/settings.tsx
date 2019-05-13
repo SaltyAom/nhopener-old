@@ -17,15 +17,21 @@ import '../../assets/css/settings.css'
 interface ButtonPanelInterface {
     title: string,
     buttonTitle: string,
-    function: any
+    function?: any,
+    id?: string
 }
 
 const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactElement<any> => (
     <div>
         <p>{props.title}</p>
+        {props.id ?
+        <ButtonBase className="setting-button" id={props.id}>
+            {props.buttonTitle}
+        </ButtonBase> :
         <ButtonBase className="setting-button" onClick={(evt) => props.function(evt)}>
             {props.buttonTitle}
         </ButtonBase>
+        }
     </div>
 );
 
@@ -69,9 +75,8 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
         [blurPreview, setBlurPreview] = useState<boolean | any>(false),
         [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false),
-        [showLoading, setShowLoading] = useState<boolean | any>(false);
-
-    let isAndroid = /(android)/i.test(navigator.userAgent);
+        [showLoading, setShowLoading] = useState<boolean | any>(false),
+        [a2hs, setA2hs] = useState<Boolean | any>(false);
 
     useEffect(() => {
         openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
@@ -147,20 +152,24 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         });
     }
 
-    const addToHomescreen = () => {
-        let deferredPrompt;
-
+    useEffect(() => {
         window.addEventListener('beforeinstallprompt', (e:any) => {
             e.preventDefault();
 
-            deferredPrompt = e;
-            deferredPrompt.prompt();
+            let deferredPrompt = e;
+            setA2hs(true);
 
-            deferredPrompt.userChoice.then((choiceResult:any) => {
-                deferredPrompt = null;
+            document.getElementById("a2hs").addEventListener("click", a2hsEvent => {
+                console.log("TEST");
+                deferredPrompt.prompt();
+        
+                deferredPrompt.userChoice.then((choiceResult:any) => {
+                    deferredPrompt = null;
+                });
             });
         });
-    }
+        // eslint-disable-next-line
+    }, []);
 
     const clearCache = () => {
         setShowLoading(true);
@@ -263,11 +272,11 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                     <div className="setting-card">
 
                         <h1>Progressive</h1>
-                        {isAndroid && !window.matchMedia('(display-mode: standalone)').matches ?
+                        {a2hs && !window.matchMedia('(display-mode: standalone)').matches ?
                             <ButtonPanel 
                                 title="Add to homescreen"
                                 buttonTitle="Add"
-                                function={() => addToHomescreen()} 
+                                id="a2hs"
                             />
                             : null
                         }
