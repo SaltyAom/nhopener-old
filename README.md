@@ -1,9 +1,9 @@
-# Hentai Opener
+# NHentai Opener
 ###### Previously known as 'Opener Pro'
 ![Introducing Opener](https://raw.githubusercontent.com/aomkirby123/opener-pro/master/public/assets/app/util/Introducing%20Opener.jpg)
 
 ## Safe platform for reading doujinshi hentai
-Hentai Opener is an open-source platform for encrypting an doujinshi's code to image with `nhentai` and `h.rayriffy`.
+NHentai Opener is an open-source platform for encrypting an doujinshi's code to image with `nhentai` and `h.rayriffy`.
 Platform is already running at [Opener Pro!](https://opener.mystiar.com)
 
 ### Encrypt image
@@ -18,7 +18,7 @@ Without having to type at all!
 Preview any doujinshi including title, description, tags and image's cover with link!
 
 ### Safe for Work Mode (SFW Mode)
-With a safe settings, you can use Hentai Opener on a public zone, Opener will blur any R18 doujinshi and make you safe which can be set at settings.
+With a safe settings, you can use NHentai Opener on a public zone, Opener will blur any R18 doujinshi and make you safe which can be set at settings.
 
 ## Private
 We concern about your privacy very much that we never stored any data to server, but instead store at client-side (Indexed Database) for the fastest and safest performance instead.
