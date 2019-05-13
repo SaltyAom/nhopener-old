@@ -247,6 +247,12 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                 {showLoading ? <Loading instant /> : null}
                 <div id="settings">
                     <div className="setting-card">
+                        <div>
+                            <h2>NHentai Opener 1.2.0</h2>
+                        </div>
+                    </div>
+
+                    <div className="setting-card">
                         <h1>Privacy</h1>
 
                         <CheckPanel
