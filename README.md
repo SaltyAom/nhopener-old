@@ -1,10 +1,11 @@
 # NHentai Opener
 ###### Previously known as 'Opener Pro'
-![Introducing Opener](https://raw.githubusercontent.com/aomkirby123/opener-pro/master/public/assets/app/util/Introducing%20Opener.jpg)
+![Opener Pro 1.2.0](https://user-images.githubusercontent.com/35027979/57622535-0d5ad680-75b8-11e9-9d8c-2dac974bcc2e.png)
 
-## Safe platform for reading doujinshi hentai
+## Turn six digits code to image
 NHentai Opener is an open-source platform for encrypting an doujinshi's code to image with `nhentai` and `h.rayriffy`.
-Platform is already running at [Opener Pro!](https://opener.mystiar.com)
+Platform is already running at [NHentai Opener!](https://opener.mystiar.com)
+![Introducing Opener](https://raw.githubusercontent.com/aomkirby123/opener-pro/master/public/assets/app/util/Introducing%20Opener.jpg)
 
 ### Encrypt image
 Instead of memorizing 6 digit codes, while not encrypt it to image and save to your gallery instead!  
