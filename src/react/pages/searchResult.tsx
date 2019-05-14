@@ -16,9 +16,6 @@ import { withRouter } from "react-router-dom"
 
 import '../../assets/css/searchResult.css'
 
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-
 type PathParamsType = {
     id: string,
 }
@@ -151,16 +148,11 @@ const SearchResult:FunctionComponent<any> = (props:props):ReactElement => {
                                 <Link className="body-search-card-link" key={index} to={`/redirect/${data.link}`}>
                                     <div className="body-search-card">
                                         {data.ref ?
-                                        <div className="search-card-preview-image-wrapper">
-                                            <LazyLoadImage
-                                                width={141}
-                                                height={141}
-                                                wrapperClassName="search-card-preview-image"
-                                                alt={data.title}
-                                                effect="blur"
+                                            <img
+                                                className="search-card-preview-image"
                                                 src={data.ref} 
+                                                alt={data.title}
                                             />
-                                        </div>
                                         : null }
                                         <div className="body-search-card-body">
                                             <h1 className="body-search-card-title">

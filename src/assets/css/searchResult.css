@@ -123,7 +123,7 @@
     cursor:pointer;
 }
 
-.search-card-preview-image > img {
+.search-card-preview-image {
     width:141px;
     height:141px;
     object-fit: cover;
@@ -137,14 +137,6 @@
     padding:15px 25px;
     flex:1;
     cursor:pointer;
-    overflow:hidden;
-}
-
-.search-card-preview-image-wrapper {
-    width:141px;
-    height:141px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     overflow:hidden;
 }
 

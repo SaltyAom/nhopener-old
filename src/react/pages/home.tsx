@@ -219,9 +219,8 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             <div id="main-card-container">
                                 <div className="main-card-wrapper">
                                     <Card
-                                        key={5}
                                         title="Hello There!"
-                                        detail="Welcome to NHentai Opener 1.2.0! You can check more detail at Github"
+                                        detail="Welcome to NHentai Opener 1.3.0.beta.0! You can check more detail at Github"
                                         footer="NHentai Opener 1.2.0"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
