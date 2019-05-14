@@ -89,10 +89,10 @@ const HistoryList:FunctionComponent<any> = (props:historyProps):ReactElement => 
                     aria-haspopup="true"
                     onClick={(evt:any) => showPopup(evt)}
                 >
-                    <i className="material-icons">more_vert</i>
+                    <i className="material-icons history-popup-icon">more_vert</i>
                 </IconButton>
-                <Menu 
-                    className="history-popup-menu"
+                <Menu
+                    id="history-popup-menu"
                     anchorEl={attachmentElement} 
                     open={popup}
                     onClose={() => setPopup(false)}

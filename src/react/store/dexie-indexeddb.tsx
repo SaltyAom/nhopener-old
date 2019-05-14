@@ -7,6 +7,10 @@ Dexie.exists("opener").then(async (exists:boolean) => {
         history: 'id++, title, link, timestamp',
         settings: 'title, value',
     });
+    await openerIDB.version(2).stores({
+        history: 'id++, title, link, timestamp, ref',
+        settings: 'title, value',
+    });
     if(!exists){
         openerIDB.table("settings").put({
             title: "blurDashboard",

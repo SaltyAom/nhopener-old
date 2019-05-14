@@ -107,7 +107,12 @@
 }
 
 #search-go-wrapper {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color:transparent;
+    border:0;
     height:42px;
+    outline:none;
     color:var(--text-2);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;

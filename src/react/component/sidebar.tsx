@@ -77,6 +77,11 @@ const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         title="Generate" 
                     />
                     <SidebarIcon 
+                        to="/search" 
+                        icon="search" 
+                        title="Search" 
+                    />
+                    <SidebarIcon 
                         to="/history" 
                         icon="restore" 
                         title="History" 

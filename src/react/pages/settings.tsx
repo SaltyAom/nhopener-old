@@ -248,7 +248,7 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                 <div id="settings">
                     <div className="setting-card">
                         <div>
-                            <h2>NHentai Opener 1.2.0</h2>
+                            <h2>NHentai Opener 1.3.0.beta.0</h2>
                         </div>
                     </div>
 

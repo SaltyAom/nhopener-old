@@ -7,7 +7,7 @@
     top:58px;
     left:0;
     justify-content: space-between;
-    transition: left .325s ease-in-out;
+    transition: left .25s ease-in-out;
 }
 
 #sidebar-body, #sidebar-footer, #sidebar, .sidebar-nav-wrapper {
@@ -17,9 +17,15 @@
 }
 
 #sidebar-body {
-    flex:1;
+    height: calc(100vh - 128px);
     width:100%;
     padding: 10px 0;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+#sidebar-body::-webkit-scrollbar {
+    display:none;
 }
 
 .sidebar-nav-wrapper {
@@ -71,5 +77,5 @@
     background-color:rgba(0,0,0,.625);
     opacity:0;
     z-index:-9000;
-    transition: opacity .325s ease-in-out;
+    transition: opacity .25s ease-in-out;
 }

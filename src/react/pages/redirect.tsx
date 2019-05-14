@@ -47,6 +47,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                             openerIDB.table("history").add({
                                 title: ogData.data.data.ogTitle,
                                 link: props.match.params.id,
+                                ref: ogData.data.data.ogImage.url,
                                 timestamp: Date.now()
                             });
                         }
@@ -54,6 +55,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                         openerIDB.table("history").add({
                             title: ogData.data.data.ogTitle,
                             link: props.match.params.id,
+                            ref: ogData.data.data.ogImage.url,
                             timestamp: Date.now()
                         });
                     })

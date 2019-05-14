@@ -1,0 +1,153 @@
+.search-page {
+    padding-right:68px;
+}
+
+#body-search {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    width:500px;
+    background-color:rgba(255,255,255,.1);
+    margin: 75px auto 30px auto;
+    height:58px;
+    padding:0;
+    border-radius: 3px;
+    box-shadow:0 5px 15px rgba(0,0,0,.325);
+}
+
+.body-search-icon {
+    font-size: 28px;
+    height:inherit;
+    width:73px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#body-search-send {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color:transparent;
+    border:0;
+    cursor:pointer;
+    outline:none;
+    color:rgba(255,255,255,.375);
+}
+
+#body-search-send-icon {
+    font-size: 28px;
+    color:var(--text-1);
+    cursor:pointer;
+}
+
+#body-searchbar {
+    appearance: none;
+    -webkit-appearance: none;
+    border:0;
+    background-color:transparent;
+    width:100%;
+    height:inherit;
+    margin:0;
+    padding:5px 10px;
+    font-size: 26px;
+    outline:none;
+    color:var(--text);
+}
+
+#body-searchbar::placeholder {
+    color:var(--text);
+}
+
+#body-search-result {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width:650px;
+    margin:45px auto;
+}
+
+.body-search-card-link {
+    width:inherit;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+.body-search-card {
+    width:inherit;
+    background-color:var(--root);
+    box-shadow:0 5px 15px rgba(0,0,0,.325);
+    border-radius: 5px;
+    margin:10px 0;
+    overflow:hidden;
+    color:var(--text);
+    text-decoration: none;
+    transition: transform .225s ease-out, box-shadow .225s ease-out;
+    cursor:pointer;
+    animation: body-search-card-fade-in .375s ease-out;
+    display:flex;
+    flex-direction: row;
+}
+
+.body-search-card:hover, .body-search-card:focus {
+    transform: translateY(-10px);
+    box-shadow:0 10px 30px rgba(0,0,0,.425);
+}
+
+@keyframes body-search-card-fade-in {
+    from { opacity:0; transform: translateY(10px); }
+}
+
+.body-search-card-title {
+    font-size: 21px;
+    height:52px;
+    cursor:pointer;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.search-card-footer {
+    margin-top: 15px;
+    width:100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor:pointer;
+}
+
+.search-card-footer-text {
+    font-size: 16px;
+    color:var(--text-2);
+    cursor:pointer;
+}
+
+.search-card-preview-image > img {
+    width:141px;
+    height:141px;
+    object-fit: cover;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    cursor:pointer;
+}
+
+.body-search-card-body {
+    height: 141px;
+    padding:15px 25px;
+    flex:1;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.search-card-preview-image-wrapper {
+    width:141px;
+    height:141px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    overflow:hidden;
+}
+
+#body-search-404 {
+    width:100%;
+}

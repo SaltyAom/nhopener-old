@@ -3,7 +3,7 @@ import React, {
     useReducer,
     FunctionComponent
 } from 'react'
-import ReactDOM from 'react-dom'
+import { render } from "react-dom"
 import { 
     BrowserRouter as Router,
     Route,
@@ -55,6 +55,10 @@ History:any = Loadable({
 Warning:any = Loadable({
     loader: () => import('./react/pages/warning' /* webpackChunkName: "warning" */),
     loading: Loading
+}),
+SearchResult:any = Loadable({
+    loader: () => import('./react/pages/searchResult' /* webpackChunkName: "searchResult" */),
+    loading: Loading
 });
 
 const Root:FunctionComponent = () => {
@@ -76,7 +80,7 @@ const Root:FunctionComponent = () => {
                         exact 
                         path="/" 
                         render={() => (
-                            <storeContext.Provider key={0} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <Home store={state} />
                             </storeContext.Provider>
                         )}
@@ -85,7 +89,7 @@ const Root:FunctionComponent = () => {
                         exact 
                         path="/redirect/:id"
                         render={() => (
-                            <storeContext.Provider key={1} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <Redirect store={state} />
                             </storeContext.Provider>
                         )}
@@ -94,7 +98,7 @@ const Root:FunctionComponent = () => {
                         exact
                         path="/drop" 
                         render={() => (
-                            <storeContext.Provider key={2} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <Drop store={state} />
                             </storeContext.Provider>
                         )}
@@ -103,7 +107,7 @@ const Root:FunctionComponent = () => {
                         exact
                         path="/generate" 
                         render={() => (
-                            <storeContext.Provider key={3} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <Generate store={state} />
                             </storeContext.Provider>
                         )}
@@ -112,7 +116,7 @@ const Root:FunctionComponent = () => {
                         exact
                         path="/generate/:id"
                         render={() => (
-                            <storeContext.Provider key={3} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <Generate store={state} />
                             </storeContext.Provider>
                         )}
@@ -121,7 +125,7 @@ const Root:FunctionComponent = () => {
                         exact
                         path="/history"
                         render={() => (
-                            <storeContext.Provider key={4} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <History store={state} />
                             </storeContext.Provider>
                         )}
@@ -130,8 +134,26 @@ const Root:FunctionComponent = () => {
                         exact
                         path="/settings"
                         render={() => (
-                            <storeContext.Provider key={5} value={dispatch}>
+                            <storeContext.Provider value={dispatch}>
                                 <Settings store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/search"
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <SearchResult store={state} />
+                            </storeContext.Provider>
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/search/:id"
+                        render={() => (
+                            <storeContext.Provider value={dispatch}>
+                                <SearchResult store={state} />
                             </storeContext.Provider>
                         )}
                     />
@@ -147,4 +169,5 @@ const Root:FunctionComponent = () => {
     )
 }
 
-ReactDOM.render(<Root />, document.getElementById('opener-pro'));
+const rootElement = document.getElementById('opener-pro');
+render(<Root />, rootElement);
