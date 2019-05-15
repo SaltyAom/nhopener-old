@@ -197,19 +197,19 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         <h1>Privacy</h1>
 
                         <CheckPanel
-                            title="Blur an preview image on dashboard"
+                            title="blur a preview image on dashboard"
                             checkValue={blurDashboard}
                             function={ async() => setBlurDashboard(await setIDBSetting("blurDashboard", false)) }
                             aria="Set blur dashboard"
                         />
                         <CheckPanel
-                            title="Blur an preview image on redirect's image preview"
+                            title="blur a preview image on redirect's image preview"
                             checkValue={blurPreview}
                             function={ async() => setBlurPreview(await setIDBSetting("blurPreview", false)) }
                             aria="Set save history"
                         />
                         <CheckPanel
-                            title="Blur an preview image on search result"
+                            title="blur a preview image on search result"
                             checkValue={blurSearchPreview}
                             function={ async() => setBlurSearchPreview(await setIDBSetting("blurSearchResult", false)) }
                             aria="Set blur search result"
