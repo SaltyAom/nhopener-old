@@ -82,6 +82,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
     useEffect(() => {
         (async() => {
 
+            // Get Blur settings
             openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any):void => {
                 setBlurDashboard(data[0].value);
             }).catch((err:any):void => {
@@ -91,6 +92,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                 });    
             });
 
+            // Check last visit time
             let visitState:number = Date.now();
             let fetchVisitState:Promise<boolean> = new Promise((resolve, reject) => {
 
@@ -110,7 +112,8 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
 
             await fetchVisitState;
 
-            let randomStoriesID:number = Math.floor(Math.random() * (229345 - 1)) + 1;
+            // Random Hentai
+            let randomStoriesID:number = Math.floor(Math.random() * (272339 - 1)) + 1;
             let fetchStoriesID:Promise<boolean> = new Promise(async (resolve, reject) => {
 
                 openerIDB.table("settings").where("title").equals("suggestedStoriesID").toArray(async (data:any) => {
@@ -141,6 +144,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
 
             await fetchStoriesID;
 
+            // Find new hentai
             let fetchStories:Promise<boolean> = new Promise(async (resolve, reject) => {
                 openerIDB.table("settings").where("title").equals("suggestedStories").toArray(async (data:any) => {
 
