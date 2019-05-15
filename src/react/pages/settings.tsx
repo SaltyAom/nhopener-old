@@ -5,10 +5,11 @@ import React, {
     ReactElement
 } from 'react'
 import {
-    openerIDB,
     ButtonBase,
     Loading,
-    Helmet
+    Helmet,
+    getIDBSetting,
+    setIDBSetting
 } from '../bridge'
 import { Checkbox } from '@material-ui/core'
 
@@ -21,7 +22,7 @@ interface ButtonPanelInterface {
     id?: string
 }
 
-const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactElement<any> => (
+const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactElement<any> => 
     <div>
         <p>{props.title}</p>
         {props.id ?
@@ -33,7 +34,6 @@ const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactEle
         </ButtonBase>
         }
     </div>
-);
 
 interface CheckPanelInterface {
     title: string,
@@ -42,17 +42,21 @@ interface CheckPanelInterface {
     function: any,
 }
 
-const CheckPanel:FunctionComponent<any> = (props:CheckPanelInterface):ReactElement<any> => (
-    <div>
-        <p>{props.title}</p>
-        <Checkbox
-            className="check"
-            checked={props.checkValue}
-            onChange={() => props.function()}
-            value={props.aria}
-        />
-    </div>
-)
+const CheckPanel:FunctionComponent<any> = (props:CheckPanelInterface):ReactElement<any> => {
+    let checkValue = props.checkValue || false
+
+    return(
+        <div>
+            <p>{props.title}</p>
+            <Checkbox
+                className="check"
+                checked={checkValue}
+                onChange={() => props.function()}
+                value={props.aria}
+            />
+        </div>
+    );
+}
 
 interface LinkInterface {
     title: string,
@@ -60,7 +64,7 @@ interface LinkInterface {
     link: string,
 }
 
-const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any> => (
+const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any> =>
     <div>
         <p>{props.title}</p>
         <a className="link-panel-button" href="https://api.opener.mystiar.com">
@@ -69,90 +73,29 @@ const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any>
             </ButtonBase>
         </a>
     </div>
-)
 
 const Settings:FunctionComponent<any> = ():ReactElement<null> => {
     const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
         [blurPreview, setBlurPreview] = useState<boolean | any>(false),
+        [blurSearchPreview, setBlurSearchPreview] = useState<boolean | any>(false),
         [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false),
         [showLoading, setShowLoading] = useState<boolean | any>(false),
         [a2hs, setA2hs] = useState<Boolean | any>(false);
 
-    useEffect(() => {
-        openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
-            setBlurDashboard(data[0].value);
-        }).catch((err:any) => {
-            openerIDB.table("settings").put({
-                title: "blurDashboard",
-                value: false
-            });
+    useEffect(() => {            
+        getIDBSetting("blurDashboard", false).then(data => {
+            setBlurDashboard(data);
+        });
+        getIDBSetting("blurPreview", false).then(data => {
+            setBlurPreview(data);
+        });
+        getIDBSetting("blurSearchResult", false).then(data => {
+            setBlurSearchPreview(data);
+        });
+        getIDBSetting("dontSaveHistory", false).then(data => {
+            setdontSaveHistory(data);
         });
 
-        openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
-            setBlurPreview(data[0].value);
-        }).catch((err:any) => {
-            openerIDB.table("settings").put({
-                title: "blurPreview",
-                value: false
-            });
-        });
-
-        openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
-            setdontSaveHistory(data[0].value);
-        }).catch((err:any) => {
-            openerIDB.table("settings").put({
-                title: "dontSaveHistory",
-                value: false
-            });
-        });
-    }, []);
-
-    const saveBlurDashboard = () => {
-        openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any) => {
-            openerIDB.table("settings").put({
-                title:"blurDashboard",
-                value:!data[0].value
-            });
-            setBlurDashboard(!data[0].value);
-        }).catch((err:any) => {
-            openerIDB.table("settings").put({
-                title: "blurDashboard",
-                value: false
-            });
-        });
-    }
-
-    const saveBlurPreview = () => {
-        openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
-            openerIDB.table("settings").put({
-                title: "blurPreview",
-                value: !data[0].value
-            });
-            setBlurPreview(!data[0].value);
-        }).catch((err:any) => {
-            openerIDB.table("settings").put({
-                title: "blurPreview",
-                value: false
-            });
-        });
-    }
-
-    const saveDontSaveHistory = () => {
-        openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
-            openerIDB.table("settings").put({
-                title: "dontSaveHistory",
-                value: !data[0].value
-            });
-            setdontSaveHistory(!data[0].value);
-        }).catch((err:any) => {
-            openerIDB.table("settings").put({
-                title: "dontSaveHistory",
-                value: false
-            });
-        });
-    }
-
-    useEffect(() => {
         window.addEventListener('beforeinstallprompt', (e:any) => {
             e.preventDefault();
 
@@ -160,7 +103,6 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
             setA2hs(true);
 
             document.getElementById("a2hs").addEventListener("click", a2hsEvent => {
-                console.log("TEST");
                 deferredPrompt.prompt();
         
                 deferredPrompt.userChoice.then((choiceResult:any) => {
@@ -168,7 +110,6 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                 });
             });
         });
-        // eslint-disable-next-line
     }, []);
 
     const clearCache = () => {
@@ -258,19 +199,25 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         <CheckPanel
                             title="Blur an preview image on dashboard"
                             checkValue={blurDashboard}
-                            function={() => saveBlurDashboard()}
+                            function={ async() => setBlurDashboard(await setIDBSetting("blurDashboard", false)) }
                             aria="Set blur dashboard"
                         />
                         <CheckPanel
                             title="Blur an preview image on redirect's image preview"
                             checkValue={blurPreview}
-                            function={() => saveBlurPreview()}
+                            function={ async() => setBlurPreview(await setIDBSetting("blurPreview", false)) }
                             aria="Set save history"
+                        />
+                        <CheckPanel
+                            title="Blur an preview image on search result"
+                            checkValue={blurSearchPreview}
+                            function={ async() => setBlurSearchPreview(await setIDBSetting("blurSearchResult", false)) }
+                            aria="Set blur search result"
                         />
                         <CheckPanel
                             title="Don't save read history"
                             checkValue={dontSaveHistory}
-                            function={() => saveDontSaveHistory()}
+                            function={ async() => setdontSaveHistory(await setIDBSetting("dontSaveHistory", false)) }
                             aria="Set save history"
                         />
 

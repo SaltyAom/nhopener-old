@@ -123,9 +123,18 @@
     cursor:pointer;
 }
 
-.search-card-preview-image {
+.search-card-preview-image-wrapper {
     width:141px;
     height:141px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+.search-card-preview-image {
+    width:inherit;
+    height:inherit;
     object-fit: cover;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;

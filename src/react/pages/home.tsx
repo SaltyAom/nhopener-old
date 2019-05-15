@@ -11,7 +11,8 @@ import {
     Link,
     Axios,
     openerIDB,
-    Helmet
+    Helmet,
+    getIDBSetting
 } from '../bridge'
 import '../../assets/css/dashboard.css'
 
@@ -83,14 +84,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
         (async() => {
 
             // Get Blur settings
-            openerIDB.table("settings").where("title").equals("blurDashboard").toArray((data:any):void => {
-                setBlurDashboard(data[0].value);
-            }).catch((err:any):void => {
-                openerIDB.table("settings").put({
-                    title: "blurDashboard",
-                    value: false
-                });    
-            });
+            setBlurDashboard(await getIDBSetting("blurDashboard", false));
 
             // Check last visit time
             let visitState:number = Date.now();

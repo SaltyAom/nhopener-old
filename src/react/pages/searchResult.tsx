@@ -8,7 +8,8 @@ import { Helmet } from 'react-helmet'
 
 import {
     openerIDB,
-    Link
+    Link,
+    getIDBSetting
 } from '../bridge'
 
 import { RouteComponentProps } from "react-router"
@@ -26,7 +27,8 @@ type props = RouteComponentProps<PathParamsType> & {
 
 const SearchResult:FunctionComponent<any> = (props:props):ReactElement => {
     const [searchQuery, setSearchQuery] = useState<string | any>(""),
-        [searchResult, setSearchResult] = useState<object | any>([]);
+        [searchResult, setSearchResult] = useState<object | any>([]),
+        [blurSearchResult, setBlurSearchResult] = useState<boolean | any>(true);
 
     useEffect(() => {
         (async() => {
@@ -34,6 +36,7 @@ const SearchResult:FunctionComponent<any> = (props:props):ReactElement => {
                 setSearchQuery(props.match.params.id);
                 retrieveSearch(props.match.params.id);
             }
+            setBlurSearchResult(await getIDBSetting("blurSearchResult", false));
         })();
     }, [props.match.params.id]);
 
@@ -148,11 +151,22 @@ const SearchResult:FunctionComponent<any> = (props:props):ReactElement => {
                                 <Link className="body-search-card-link" key={index} to={`/redirect/${data.link}`}>
                                     <div className="body-search-card">
                                         {data.ref ?
-                                            <img
-                                                className="search-card-preview-image"
-                                                src={data.ref} 
-                                                alt={data.title}
-                                            />
+                                            <div className="search-card-preview-image-wrapper">
+                                                { blurSearchResult ?
+                                                    <img
+                                                        className="search-card-preview-image"
+                                                        src={data.ref} 
+                                                        alt={data.title}
+                                                        style={{filter:"blur(10px)"}}
+                                                    />
+                                                    :
+                                                    <img
+                                                        className="search-card-preview-image"
+                                                        src={data.ref} 
+                                                        alt={data.title}
+                                                    />
+                                                }
+                                            </div>
                                         : null }
                                         <div className="body-search-card-body">
                                             <h1 className="body-search-card-title">

@@ -21,6 +21,10 @@ Dexie.exists("opener").then(async (exists:boolean) => {
             value: false
         });
         openerIDB.table("settings").put({
+            title: "blurSearchResult",
+            value: false
+        });
+        openerIDB.table("settings").put({
             title: "dontSaveHistory",
             value: false
         });

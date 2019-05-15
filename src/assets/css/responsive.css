@@ -113,9 +113,10 @@
         display:none;
     }
     #sidebar-overlay.active { z-index:2800; opacity:1; }
-    #body-searchbar {
+    #body-searchbar, .body-search-icon {
         font-size: 24px !important;
     }
+    .body-search-icon { width: 60px !important; padding-left:10px !important; }
 }
 
 @media screen and (min-width:768px) and (max-width: 959.9px){
