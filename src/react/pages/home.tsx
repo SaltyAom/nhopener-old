@@ -221,7 +221,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                     <Card
                                         title="Hello There!"
                                         detail="Welcome to NHentai Opener 1.3.0.beta.0! You can check more detail at Github"
-                                        footer="NHentai Opener 1.2.0"
+                                        footer="NHentai Opener 1.3.0.beta.0"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
                                     />
@@ -290,8 +290,15 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                 </div>
                             </div>
                         </div>
-                        <div id="notify-container">                        
-                        </div>    
+                        <div id="notify-container">
+                            <div id="notify-wrapper">
+                                <Card 
+                                    title="Beta 1.3" 
+                                    detail="Hi there! You're now in beta 1.3.0.beta.1 in-case of you found something new and cool"
+                                    to="/"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

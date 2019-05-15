@@ -15,7 +15,14 @@
 
 #notify-container {
     padding:15px;
-    width: 250px;
+    width: 300px;
+    position:relative;
+}
+
+#notify-wrapper {
+    position:absolute;
+    z-index: 100;
+    width:inherit;
 }
 
 #main-card-container {
