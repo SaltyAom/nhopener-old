@@ -1,3 +1,4 @@
+[![forthebadge](https://forthebadge.com/images/badges/ages-18.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
 # NHentai Opener
 ###### Previously known as 'Opener Pro'
 ![Opener Pro 1.2.0](https://user-images.githubusercontent.com/35027979/57622535-0d5ad680-75b8-11e9-9d8c-2dac974bcc2e.png)
