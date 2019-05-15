@@ -7,8 +7,8 @@ export default (
             <Route path='/drop' />
             <Route path='/generate' />
             <Route path='/history' />
-            <Route path='/' />
             <Route path='/redirect' />
+            <Route path='/search' />
             <Route path='/settings' />
     </Route>
 )
