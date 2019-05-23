@@ -1,7 +1,8 @@
 import React, {
     useState,
     useReducer,
-    FunctionComponent
+    FunctionComponent,
+    useEffect
 } from 'react'
 import { render } from "react-dom"
 import { 
@@ -10,7 +11,7 @@ import {
     Switch
 } from 'react-router-dom'
 
-import { 
+import {
     Loadable,
     Loading, 
     storeContext,
@@ -23,6 +24,8 @@ import Sidebar from './react/component/sidebar' /* webpackChunkName: "sidebar" *
 import './assets/css/init.css'
 import './assets/css/responsive.css'
 import './assets/material-icon/material-icons.css'
+
+import * as serviceWorker from './serviceWorker';
 
 const Home:any = Loadable({
     loader: () => import('./react/pages/home' /* webpackChunkName: "home" */),
@@ -65,15 +68,16 @@ const Root:FunctionComponent = () => {
     const [state, dispatch]:any = useReducer(reducers, initState),
         [warning, setWarning] = useState<boolean | any>(false);
 
+    useEffect(() => {
+        serviceWorker.register();
+    }, []);
+
     return (
         <Router>
             <storeContext.Provider value={dispatch}>
                 <Nav store={state} />
                 <Sidebar store={state} />
             </storeContext.Provider>
-            { process.env.NODE_ENV !== "development" ?
-            <script defer src="/assets/app/js/register.js"></script> :
-            null }
             { warning ?
                 <Switch>
                     <Route 

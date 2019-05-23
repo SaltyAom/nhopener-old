@@ -218,8 +218,8 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                 <div className="main-card-wrapper">
                                     <Card
                                         title="Hello There!"
-                                        detail="Welcome to NHentai Opener 1.3.0.beta.0! You can check more detail at Github"
-                                        footer="NHentai Opener 1.3.0.beta.0"
+                                        detail="Welcome to NHentai Opener 1.3.0.beta.1! You can check more detail at Github"
+                                        footer="NHentai Opener 1.3.0.beta.1"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
                                     />
