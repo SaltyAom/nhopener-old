@@ -9,7 +9,7 @@ import React, {
 import { 
     storeContext,
     Link,
-    Axios,
+    OpenerAPI,
     openerIDB,
     Helmet,
     getIDBSetting
@@ -150,15 +150,15 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         // Stories in IndexedEB not exists
                         if(props.store.suggestStories[0] === undefined){
                             // Haven't fetched stories yet
-                            Axios(`https://opener.now.sh/api/relate/${randomStoriesID}`).then(async (stories:any) => {
+                            OpenerAPI.getRelate(randomStoriesID).then(async (stories:any) => {
                                 dispatch({
                                     type: "newSuggestStories",
-                                    suggestStories: stories.data.result
+                                    suggestStories: stories.result
                                 });
-                                setStories(stories.data.result);
+                                setStories(stories.result);
                                 await openerIDB.table("settings").put({
                                     title: "suggestedStories",
-                                    value: stories.data.result
+                                    value: stories.result
                                 });
                                 resolve(true);
                             });
@@ -218,8 +218,8 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                                 <div className="main-card-wrapper">
                                     <Card
                                         title="Hello There!"
-                                        detail="Welcome to NHentai Opener 1.3.0.beta.1! You can check more detail at Github"
-                                        footer="NHentai Opener 1.3.0.beta.1"
+                                        detail="Welcome to NHentai Opener 1.3.0beta.2! You can check more detail at Github"
+                                        footer="NHentai Opener 1.3.0beta.2"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
                                     />
@@ -292,7 +292,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             <div id="notify-wrapper">
                                 <Card 
                                     title="Beta 1.3" 
-                                    detail="Hi there! You're now in beta 1.3.0.beta.1 in-case of you found something new and cool"
+                                    detail="Hi there! You're now in beta 1.3.0beta.2 in-case of you found something new and cool"
                                     to="/"
                                 />
                             </div>

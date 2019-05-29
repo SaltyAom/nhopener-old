@@ -100,7 +100,7 @@ const Nav:FunctionComponent<any> = (props: props):ReactElement<any> => {
 
             }
 
-        },625);
+        },400);
     }
 
     const unFocusSearchbar = () => {

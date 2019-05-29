@@ -7,9 +7,9 @@ import React, {
 import {
     Loading,
     ButtonBase,
-    Axios,
     Link,
-    openerIDB
+    openerIDB,
+    OpenerAPI
 } from "../bridge"
 import { RouteComponentProps } from "react-router"
 import { withRouter } from "react-router-dom"
@@ -31,31 +31,30 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
         [blurPreview, setBlurPreview] = useState<boolean | any>(true);
 
     useEffect(() => {
-        let requestUrl:string = `https://opener.now.sh/api/g/${props.match.params.id}`;
-
         openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
             setBlurPreview(data[0].value);
         });
 
-        Axios(requestUrl).then((ogData:any) => {
-            if(ogData.data.data.ogTitle === undefined) throw Object.assign({error:"not found"})
-            setOg(ogData.data.data);
-            openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((data:any) => {
-                if(data[0].value !== true){
-                    openerIDB.table("history").toArray().then((data:Array<any>) => {
-                        if(data[data.length - 1].link !== props.match.params.id){
+        OpenerAPI.getData(props.match.params.id).then((requestData:any) => {
+            if(requestData.id === undefined) throw Object.assign({error:"not found"})
+            setOg(requestData);
+            console.log(requestData);
+            openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((setting:any) => {
+                if(setting[0].value !== true){
+                    openerIDB.table("history").toArray().then((IDBData:Array<any>) => {
+                        if(IDBData[IDBData.length - 1].link !== props.match.params.id){
                             openerIDB.table("history").add({
-                                title: ogData.data.data.ogTitle,
+                                title: requestData.title.pretty,
                                 link: props.match.params.id,
-                                ref: ogData.data.data.ogImage.url,
+                                ref: requestData.images.cover.src,
                                 timestamp: Date.now()
                             });
                         }
                     }).catch(():void => {
                         openerIDB.table("history").add({
-                            title: ogData.data.data.ogTitle,
+                            title: requestData.title.pretty,
                             link: props.match.params.id,
-                            ref: ogData.data.data.ogImage.url,
+                            ref: requestData.images.cover.src,
                             timestamp: Date.now()
                         });
                     })
@@ -67,7 +66,6 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
     },[props.match.params.id]);
     
     if(og !== undefined && og !== "Fetching..."){
-        let tags = (og.twitterDescription).split(",");
         return (
             <div id="pages">
                 <link rel="prefetch" href={`https://nhentai.net/g/${props.match.params.id}`} />
@@ -75,11 +73,11 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                 <div id="redirect-page">
                     <div id="redirect-image-container">
                         <div id="redirect-image-wrapper">
-                            { og.ogImage !== undefined ?
+                            { og.images.cover !== undefined ?
                                 <>
                                     { blurPreview ?
-                                        <img id="redirect-preview-image" className="blur" src={og.ogImage.url} alt="Preview Story" /> :
-                                        <img id="redirect-preview-image" src={og.ogImage.url} alt="Preview Story" />
+                                        <img id="redirect-preview-image" className="blur" src={og.images.cover.src} alt="Preview Story" /> :
+                                        <img id="redirect-preview-image" src={og.images.cover.src} alt="Preview Story" />
                                     }
                                 </>
                             : null }
@@ -87,10 +85,14 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                     </div>
                     <div id="redirect-detail">
                         <h6 id="redirect-code">{props.match.params.id}</h6> 
-                        <h2>{og.ogTitle}</h2>
-                        <h3 id="redirect-description">{og.ogDescription}</h3>
+                        <h2>{og.title.pretty}</h2>
+                        <h3 id="redirect-description">{og.title.english}</h3>
+                        <div id="redirect-paper">
+                            <h4>Pages: {og.num_pages}</h4>
+                            <h4>Fav: {og.num_favorites}</h4>
+                        </div>
                         <div id="redirect-tag">
-                            {tags.map((tag:string,index:number) => <div key={index}>{tag}</div>)}
+                            {og.tags.map((tag:any,index:number) => <div key={index}>{tag.name}</div>)}
                         </div>
                         <ButtonBase id="h-rayriffy-button">
                             <a className="button success has-wrapper" href={`https://h.rayriffy.com/g/${props.match.params.id}`} rel="noreferrer external nofollow">

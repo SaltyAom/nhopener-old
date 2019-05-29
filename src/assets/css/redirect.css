@@ -86,3 +86,16 @@
     font-weight: bold;
     font-size: 13px;
 }
+
+#redirect-paper {
+    display:flex;
+    flex-direction: row;
+}
+
+#redirect-paper > h4 {
+    background-color: var(--secondary-2);
+    padding:3px 8px;
+    border-radius: 3px;
+    font-size: 16px;
+    margin:8px 5px;
+}

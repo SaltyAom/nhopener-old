@@ -6,6 +6,7 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import Axios from 'axios'
 import openerIDB from './store/dexie-indexeddb'
 import { Helmet } from 'react-helmet'
+import OpenerAPI from 'opener-api'
 
 const storeContext:any = React.createContext<null>(null)
 
@@ -67,5 +68,6 @@ export {
     openerIDB,
     Helmet,
     getIDBSetting,
-    setIDBSetting
+    setIDBSetting,
+    OpenerAPI
 }
