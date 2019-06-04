@@ -30,7 +30,7 @@ const SidebarIcon:FunctionComponent<props> = (props: props):ReactElement<any> =>
 
     return(
         <NavLink onClick={() => closeSidebar()} exact to={`${props.to}`} className="sidebar-nav-link" activeClassName="sidebar-nav-link-active">
-            <ButtonBase className="sidebar-nav-wrapper" style={{color: "#ccc"}}>
+            <ButtonBase tabIndex={-1} className="sidebar-nav-wrapper" style={{color: "#ccc"}}>
                 <i className="material-icons">{props.icon}</i>
                 <p className='sidebar-detail'>{props.title}</p>
             </ButtonBase>
@@ -59,7 +59,7 @@ const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
 
     return(
         <>
-            <aside id="sidebar" className={sidebarClass}>
+            <aside id="sidebar" role="navigation" className={sidebarClass}>
                 <div id="sidebar-body">
                     <SidebarIcon 
                         to="/" 

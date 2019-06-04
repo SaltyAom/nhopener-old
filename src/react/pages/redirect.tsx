@@ -38,7 +38,6 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
         OpenerAPI.getData(props.match.params.id).then((requestData:any) => {
             if(requestData.id === undefined) throw Object.assign({error:"not found"})
             setOg(requestData);
-            console.log(requestData);
             openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((setting:any) => {
                 if(setting[0].value !== true){
                     openerIDB.table("history").toArray().then((IDBData:Array<any>) => {
@@ -94,12 +93,12 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                         <div id="redirect-tag">
                             {og.tags.map((tag:any,index:number) => <div key={index}>{tag.name}</div>)}
                         </div>
-                        <ButtonBase id="h-rayriffy-button">
+                        <ButtonBase tabIndex={-1} id="h-rayriffy-button">
                             <a className="button success has-wrapper" href={`https://h.rayriffy.com/g/${props.match.params.id}`} rel="noreferrer external nofollow">
                                 h.rayriffy <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
                         </ButtonBase>
-                        <ButtonBase id="redirect-button">
+                        <ButtonBase tabIndex={-1} id="redirect-button">
                             <a className="button secondary" href={`https://nhentai.net/g/${props.match.params.id}`} rel="noreferrer external nofollow">
                                 nhentai <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
@@ -118,7 +117,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                 <h6 id="redirect-code">{props.match.params.id}</h6> 
                 <h1>Offline</h1>
                 <p>Request couldn't been made</p>
-                <ButtonBase className="button-wrapper">
+                <ButtonBase tabIndex={-1} className="button-wrapper">
                     <Link className="button" to="/generate">
                         Return <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                     </Link>
@@ -131,7 +130,7 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                 <h6 id="redirect-code">{props.match.params.id}</h6> 
                 <h1>404</h1>
                 <p>Stories not found...</p>
-                <ButtonBase className="button-wrapper">
+                <ButtonBase tabIndex={-1} className="button-wrapper">
                     <Link className="button" to="/generate">
                         Return <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                     </Link>

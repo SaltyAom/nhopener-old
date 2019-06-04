@@ -33,6 +33,12 @@
     cursor:pointer;
     outline:none;
     color:rgba(255,255,255,.375);
+    transition: background-color .25s ease-out;
+    outline:none;
+}
+
+#body-search-send:focus {
+    background-color:var(--text-overlay);
 }
 
 #body-search-send-icon {

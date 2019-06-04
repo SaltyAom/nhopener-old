@@ -6,6 +6,7 @@
   "dependencies": {
     "@loadable/component": "^5.10.1",
     "@material-ui/core": "^4.0.1",
+    "@testing-library/react": "^8.0.1",
     "@types/dexie": "^1.3.1",
     "@types/firebase": "^3.2.1",
     "@types/jest": "24.0.13",
@@ -50,5 +51,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {}
+  "devDependencies": {
+    "jest-dom": "^3.4.0"
+  }
 }

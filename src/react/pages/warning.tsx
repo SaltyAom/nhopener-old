@@ -80,7 +80,7 @@ const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
                     />
                     <label id="warning-label">Blur every preview image (SFW mode)</label>
                 </div>
-                <ButtonBase className="button-wrapper" onClick={() => props.function()}>
+                <ButtonBase tabIndex={-1} className="button-wrapper" onClick={() => props.function()}>
                     <Link className="button" to="/" onClick={(e:any) => allow(e)}>
                         Proceed <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                     </Link>

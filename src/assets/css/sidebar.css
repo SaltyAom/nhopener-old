@@ -79,3 +79,7 @@
     z-index:-9000;
     transition: opacity .25s ease-in-out;
 }
+
+.sidebar-nav-link:focus > .sidebar-nav-wrapper {
+    border-left-color: var(--secondary) !important;
+}

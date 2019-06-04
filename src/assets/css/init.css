@@ -30,6 +30,9 @@
   --warning: #f1c205;
   --danger: #bb0000;
   --info: #1eb8eb;
+
+  --primary-overlay: rgba(245,0,87,.175);
+  --text-overlay: rgba(255,255,255,.175);
 }
 
 ::selection, ::-webkit-selection { background-color: rgba(0,123,255,.25); }

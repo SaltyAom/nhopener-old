@@ -124,7 +124,7 @@ const Nav:FunctionComponent<any> = (props: props):ReactElement<any> => {
                 </Link>
             </div>
             <div className="nav-section">
-                <form id="search" onSubmit={(evt:any) => toSearch(evt)}>
+                <form id="search" role="search" onSubmit={(evt:any) => toSearch(evt)}>
                     <i id="search-icon" className="material-icons">search</i>
                     <input
                         autoComplete="off"
@@ -132,6 +132,7 @@ const Nav:FunctionComponent<any> = (props: props):ReactElement<any> => {
                         id="search-box"
                         type="text"
                         placeholder="Search from history" 
+                        aria-labelledby="Search from history"
                     />
                     <button id="search-go-wrapper">
                         <i id="search-go" className="material-icons">chevron_right</i>

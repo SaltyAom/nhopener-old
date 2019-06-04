@@ -130,7 +130,7 @@ const SearchResult:FunctionComponent<any> = (props:props):ReactElement => {
                 ]}
             />
             <div id="pages" className="search-page">
-                <form id="body-search" onSubmit={(evt) => SearchSubmit(evt)}>
+                <form id="body-search" onSubmit={(evt) => SearchSubmit(evt)} role="search">
                     <i className="material-icons body-search-icon">search</i>
                     <input 
                         id="body-searchbar"
@@ -139,6 +139,7 @@ const SearchResult:FunctionComponent<any> = (props:props):ReactElement => {
                         autoComplete="off"
                         onChange={(evt:any) => handleQuery(evt)}
                         value={searchQuery}
+                        aria-labelledby="Search from history"
                     />
                     <button id="body-search-send" className="body-search-icon">
                         <i id="body-search-send-icon" className="material-icons">chevron_right</i>

@@ -68,7 +68,7 @@ const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any>
     <div>
         <p>{props.title}</p>
         <a className="link-panel-button" href="https://api.opener.mystiar.com">
-            <ButtonBase className="setting-button">
+            <ButtonBase tabIndex={-1} className="setting-button">
                 {props.buttonTitle}
             </ButtonBase>
         </a>

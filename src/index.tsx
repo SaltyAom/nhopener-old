@@ -78,7 +78,7 @@ const Root:FunctionComponent = () => {
                 <Nav store={state} />
                 <Sidebar store={state} />
             </storeContext.Provider>
-            { warning ?
+            { !warning ?
                 <Switch>
                     <Route 
                         exact 

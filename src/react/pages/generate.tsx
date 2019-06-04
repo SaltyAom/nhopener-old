@@ -135,7 +135,7 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
             />
             <div id="pages">
                 { redirectState ? <Redirect to={`/redirect/${props.store.code}`} push /> : null }
-                <div id="generate-page">
+                <div role="form" id="generate-page">
                     <canvas id="generate-canvas" style={{display:"none"}}></canvas>
                     <img
                         id="generate-preview" 
@@ -145,23 +145,24 @@ const Generate:FunctionComponent<any> = (props:props):ReactElement => {
                             boxShadow: `0 12px 35px #${props.store.code}85`
                         }}
                     />
-                    <div id="generate-input-wrapper">
+                    <div id="generate-input-wrapper" >
                         <label id="generate-label">#</label>
-                        <input 
+                        <input
                             autoComplete="off"
                             id="generate-input"
                             type="tel"
                             placeholder="000000"
+                            aria-labelledby="Generate Code Input, maximum 6 digits"
                             onBlur={e => handleCode(e)} onKeyDown={e => handleKey(e)} 
                         />
                     </div>
                     <div id="generate-detail">
-                        <ButtonBase id="generate-download" className="button-wrapper">
+                        <ButtonBase tabIndex={-1} id="generate-download" className="button-wrapper">
                             <a className="button secondary" href={uri} download={`${props.store.code}.png`}>
                                 Download <i className="material-icons" style={{cursor:"pointer"}}>vertical_align_bottom</i>
                             </a>
                         </ButtonBase>
-                        <ButtonBase className="button-wrapper" onClick={() => redirect()}>
+                        <ButtonBase tabIndex={-1} className="button-wrapper" onClick={() => redirect()}>
                             <a className="button" href="#generate-page" onClick={evt => evt.preventDefault()}>
                                 Redirect <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>

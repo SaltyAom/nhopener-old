@@ -116,6 +116,11 @@
     color:var(--text-2);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    transition: background-color .175s ease-out;
+}
+
+#search-go-wrapper:focus {
+    background-color:var(--text-overlay);
 }
 
 #search-box {
