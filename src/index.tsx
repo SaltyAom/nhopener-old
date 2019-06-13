@@ -66,10 +66,13 @@ SearchResult:any = Loadable({
 
 const Root:FunctionComponent = () => {
     const [state, dispatch]:any = useReducer(reducers, initState),
-        [warning, setWarning] = useState<boolean | any>(false);
+        [warning, setWarning] = useState<boolean | any>(true);
 
     useEffect(() => {
-        serviceWorker.register();
+        window.onload = () => {
+            serviceWorker.register();
+            console.log("REGISTER");
+        }
     }, []);
 
     return (
@@ -166,7 +169,7 @@ const Root:FunctionComponent = () => {
                 </Switch>
             : 
             <storeContext.Provider value={dispatch}>
-                <Warning function={() => setWarning(true)} />
+                <Warning function={() => setWarning(!warning)} />
             </storeContext.Provider>
             }
         </Router>
