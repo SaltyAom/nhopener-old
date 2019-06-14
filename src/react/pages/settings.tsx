@@ -208,7 +208,7 @@ const Settings = () => {
                     
                     <div className="setting-card">
                         <div>
-                            <h2>NHentai Opener 1.3.0.beta.2</h2>
+                            <h2>NHentai Opener 1.3.0.beta.3</h2>
                         </div>
                     </div>
 

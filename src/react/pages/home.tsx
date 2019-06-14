@@ -26,7 +26,8 @@ interface cardProps {
     footer?: string,
     onClick?: any,
     to?: string,
-    blur?: boolean
+    blur?: boolean,
+    index?: number
 }
 
 const mapStateToProps = (state) => {
@@ -193,57 +194,25 @@ const Home = ({ store, dispatch }) => {
                     ]}
                 />
                 <div id="pages">
+
                     <div id="home-page">
+
                         <div id="main-dashboard">
                             <div id="main-card-container">
                                 <div className="main-card-wrapper">
                                     <Card
                                         title="Hello There!"
-                                        detail="Welcome to NHentai Opener 1.3.0beta.2! You can check more detail at Github"
-                                        footer="NHentai Opener 1.3.0beta.2"
+                                        detail="Welcome to NHentai Opener 1.3.0beta.3! You can check more detail at Github"
+                                        footer="NHentai Opener 1.3.0beta.3"
                                         onClick={(e:any) => e.preventDefault()}
                                         to="/"
                                     />
                                     {stories.map((data:any, index:number) => 
                                         <Fragment key={index}>
+
                                             {index < 2 ?
-                                            <Fragment>
-                                                <Card
-                                                    key={index}
-                                                    detail={data.title.english}
-                                                    footer={`ID: ${data.id} - ${data.num_pages} pages`}
-                                                    image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
-                                                    imageType={data.images.cover.t}
-                                                    to={`/redirect/${data.id}`}
-                                                    blur={blurDashboard}
-                                                />
-                                                {index === 1 ?
-                                                    <>
-                                                        <Card
-                                                            key={6}
-                                                            title="Encrypt hexcode to image"
-                                                            detail="Secure your favourite stories' id with image and share with your friend"
-                                                            to="/generate"
-                                                        />
-                                                        <Card
-                                                            key={7}
-                                                            title="Decrypt secret code"
-                                                            detail="Decrypt secure codes' image to link and read stories"
-                                                            to="/drop"
-                                                        />
-                                                    </>
-                                                    : null
-                                                }
-                                            </Fragment>
-                                            : null }
-                                        </Fragment>
-                                    )}
-                                </div>
-                                <div className="main-card-wrapper">
-                                    {stories.map((data:any, index:number) => 
-                                        <Fragment key={index}>
-                                            {index >= 2 ?
-                                                <>
+                                                <Fragment>
+
                                                     <Card
                                                         key={index}
                                                         detail={data.title.english}
@@ -252,7 +221,51 @@ const Home = ({ store, dispatch }) => {
                                                         imageType={data.images.cover.t}
                                                         to={`/redirect/${data.id}`}
                                                         blur={blurDashboard}
+                                                        index={index}
                                                     />
+
+                                                    {index === 1 ?
+                                                        <Fragment>
+                                                            <Card
+                                                                key={6}
+                                                                title="Encrypt hexcode to image"
+                                                                detail="Secure your favourite stories' id with image and share with your friend"
+                                                                to="/generate"
+                                                            />
+                                                            <Card
+                                                                key={7}
+                                                                title="Decrypt secret code"
+                                                                detail="Decrypt secure codes' image to link and read stories"
+                                                                to="/drop"
+                                                            />
+                                                        </Fragment>
+                                                    : null
+                                                }
+                                            </Fragment>
+
+                                            : null }
+                                        </Fragment>
+                                    )}
+                                </div>
+                                
+                                <div className="main-card-wrapper">
+                                    {stories.map((data:any, index:number) => 
+
+                                        <Fragment key={index}>
+                                            {index >= 2 ?
+
+                                                <Fragment>
+                                                    <Card
+                                                        key={index}
+                                                        detail={data.title.english}
+                                                        footer={`ID: ${data.id} - ${data.num_pages} pages`}
+                                                        image={`https://t.nhentai.net/galleries/${data.media_id}/cover`}
+                                                        imageType={data.images.cover.t}
+                                                        to={`/redirect/${data.id}`}
+                                                        blur={blurDashboard}
+                                                        index={index}
+                                                    />
+                                                    
                                                     {index === 3 ?
                                                         <Card
                                                             key={8}
@@ -262,24 +275,30 @@ const Home = ({ store, dispatch }) => {
                                                         />
                                                         : null
                                                     }
-                                                </>
+
+                                                </Fragment>
+
                                             : null }
                                         </Fragment>
+
                                     )}
                                 </div>
                             </div>
                         </div>
+
                         <div id="notify-container">
                             <div id="notify-wrapper">
                                 <Card 
                                     title="Beta 1.3" 
-                                    detail="Hi there! You're now in beta 1.3.0beta.2 in-case of you found something new and cool"
+                                    detail="Hi there! You're now in beta 1.3.0beta.3 in-case of you found something new and cool"
                                     to="/"
                                 />
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </Fragment>
         )
     } else {
@@ -312,8 +331,10 @@ const Home = ({ store, dispatch }) => {
                 />
                 <div id="pages">
                     <div id="home-page">
+
                         <div id="main-dashboard">
                             <div id="main-card-container">
+
                                 <div className="main-card-wrapper">
                                     <Card
                                         title="Hello There!"
@@ -340,10 +361,13 @@ const Home = ({ store, dispatch }) => {
                                         to="/history"
                                     />
                                 </div>
+
                             </div>
                         </div>
+
                         <div id="notify-container">
                         </div>    
+
                     </div>
                 </div>
             </Fragment>
@@ -353,6 +377,32 @@ const Home = ({ store, dispatch }) => {
 
 /* Sub Component */
 const Card = (props: cardProps) => {
+    const [intersected, setIntersected] = useState(false);
+
+    /* Effect */
+    useEffect(() => {
+        if(!props.image) return;
+        
+        const element = document.getElementById(`main-card-${props.index}`);
+        if ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window){
+
+            const io = new IntersectionObserver(entries => {
+                if(entries[0].isIntersecting && !intersected){
+                    console.log("INTERSECT");
+                    setIntersected(true);
+                    io.unobserve(entries[0].target);
+                }
+            });
+
+            io.observe(element);
+
+        } else {
+            window.onload = () => {
+                setIntersected(true);
+            }
+        }
+    }, [props.image]);
+
     let imageType:string;
 
     switch(props.imageType){
@@ -368,32 +418,44 @@ const Card = (props: cardProps) => {
     }
 
     return(
-        <Link to={props.to} className="main-card">
+        <Link to={props.to} className="main-card" id={`main-card-${props.index}`}>
+
             { props.image ?
+
                 <div className="main-card-image-wrapper">
                     <div className="main-card-overlay">
                         <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
                     </div>
-                    { props.blur ?
-                        <div className="main-card-image blur" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
-                    :
-                        <div className="main-card-image" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                    { intersected ?
+                        <Fragment>
+                            { props.blur ?
+                                <div className="main-card-image blur" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                                :
+                                <div className="main-card-image" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                            }
+                        </Fragment>
+                        : <div className="main-card-image"></div>
                     }
                 </div>
+
             : null }
+
             { props.title ?
                 <h1 className="main-card-header">{props.title}</h1>
             : null }
+
             { props.detail ?
                 <p className="main-card-detail">
                     {props.detail}
                 </p>
             : null }
+
             {props.footer ?
                 <footer className="main-card-footer">
                     <p>{props.footer}</p>
                 </footer>
             : null }
+
         </Link>
     )
 }
