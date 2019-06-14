@@ -1,45 +1,56 @@
+/* React */
 import React, {
     useState,
     useEffect,
-    ReactElement,
-    FunctionComponent
+    Fragment
 } from 'react'
+
+/* Router */
+import { withRouter } from "react-router-dom"
+
+/* Bridge */
 import {
     Loading,
     ButtonBase,
     Link,
     openerIDB,
-    OpenerAPI
+    OpenerAPI,
+    getIDBSetting
 } from "../bridge"
-import { RouteComponentProps } from "react-router"
-import { withRouter } from "react-router-dom"
 
+/* CSS */
 import "../../assets/css/redirect.css"
 import '../../assets/css/button.css'
 import '../../assets/css/error.css'
 
-type PathParamsType = {
-    id: string,
-}
-
-type props = RouteComponentProps<PathParamsType> & {
-    store: any
-}
-
-const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
-    const [og, setOg] = useState<string | boolean | any>("Fetching..."),
-        [blurPreview, setBlurPreview] = useState<boolean | any>(true);
+/* Model */
+const Redirect = (props) => {
+    /* Defination */
+    const [hentaiData, setHentaiData] = useState<string | boolean | any>("Fetching..."),
+        [blurPreview, setBlurPreview] = useState(true);
 
     useEffect(() => {
+        getIDBSetting("dontSaveHistory").then(data => {
+            console.log(data);
+        });
+    }, [])
+
+    /* Effect */
+    useEffect(() => {
+        /* Retrieve Settings Value */
         openerIDB.table("settings").where("title").equals("blurPreview").toArray((data:any) => {
             setBlurPreview(data[0].value);
         });
 
         OpenerAPI.getData(props.match.params.id).then((requestData:any) => {
+
             if(requestData.id === undefined) throw Object.assign({error:"not found"})
-            setOg(requestData);
-            openerIDB.table("settings").where("title").equals("dontSaveHistory").toArray((setting:any) => {
-                if(setting[0].value !== true){
+            setHentaiData(requestData);
+
+            /* Determined if history saving is allowed */
+            getIDBSetting("dontSaveHistory").then((setting:any) => {
+                if(setting !== true){
+
                     openerIDB.table("history").toArray().then((IDBData:Array<any>) => {
                         if(IDBData[IDBData.length - 1].link !== props.match.params.id){
                             openerIDB.table("history").add({
@@ -57,42 +68,51 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                             timestamp: Date.now()
                         });
                     })
+
                 }
             });
         }).catch(():void => {
-            setOg(undefined);
+            setHentaiData(undefined);
         })
     },[props.match.params.id]);
     
-    if(og !== undefined && og !== "Fetching..."){
+    /* View */
+    if(hentaiData !== undefined && hentaiData !== "Fetching..."){
         return (
             <div id="pages">
+
                 <link rel="prefetch" href={`https://nhentai.net/g/${props.match.params.id}`} />
                 <link rel="dns-prefetch" href={`https://nhentai.net/g/${props.match.params.id}`} />
+
                 <div id="redirect-page">
+
                     <div id="redirect-image-container">
                         <div id="redirect-image-wrapper">
-                            { og.images.cover !== undefined ?
-                                <>
+                            { hentaiData.images.cover !== undefined ?
+                                <Fragment>
                                     { blurPreview ?
-                                        <img id="redirect-preview-image" className="blur" src={og.images.cover.src} alt="Preview Story" /> :
-                                        <img id="redirect-preview-image" src={og.images.cover.src} alt="Preview Story" />
+                                        <img id="redirect-preview-image" className="blur" src={hentaiData.images.cover.src} alt="Preview Story" /> :
+                                        <img id="redirect-preview-image" src={hentaiData.images.cover.src} alt="Preview Story" />
                                     }
-                                </>
+                                </Fragment>
                             : null }
                         </div>
                     </div>
+
                     <div id="redirect-detail">
                         <h6 id="redirect-code">{props.match.params.id}</h6> 
-                        <h2>{og.title.pretty}</h2>
-                        <h3 id="redirect-description">{og.title.english}</h3>
+                        <h2>{hentaiData.title.pretty}</h2>
+                        <h3 id="redirect-description">{hentaiData.title.english}</h3>
+
                         <div id="redirect-paper">
-                            <h4>Pages: {og.num_pages}</h4>
-                            <h4>Fav: {og.num_favorites}</h4>
+                            <h4>Pages: {hentaiData.num_pages}</h4>
+                            <h4>Fav: {hentaiData.num_favorites}</h4>
                         </div>
+
                         <div id="redirect-tag">
-                            {og.tags.map((tag:any,index:number) => <div key={index}>{tag.name}</div>)}
+                            {hentaiData.tags.map((tag:any,index:number) => <div key={index}>{tag.name}</div>)}
                         </div>
+
                         <ButtonBase tabIndex={-1} id="h-rayriffy-button">
                             <a className="button success has-wrapper" href={`https://h.rayriffy.com/g/${props.match.params.id}`} rel="noreferrer external nofollow">
                                 h.rayriffy <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
@@ -103,11 +123,13 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                                 nhentai <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                             </a>
                         </ButtonBase>
+
                     </div>
+
                 </div>
             </div>
         )
-    } else if(og === "Fetching...") {
+    } else if(hentaiData === "Fetching...") {
         return (
             <Loading />
         )
@@ -117,24 +139,29 @@ const Redirect:FunctionComponent<any> = (props: props):ReactElement<any> => {
                 <h6 id="redirect-code">{props.match.params.id}</h6> 
                 <h1>Offline</h1>
                 <p>Request couldn't been made</p>
+
                 <ButtonBase tabIndex={-1} className="button-wrapper">
                     <Link className="button" to="/generate">
                         Return <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                     </Link>
                 </ButtonBase>
+
             </div>
         )
     } else {
         return (
             <div id="error">
+
                 <h6 id="redirect-code">{props.match.params.id}</h6> 
                 <h1>404</h1>
                 <p>Stories not found...</p>
+
                 <ButtonBase tabIndex={-1} className="button-wrapper">
                     <Link className="button" to="/generate">
                         Return <i className="material-icons" style={{cursor:"pointer"}}>chevron_right</i>
                     </Link>
                 </ButtonBase>
+
             </div>
         )
     }

@@ -1,254 +1,197 @@
+/* React */
 import React, {
     useState,
     useEffect,
-    useContext,
-    FunctionComponent,
-    ReactElement,
+    Fragment
 } from 'react'
+
+/* Router */
+import { withRouter } from 'react-router-dom'
+
+/* Component */
+import HistoryList from '../component/historyList'
+
+/* Bridge */
 import {
-    Link,
     openerIDB,
-    ButtonBase,
-    Helmet
+    Link,
+    getIDBSetting,
 } from '../bridge'
-import { 
-    IconButton,
-    Checkbox,
-    Menu,
-    MenuItem
-} from '@material-ui/core'
 
-import '../../assets/css/history.css'
+/* CSS */
+import '../../assets/css/searchResult.css'
 
-const historyContext:any = React.createContext<null>(null);
+/* View */
+const SearchResult = (props) => {
+    /* Defination */
+    const [searchQuery, setSearchQuery] = useState<string | any>(""),
+        [searchResult, setSearchResult] = useState<object | any>([]),
+        [blurSearchResult, setBlurSearchResult] = useState<boolean | any>(true);
 
-interface historyProps {
-    id: number,
-    title: string,
-    removeHistory: any,
-    link: number,
-    value: boolean
-}
+    /* Effect */
+    useEffect(() => {
+        (async() => {
+            if(props.match.params.id !== undefined){
+                setSearchQuery(props.match.params.id);
+                retrieveSearch(props.match.params.id);
+            }
+            setBlurSearchResult(await getIDBSetting("blurSearchResult", false));
+        })();
+    }, [props.match.params.id]);
 
-const HistoryList:FunctionComponent<any> = (props:historyProps):ReactElement => {
-    const [popup, setPopup] = useState<boolean | any>(false),
-        [attachmentElement, setAttachmentElement] = useState<HTMLElement | any>(null);
+    /* Function */
+    const SearchSubmit:Function = (evt:any) => {
+        evt.preventDefault();
 
-    const showPopup = (evt:any):void => {
-        setAttachmentElement(evt.currentTarget);
-        setPopup(true);
+        retrieveSearch(searchQuery);
     }
-    
-    const handleselectedHistory:any = useContext(historyContext);
+
+    const retrieveSearch:Function = (searchQuery):void => {
+        /* Create temporary history */
+        let tempHistory = [],
+        query = searchQuery.toLowerCase();
+
+        /* Retrieve history */
+        openerIDB.table("history").reverse().toArray(collection => {
+
+            /* Read History */
+            let fetchHistory:Promise<boolean> = new Promise((resolve, reject) => {
+                collection.some((data:any, index:number):any => {
+                    let keyword = data.title.toLowerCase();
+
+                    if(keyword.includes(query)){
+                        if(tempHistory[0] !== undefined){
+                            tempHistory.some((tempData,index) => {
+                                if(tempData.link === data.link){
+                                    return true;
+                                }
+                                if(index === tempHistory.length - 1){
+                                    tempHistory.push(data);
+                                    return true;
+                                }
+                                return false;
+                            });
+                        } else {
+                            tempHistory.push(data);
+                        }
+                    }
+                    if(tempHistory.length >= 15 || collection.length - 1 === index){
+                        resolve(true);
+                        return true;
+                    }
+                    return null;
+                });
+            });
+
+            /* Set history */
+            fetchHistory.then(() => {
+                if(searchQuery === ""){
+                    /* If searchbar is blank */
+                    setSearchResult([]);
+                } else {
+                    if(tempHistory[0] !== undefined){
+                        /* Storiy found */
+                        setSearchResult(tempHistory);
+                    } else {
+                        /* Story not found*/
+                        setSearchResult(false);
+                    }
+                }
+            });
+
+        });
+    }
+
+    const handleQuery:Function = (evt:any) => {
+        if(evt.target.value === "") setSearchResult([]);
+        setSearchQuery(evt.target.value);
+    }
 
     return(
-        <>
-            <Helmet
-                title={"History"}
-                meta={[
-                    {
-                        name: 'title',
-                        content: 'Manage your hentai reading history.'
-                    },
-                    {
-                        name: 'description',
-                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
-                    },
-                    {
-                        name: 'og:title',
-                        content: 'Manage your hentai reading history.'
-                    },
-                    {
-                        name: 'og:description',
-                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
-                    },
-                    {
-                        name: 'twitter:description',
-                        content: "A safe platform for reading doujinshi's hentai. With hentai encryption on images. Also is an alternative way (also easier and safer) for finding hentai and read hentai with a more secure way."
-                    }
-                ]}
-            />
-            <div className="history-list">
-                {props.value !== undefined ?
-                    <Checkbox
-                        className="check"
-                        checked={props.value}
-                        onChange={() => handleselectedHistory()}
-                    />
-                : 
-                <Checkbox
-                    className="check"
-                    checked={false}
-                    onChange={() => handleselectedHistory()}
+        <div id="pages">
+            <form id="body-search" onSubmit={(evt) => SearchSubmit(evt)} role="search">
+
+                <i className="material-icons body-search-icon">search</i>
+                <input 
+                    id="body-searchbar"
+                    type="text" 
+                    placeholder="Search from history"
+                    autoComplete="off"
+                    onChange={(evt:any) => handleQuery(evt)}
+                    value={searchQuery}
+                    aria-labelledby="Search from history"
                 />
+
+                <button id="body-search-send" className="body-search-icon">
+                    <i id="body-search-send-icon" className="material-icons">chevron_right</i>
+                </button>
+
+            </form>
+
+            <div id="body-search-result">
+                {searchResult[0] !== undefined ?
+
+                    <Fragment>
+
+                        {searchResult.map((data:any, index:number) =>
+
+                            <Link className="body-search-card-link" key={index} to={`/redirect/${data.link}`}>
+                                <div className="body-search-card">
+
+                                    {data.ref ?
+                                        <div className="search-card-preview-image-wrapper">
+                                            { blurSearchResult ?
+                                                <img
+                                                    className="search-card-preview-image"
+                                                    src={data.ref} 
+                                                    alt={data.title}
+                                                    style={{filter:"blur(10px)"}}
+                                                />
+                                                :
+                                                <img
+                                                    className="search-card-preview-image"
+                                                    src={data.ref} 
+                                                    alt={data.title}
+                                                />
+                                            }
+                                        </div>
+                                    : null }
+
+                                    <div className="body-search-card-body">
+                                        <h1 className="body-search-card-title">
+                                            {data.title}
+                                        </h1>
+                                        <footer className="search-card-footer">
+                                            <p id="search-card-footer-date" className="search-card-footer-text">Read: {new Date(data.timestamp).toLocaleString()}</p>
+                                            <p className="search-card-footer-text">ID: {data.link}</p>
+                                        </footer>
+                                    </div>
+
+                                </div>
+
+                            </Link>
+
+                        )}
+                    </Fragment>
+                : null }
+                
+                {(searchResult === false) && searchQuery !== "" ?
+                    <div className="body-search-card">
+                        <h1 className="body-search-card-title">
+                            <div id="body-search-404" className="body-search-card-body">
+                                Not Found
+                            </div>
+                        </h1>
+                    </div>
+                    : null
                 }
-                <Link to={`/redirect/${props.link}`} className="history-name">{props.title}</Link>
-                <IconButton
-                    className="history-selector"
-                    aria-owns={popup ? 'History management' : undefined}
-                    aria-haspopup="true"
-                    onClick={(evt:any) => showPopup(evt)}
-                >
-                    <i className="material-icons history-popup-icon">more_vert</i>
-                </IconButton>
-                <Menu
-                    id="history-popup-menu"
-                    anchorEl={attachmentElement} 
-                    open={popup}
-                    onClose={() => setPopup(false)}
-                >
-                    <MenuItem onClick={() => props.removeHistory(props.id)}>Remove</MenuItem>
-                    <MenuItem><Link to={`/generate/${props.id}`} className="link-menu-item">Generate</Link></MenuItem>
-                </Menu>
+
             </div>
-        </>
+
+            { !searchQuery ? <HistoryList /> : null }
+
+        </div>
     )
 }
 
-interface historyType {
-    id:number,
-    title:string,
-    link:number,
-    timestamp:any
-}
-
-interface tempHistory {
-    id: number,
-    value: boolean
-}
-
-const History:FunctionComponent<null> = ():ReactElement<any> => {
-    const [history, setHistory]:any = useState(""),
-        [selectedHistory, setSelectedHistory]:any = useState([]),
-        [selected, setSelected]:any = useState(false),
-        [, updateState] = useState();
-
-    const reloadHistory = ():any => {
-        openerIDB.table("history").orderBy("id").reverse().toArray(async (historyData:Array<historyType>) => {
-            setHistory(historyData);
-
-            let tempHistory:any = [];
-            await historyData.forEach(data => {
-                tempHistory[data.id] = {id: data.id, value: false};
-            });
-
-            let filterHistory:any = tempHistory.filter((data:any) => {
-                return data !== null;
-            });
-
-            let filterHistoryLength = filterHistory.length - 1;
-            filterHistory.every((data:any, index:number) => {
-                if(data.value === true){
-                    // If one of history is checked
-                    setSelected(true);
-                    return false
-                } else {
-                    if(filterHistoryLength === index){
-                        setSelected(false);
-                        return false;
-                    }
-                    return true;
-                }
-            });
-            setSelectedHistory(filterHistory);
-        });
-    }
-    
-    const removeHistory = async (id:number) => {
-        await openerIDB.table("history").where("id").equals(id).delete();
-        openerIDB.table("history").orderBy("id").reverse().toArray((historyData:Array<historyType>) => {
-            setHistory(historyData);
-        });
-        reloadHistory();
-    }
-
-    const handleselectedHistory = (arrIndex:number, id:number) => {
-        let tempHistory:Array<tempHistory> = selectedHistory;
-
-        tempHistory[id] = { id: arrIndex, value: !tempHistory[id].value };
-
-        let filterHistory:Array<tempHistory> = tempHistory.filter((data:any) => {
-            return data !== null;
-        })
-        setSelectedHistory(filterHistory);
-
-        let filterHistoryLength:number = filterHistory.length - 1;
-
-        filterHistory.every((data:any, index:number) => {
-            if(data.value === true){
-                // If one of history is checked
-                setSelected(true);
-                return false
-            } else {
-                if(filterHistoryLength === index){
-                    setSelected(false);
-                    return false;
-                }
-                return true;
-            }
-        });
-
-        updateState(Date.now());
-    }
-
-    const cancelAllSelected = ():void => {
-        reloadHistory();
-    }
-
-    const removeAllSelected = async () => {
-        await selectedHistory.forEach((data:any,index:number) => {
-            if(data.value === true){
-                openerIDB.table("history").where("id").equals(data.id).delete();
-            }
-        });
-        reloadHistory();
-    }
-
-    useEffect(() => {
-        reloadHistory();
-    },[]);
-
-    if(selectedHistory[0] !== undefined){
-        return(
-            <div id="pages">
-                <div id="history-container">
-                    {history.map((history:historyType, index:number) => 
-                        <historyContext.Provider key={history.id} value={() => handleselectedHistory(history.id, index)}>
-                            <HistoryList
-                                id={history.id}
-                                link={history.link}
-                                title={history.title}
-                                value={selectedHistory[index].value}
-                                removeHistory={(id:number) => removeHistory(id)} 
-                            />
-                        </historyContext.Provider>
-                    )}
-                    {selected ?
-                    <div id="history-manage">
-                        <ButtonBase id="history-manage-cancel" onClick={() => cancelAllSelected()}>Cancel</ButtonBase>
-                        <ButtonBase id="history-manage-remove" onClick={() => removeAllSelected()}>Remove all</ButtonBase>
-                    </div>
-                    : null}
-                </div>
-            </div>
-        )
-    } else if(history === "") {
-        return(
-            <div id="pages">
-                <section id="history-container-blank">
-                    <p className="history-name">Fetching history...</p>
-                </section>
-            </div>
-        )
-    } else {
-        return(
-            <div id="pages">
-                <section id="history-container-blank">
-                    <p className="history-name">No history found</p>
-                </section>
-            </div>
-        )
-    }
-}
-
-export default History;
+export default withRouter(SearchResult);

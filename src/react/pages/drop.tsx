@@ -1,53 +1,85 @@
+/* React */
 import React, {
     useState,
-    useContext,
-    FunctionComponent,
-    ReactElement
+    Fragment
 } from 'react'
+
+/* Redux */
+import { connect } from 'react-redux'
+
+/* Bridge */
 import { 
-    storeContext,
     Redirect,
     Helmet
 } from "../bridge"
 
+/* CSS */
 import '../../assets/css/drop.css'
 
-const FastAverageColor = require('fast-average-color/dist/index');
+/* Model */
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch: {
 
-
-const Drop:FunctionComponent<null> = ():ReactElement<null> => {
-    const [redirectState, setRedirectState] = useState<boolean | any>(false),
-        [redirectID, setRedirectID] = useState<number | any>(0),
-        dispatch:any = useContext(storeContext);
-
-    const redirect:Function = (evt:any):void => {
-        let tgt:HTMLInputElement = evt.target, files = tgt.files,
-            opener:HTMLImageElement = (document.getElementById("opener-image") as HTMLImageElement);
-        if (FileReader && files && files.length) {
-            let fr:any = new FileReader();
-            fr.onload = ():any => {
-                opener.src = fr.result;
+            updateURL: newURL => {
+                dispatch({
+                    type: "UpdateURL",
+                    payload: {
+                        newURL: newURL
+                    }
+                });    
             }
-            fr.readAsDataURL(files[0]);
-        } else {
-        }
 
-        const fac:any = new FastAverageColor();
+        }
+    }
+}
+
+/* View */
+const Drop = ({ dispatch }) => {
+    /* Connect */
+    const { updateURL } = dispatch
+
+    /* Defination */
+    const [redirectState, setRedirectState] = useState(false),
+        [redirectID, setRedirectID] = useState('0');
+
+    /* Function */
+    const redirect:Function = (event:any):void => {
+        
+        /* Defination */
+        let psudoInputImage:HTMLInputElement = event.target, files = psudoInputImage.files,
+            opener:HTMLImageElement = (document.getElementById("opener-image") as HTMLImageElement);
+
+        
+        if (FileReader && files && files.length) {
+            /* Defination */
+            let fileReader:any = new FileReader();
+
+            /* Function */
+            fileReader.onload = ():any => {
+                opener.src = fileReader.result;
+            }
+            fileReader.readAsDataURL(files[0]);
+        }
+        
+        /* Defination */
         setTimeout(() => {
-            let color:any = fac.getColor(opener),
+            /* Require */
+            const FastAverageColorModule:any = require('fast-average-color/dist/index');
+            const FastAverageColor:any = new FastAverageColorModule();
+
+            let color:any = FastAverageColor.getColor(opener),
                 hexCode:string = ((color.hex).substring(1)).replace(/f/g, '');
-                setRedirectID(hexCode);
-                
-            dispatch({
-                type: "updateURL",
-                newURL: hexCode
-            });
+
+            setRedirectID(hexCode);
+            updateURL(hexCode);
             setRedirectState(true);
         },350);
     }
 
+    /* View */
     return(
-        <>
+        <Fragment>
             <Helmet
                 title={"Encrypt"}
                 meta={[
@@ -88,8 +120,11 @@ const Drop:FunctionComponent<null> = ():ReactElement<null> => {
 
                 { redirectState ? <Redirect to={`redirect/${redirectID}`} push /> : null }
             </div>
-        </>
+        </Fragment>
     )
 }
 
-export default Drop
+export default connect(
+    null,
+    mapDispatchToProps
+)(Drop)

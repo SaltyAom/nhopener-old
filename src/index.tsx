@@ -1,37 +1,44 @@
+/* Model */
+
+/* React */
 import React, {
     useState,
-    useReducer,
-    FunctionComponent,
     useEffect
 } from 'react'
 import { render } from "react-dom"
+
+/* React Util */
 import { 
     BrowserRouter as Router,
     Route,
     Switch
 } from 'react-router-dom'
-
 import {
     Loadable,
-    Loading, 
-    storeContext,
+    Loading,
 } from './react/bridge'
 
-import { reducers, initState } from "./react/store/hooks-reducers"
+import { Provider } from 'react-redux'
+import { store } from './react/store/store'
+
+/* Component */
 import Nav from './react/component/nav'
 import Sidebar from './react/component/sidebar' /* webpackChunkName: "sidebar" */
 
+/* CSS */
 import './assets/css/init.css'
 import './assets/css/responsive.css'
 import './assets/material-icon/material-icons.css'
 
-import * as serviceWorker from './serviceWorker';
+/* Service Worker */
+import * as serviceWorker from './serviceWorker'
 
+/* Lazyload */
 const Home:any = Loadable({
     loader: () => import('./react/pages/home' /* webpackChunkName: "home" */),
     loading: Loading
 }),
-Error = Loadable({
+Error:any = Loadable({
     loader: () => import('./react/pages/error' /* webpackChunkName: "error" */),
     loading: Loading
 }),
@@ -51,127 +58,82 @@ Settings:any = Loadable({
     loader: () => import('./react/pages/settings' /* webpackChunkName: "settings" */),
     loading: Loading
 }),
-History:any = Loadable({
-    loader: () => import('./react/pages/history' /* webpackChunkName: "history" */),
-    loading: Loading
-}),
 Warning:any = Loadable({
     loader: () => import('./react/pages/warning' /* webpackChunkName: "warning" */),
     loading: Loading
 }),
-SearchResult:any = Loadable({
-    loader: () => import('./react/pages/searchResult' /* webpackChunkName: "searchResult" */),
+History:any = Loadable({
+    loader: () => import('./react/pages/history' /* webpackChunkName: "searchResult" */),
     loading: Loading
 });
 
-const Root:FunctionComponent = () => {
-    const [state, dispatch]:any = useReducer(reducers, initState),
-        [warning, setWarning] = useState<boolean | any>(true);
+/* View */
+const Root = () => {
+    /* Defination */
+    const [warning, setWarning] = useState(true);
 
+    /* Function */
     useEffect(() => {
         window.onload = () => {
             serviceWorker.register();
-            console.log("REGISTER");
         }
     }, []);
 
+    /* View */
     return (
         <Router>
-            <storeContext.Provider value={dispatch}>
-                <Nav store={state} />
-                <Sidebar store={state} />
-            </storeContext.Provider>
-            { !warning ?
-                <Switch>
-                    <Route 
-                        exact 
-                        path="/" 
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <Home store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact 
-                        path="/redirect/:id"
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <Redirect store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/drop" 
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <Drop store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/generate" 
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <Generate store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/generate/:id"
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <Generate store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/history"
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <History store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/settings"
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <Settings store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/search"
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <SearchResult store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/search/:id"
-                        render={() => (
-                            <storeContext.Provider value={dispatch}>
-                                <SearchResult store={state} />
-                            </storeContext.Provider>
-                        )}
-                    />
+            <Provider store={store}>
+                <Nav />
+                <Sidebar  />
+                { !warning ?
+                    <Switch>
+                        <Route 
+                            exact 
+                            path="/" 
+                            component={ Home }
+                        />
+                        <Route
+                            exact 
+                            path="/redirect/:id"
+                            component={ Redirect }
+                        />
+                        <Route
+                            exact
+                            path="/drop" 
+                            component={ Drop }
+                        />
+                        <Route
+                            exact
+                            path="/generate" 
+                            component={ Generate }
+                        />
+                        <Route
+                            exact
+                            path="/generate/:id"
+                            component={ Generate }
+                        />
+                        <Route
+                            exact
+                            path="/settings"
+                            component={ Settings }
+                        />
+                        <Route
+                            exact
+                            path="/history"
+                            component={ History }
+                        />
+                        <Route
+                            exact
+                            path="/search/:id"
+                            component={ History }
+                        />
 
-                    <Route exact component={Error} />
-                </Switch>
-            : 
-            <storeContext.Provider value={dispatch}>
+                        <Route exact component={Error} />
+                    </Switch>
+                : 
                 <Warning function={() => setWarning(!warning)} />
-            </storeContext.Provider>
-            }
+                }
+            </Provider>
         </Router>
     )
 }

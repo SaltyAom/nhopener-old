@@ -1,9 +1,14 @@
+/* React */
 import React, {
     useState,
     useEffect,
-    FunctionComponent,
-    ReactElement
+    Fragment
 } from 'react'
+
+/* Material UI */
+import { Checkbox } from '@material-ui/core'
+
+/* Bridge */
 import {
     ButtonBase,
     Loading,
@@ -11,8 +16,8 @@ import {
     getIDBSetting,
     setIDBSetting
 } from '../bridge'
-import { Checkbox } from '@material-ui/core'
 
+/* CSS */
 import '../../assets/css/settings.css'
 
 interface ButtonPanelInterface {
@@ -22,7 +27,8 @@ interface ButtonPanelInterface {
     id?: string
 }
 
-const ButtonPanel:FunctionComponent<any> = (props:ButtonPanelInterface):ReactElement<any> => 
+/* Component */
+const ButtonPanel = (props:ButtonPanelInterface) => 
     <div>
         <p>{props.title}</p>
         {props.id ?
@@ -42,7 +48,8 @@ interface CheckPanelInterface {
     function: any,
 }
 
-const CheckPanel:FunctionComponent<any> = (props:CheckPanelInterface):ReactElement<any> => {
+/* Component */
+const CheckPanel = (props:CheckPanelInterface) => {
     let checkValue = props.checkValue || false
 
     return(
@@ -64,7 +71,7 @@ interface LinkInterface {
     link: string,
 }
 
-const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any> =>
+const LinkPanel = (props:LinkInterface) =>
     <div>
         <p>{props.title}</p>
         <a className="link-panel-button" href="https://api.opener.mystiar.com">
@@ -74,14 +81,16 @@ const LinkPanel:FunctionComponent<any> = (props:LinkInterface):ReactElement<any>
         </a>
     </div>
 
-const Settings:FunctionComponent<any> = ():ReactElement<null> => {
-    const [blurDashboard, setBlurDashboard] = useState<boolean | any>(false),
-        [blurPreview, setBlurPreview] = useState<boolean | any>(false),
-        [blurSearchPreview, setBlurSearchPreview] = useState<boolean | any>(false),
-        [dontSaveHistory, setdontSaveHistory] = useState<boolean | any>(false),
-        [showLoading, setShowLoading] = useState<boolean | any>(false),
-        [a2hs, setA2hs] = useState<Boolean | any>(false);
+const Settings = () => {
+    /* Defination */
+    const [blurDashboard, setBlurDashboard] = useState(false),
+        [blurPreview, setBlurPreview] = useState(false),
+        [blurSearchPreview, setBlurSearchPreview] = useState(false),
+        [dontSaveHistory, setdontSaveHistory] = useState(false),
+        [showLoading, setShowLoading] = useState(false),
+        [a2hs, setA2hs] = useState(false);
 
+    /* Effect */
     useEffect(() => {            
         getIDBSetting("blurDashboard", false).then(data => {
             setBlurDashboard(data);
@@ -112,7 +121,8 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         });
     }, []);
 
-    const clearCache = () => {
+    /* Function */
+    const clearCache:Function = () => {
         setShowLoading(true);
         navigator.serviceWorker.getRegistrations().then(registrations => {
             caches.keys().then(names => {
@@ -129,10 +139,12 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
         })
     }
 
-    const forceUpdate = () => {
+    const forceUpdate:Function = () => {
         if(navigator.onLine === false) return;
+
         setShowLoading(true);
         navigator.serviceWorker.getRegistrations().then(registrations => {
+
             caches.keys().then(names => {
                 for (let name of names)
                 caches.delete(name);
@@ -140,7 +152,9 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
             for(let registration of registrations) {
                 registration.unregister()
             } 
+
         }).then(():void => {
+
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js', {
                     scope: "/"
@@ -150,15 +164,18 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                     console.error('Registration failed: ', err);
                 });
             }
+
         }).then(():void => {
+            
             setInterval(() => {
                 window.location.replace("/")
             }, 275);
+
         });
     }
 
     return(
-        <>
+        <Fragment>
             <Helmet
                 title={"Settings"}
                 meta={[
@@ -184,9 +201,11 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                     }
                 ]}
             />
+
             <div id="pages">
                 {showLoading ? <Loading instant /> : null}
                 <div id="settings">
+                    
                     <div className="setting-card">
                         <div>
                             <h2>NHentai Opener 1.3.0.beta.2</h2>
@@ -194,8 +213,8 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                     </div>
 
                     <div className="setting-card">
-                        <h1>Privacy</h1>
 
+                        <h1>Privacy</h1>
                         <CheckPanel
                             title="Blur a preview image on dashboard"
                             checkValue={blurDashboard}
@@ -222,6 +241,7 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         />
 
                     </div>
+
                     <div className="setting-card">
 
                         <h1>Progressive</h1>
@@ -250,6 +270,7 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         />
 
                     </div>
+
                     <div className="setting-card">
 
                         <h1>Developer</h1>
@@ -260,9 +281,11 @@ const Settings:FunctionComponent<any> = ():ReactElement<null> => {
                         />
 
                     </div>
+
                 </div>
+
             </div>
-        </>
+        </Fragment>
     )
 }
 

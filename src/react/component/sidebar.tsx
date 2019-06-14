@@ -1,64 +1,65 @@
+/* Model */
+
+/* React */
 import React, {
     useState,
     useEffect,
-    FunctionComponent,
-    ReactElement,
-    useContext
+    Fragment
 } from 'react'
-import { 
-    ButtonBase,
-    NavLink,
-    storeContext
-} from '../bridge'
+
+/* Redux */
+import { connect } from 'react-redux'
+
+/* Components */
+import SidebarIcon from './sidebarIcon'
+
+/* CSS */
 import '../../assets/css/sidebar.css'
 
-interface props {
-    icon: string,
-    to: string,
-    title: string
-}
-
-const SidebarIcon:FunctionComponent<props> = (props: props):ReactElement<any> => {
-    const dispatch:any = useContext(storeContext);
-
-    const closeSidebar = () => {
-        dispatch({
-            type: "toggleMenu",
-            toggleMenu: false
-        })
+/* Model */
+const mapStateToProps = (state, ownProps) => {
+    return {
+        store: {
+            toggleMenu: state.toggleMenu
+        },
+        props: ownProps
     }
-
-    return(
-        <NavLink onClick={() => closeSidebar()} exact to={`${props.to}`} className="sidebar-nav-link" activeClassName="sidebar-nav-link-active">
-            <ButtonBase tabIndex={-1} className="sidebar-nav-wrapper" style={{color: "#ccc"}}>
-                <i className="material-icons">{props.icon}</i>
-                <p className='sidebar-detail'>{props.title}</p>
-            </ButtonBase>
-        </NavLink>
-    )
 }
 
-const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
-    const [sidebarClass, setSidebarClass] = useState<string | any>("active"),
-        dispatch:any = useContext(storeContext);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch: {
+            ToggleMenu: toggleMenuValue => {
+                dispatch({
+                    type: "ToggleMenu",
+                    payload: {
+                        toggleMenu: toggleMenuValue
+                    }
+                })
+            }
+        }
+    }
+}
+
+const Sidebar = ({ dispatch, store }) => {
+
+    /* Connect */
+    const { toggleMenu } = store
+    const { ToggleMenu } = dispatch
+
+    /* Defination */
+    const [sidebarClass, setSidebarClass] = useState("active");
 
     useEffect(() => {
-        if(props.store.toggleMenu === true){
+        if(toggleMenu === true){
             setSidebarClass("active");
         } else {
             setSidebarClass("");
         }
-    }, [props.store.toggleMenu]);
-
-    const closeSidebar = () => {
-        dispatch({
-            type: "toggleMenu",
-            toggleMenu: false
-        })
-    }
+    }, [toggleMenu]);
 
     return(
-        <>
+        <Fragment>
             <aside id="sidebar" role="navigation" className={sidebarClass}>
                 <div id="sidebar-body">
                     <SidebarIcon 
@@ -77,11 +78,6 @@ const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         title="Generate" 
                     />
                     <SidebarIcon 
-                        to="/search" 
-                        icon="search" 
-                        title="Search" 
-                    />
-                    <SidebarIcon 
                         to="/history" 
                         icon="restore" 
                         title="History" 
@@ -95,9 +91,9 @@ const Sidebar:FunctionComponent<any> = (props: any):ReactElement<any> => {
                     />
                 </div>
             </aside>
-            <div id="sidebar-overlay" onClick={() => closeSidebar()} className={sidebarClass}></div>
-        </>
+            <div id="sidebar-overlay" onClick={() => ToggleMenu(false) } className={sidebarClass}></div>
+        </Fragment>
     )
 }
 
-export default Sidebar;
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

@@ -1,13 +1,13 @@
+/* React */
 import React, {
     useState,
     useEffect,
-    useContext,
-    FunctionComponent,
-    ReactElement,
     Fragment
 } from 'react'
+import { connect } from 'react-redux'
+
+/* Bridge */
 import { 
-    storeContext,
     Link,
     OpenerAPI,
     openerIDB,
@@ -16,6 +16,7 @@ import {
 } from '../bridge'
 import '../../assets/css/dashboard.css'
 
+/* Type Defination */
 interface cardProps {
     overlayTitle?: string,
     image?: string,
@@ -28,56 +29,39 @@ interface cardProps {
     blur?: boolean
 }
 
-const Card:FunctionComponent<any> = (props: cardProps):ReactElement<any> => {
-    let imageType:string;
-
-    switch(props.imageType){
-        case "p":
-            imageType = "png"
-            break;
-        case "j":
-            imageType = "jpg"
-            break;
-        default:
-            imageType = "jpg"
-            break;
+const mapStateToProps = (state) => {
+    return {
+        store:{
+            suggestStories: state.suggestStories
+        }
     }
-
-    return(
-        <Link to={props.to} className="main-card">
-            { props.image ?
-                <div className="main-card-image-wrapper">
-                    <div className="main-card-overlay">
-                        <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
-                    </div>
-                    { props.blur ?
-                        <div className="main-card-image blur" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
-                    :
-                        <div className="main-card-image" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
-                    }
-                </div>
-            : null }
-            { props.title ?
-                <h1 className="main-card-header">{props.title}</h1>
-            : null }
-            { props.detail ?
-                <p className="main-card-detail">
-                    {props.detail}
-                </p>
-            : null }
-            {props.footer ?
-                <footer className="main-card-footer">
-                    <p>{props.footer}</p>
-                </footer>
-            : null }
-        </Link>
-    )
 }
 
-const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
-    const [blurDashboard, setBlurDashboard]:any = useState<Boolean | any>(true),
-        [stories, setStories]:any = useState<any>([]),
-        dispatch:any = useContext(storeContext),
+const mapDispatchToProps = (dispatch) => {
+    return{
+        dispatch: {
+
+            newSuggestStories: (newStories) => {
+                dispatch({
+                    type: "NewSuggestStories",
+                    payload: {
+                        suggestStories: newStories
+                    }
+                })
+            }
+
+        }
+    }
+}
+
+/* View */
+const Home = ({ store, dispatch }) => {
+    /* Connect */
+    const { suggestStories } = store
+    const { newSuggestStories } = dispatch
+
+    const [blurDashboard, setBlurDashboard] = useState(true),
+        [stories, setStories] = useState<any>([]),
         timeout = 20 * 60 * 1000;
 
     useEffect(() => {
@@ -148,13 +132,10 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         resolve(true);
                     } else {
                         // Stories in IndexedEB not exists
-                        if(props.store.suggestStories[0] === undefined){
+                        if(suggestStories[0] === undefined){
                             // Haven't fetched stories yet
                             OpenerAPI.getRelate(randomStoriesID).then(async (stories:any) => {
-                                dispatch({
-                                    type: "newSuggestStories",
-                                    suggestStories: stories.result
-                                });
+                                newSuggestStories(stories.result)
                                 setStories(stories.result);
                                 await openerIDB.table("settings").put({
                                     title: "suggestedStories",
@@ -164,7 +145,7 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                             });
                         } else {
                             // Once fetched
-                            setStories(props.store.suggestStories);
+                            setStories(suggestStories);
                             resolve(true);
                         }
                     }
@@ -181,11 +162,11 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
             await fetchStories;
 
         })();
-    }, [dispatch, props.store.suggestStories, timeout]);
+    }, [newSuggestStories, suggestStories, timeout]);
 
     if(stories[0] !== undefined){
         return(
-            <>
+            <Fragment>
                 <Helmet
                     title={"NHentai Opener"}
                     meta={[
@@ -299,11 +280,11 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         </div>
                     </div>
                 </div>
-            </>
+            </Fragment>
         )
     } else {
         return(
-            <>
+            <Fragment>
                 <Helmet
                     title={"NHentai Opener"}
                     meta={[
@@ -365,9 +346,59 @@ const Home:FunctionComponent<any> = (props: any):ReactElement<any> => {
                         </div>    
                     </div>
                 </div>
-            </>
+            </Fragment>
         )
     }
 }
 
-export default Home;
+/* Sub Component */
+const Card = (props: cardProps) => {
+    let imageType:string;
+
+    switch(props.imageType){
+        case "p":
+            imageType = "png"
+            break;
+        case "j":
+            imageType = "jpg"
+            break;
+        default:
+            imageType = "jpg"
+            break;
+    }
+
+    return(
+        <Link to={props.to} className="main-card">
+            { props.image ?
+                <div className="main-card-image-wrapper">
+                    <div className="main-card-overlay">
+                        <h1 className="main-card-overlay-title">{props.overlayTitle}</h1>
+                    </div>
+                    { props.blur ?
+                        <div className="main-card-image blur" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                    :
+                        <div className="main-card-image" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                    }
+                </div>
+            : null }
+            { props.title ?
+                <h1 className="main-card-header">{props.title}</h1>
+            : null }
+            { props.detail ?
+                <p className="main-card-detail">
+                    {props.detail}
+                </p>
+            : null }
+            {props.footer ?
+                <footer className="main-card-footer">
+                    <p>{props.footer}</p>
+                </footer>
+            : null }
+        </Link>
+    )
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);

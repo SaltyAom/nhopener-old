@@ -1,47 +1,69 @@
+/* React */
 import React, {
-    useContext,
-    FunctionComponent,
-    ReactElement,
     useState
 } from 'react'
+
+/* Redux */
+import { connect } from 'react-redux'
+
+/* Router */
+import { withRouter } from 'react-router-dom'
+
+/* Bridge */
 import {
     Link,
-    storeContext,
     openerIDB,
 } from '../bridge'
+
+/* CSS */
 import '../../assets/css/nav.css'
 
-import { RouteComponentProps } from "react-router"
-import { withRouter } from "react-router-dom"
-
-type PathParamsType = {
-    id: string,
+/* Model */
+const mapStateToProps = (state, ownProps) => {
+    return {
+        store: {
+            toggleMenu: state.toggleMenu
+        },
+        props: ownProps
+    }
 }
 
-type props = RouteComponentProps<PathParamsType> & {
-    store: any
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch: {
+            ToggleMenu: toggleMenuValue => {
+                dispatch({
+                    type: "ToggleMenu",
+                    payload: {
+                        toggleMenu: toggleMenuValue
+                    }
+                })
+            }
+        }
+    }
 }
 
-const Nav:FunctionComponent<any> = (props: props):ReactElement<any> => {
-    const dispatch:any = useContext(storeContext),
-        [searchQuery, setSearchQuery] = useState<string | any>(""),
-        [searchResult, setSearchResult] = useState<object | any>([]),
-        [searchQueryPlaceholder, setSearchQueryPlaceholder] = useState<string | any>(""),
-        [redirect, setRedirect] = useState<boolean | any>(false);
+/* View */
+const Nav = ({ store, dispatch, props }) => {
+    /* Connect */
+    const { toggleMenu } = store
+    const { ToggleMenu } = dispatch
+
+    /* Defination */
+    const [searchQuery, setSearchQuery] = useState(""),
+        [searchResult, setSearchResult] = useState<any>([]),
+        [redirect, setRedirect] = useState(false),
+        [searchQueryPlaceholder, setSearchQueryPlaceholder] = useState("");
 
     let query:string = "";
 
-    const toggleMenu:any = ():void => {
-        dispatch({
-            type: "toggleMenu",
-            toggleMenu: !props.store.toggleMenu
-        })
-    }
-
-    let typeTimeout = (evt:any) => {
+    /* Function */
+    let typeTimeout:Function = (evt:any) => {
         let tempQuery:string = evt.target.value;
+
         setSearchQueryPlaceholder(tempQuery);
         query = tempQuery.toLowerCase();
+        
         setTimeout(() => {
 
             if(tempQuery.toLowerCase() === query){
@@ -103,27 +125,28 @@ const Nav:FunctionComponent<any> = (props: props):ReactElement<any> => {
         },400);
     }
 
-    const unFocusSearchbar = () => {
+    const unFocusSearchbar:Function = () => {
         setSearchResult([]);
     }
 
-    const toSearch = (evt:any) => {
+    const toSearch:Function = (evt:any) => {
         evt.preventDefault();
         unFocusSearchbar();
         setRedirect(true);
         props.history.push(`/search/${searchQueryPlaceholder}`);
     }
 
+    /* View */
     return(
         <nav id="nav">
             <div className="nav-section" style={{justifyContent:"flex-start"}}>
-                <button id="nav-menu" className="material-icons" onClick={() => toggleMenu()}>menu</button>
+                <button id="nav-menu" className="material-icons" onClick={() => ToggleMenu(!toggleMenu)}>menu</button>
                 <Link id="nav-title" to="/">
                     Opener
                     <sup id="nav-title-sup">Pro</sup>
                 </Link>
             </div>
-            <div className="nav-section">
+            <section className="nav-section">
                 <form id="search" role="search" onSubmit={(evt:any) => toSearch(evt)}>
                     <i id="search-icon" className="material-icons">search</i>
                     <input
@@ -153,11 +176,11 @@ const Nav:FunctionComponent<any> = (props: props):ReactElement<any> => {
                         </div>
                     : null }
                 </form>
-            </div>
+            </section>
             <div className="nav-section" style={{justifyContent:"flex-end"}}>
             </div>
         </nav>
     )
 }
 
-export default withRouter(Nav);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav))

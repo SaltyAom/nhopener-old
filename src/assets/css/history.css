@@ -52,11 +52,11 @@
     position:absolute !important;
 }
 
-#history-popup-menu > div:last-child {
+#history-popup-menu > div.MuiPaper-root {
     background-color: var(--root-2);
 }
 
-#history-popup-menu > div:last-child > ul > li {
+#history-popup-menu > div.MuiPaper-root > ul > li {
     color: var(--text-1);
     text-transform: uppercase;
 }

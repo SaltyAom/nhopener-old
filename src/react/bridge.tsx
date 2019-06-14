@@ -1,4 +1,4 @@
-import React from 'react'
+/* Import */
 import { NavLink, Link, Redirect } from 'react-router-dom'
 import Loadable from 'react-loadable'
 import Loading from './component/loading'
@@ -8,9 +8,8 @@ import openerIDB from './store/dexie-indexeddb'
 import { Helmet } from 'react-helmet'
 import OpenerAPI from 'opener-api'
 
-const storeContext:any = React.createContext<null>(null)
-
-const getIDBSetting = async (name:string, defaultValue: boolean) => {
+/* Function */
+const getIDBSetting:Function = async (name:string, defaultValue: boolean) => {
     let returnData:boolean;
 
     let fetchData:Promise<Boolean> = new Promise((resolve, reject) => {
@@ -31,7 +30,7 @@ const getIDBSetting = async (name:string, defaultValue: boolean) => {
     return returnData;
 }
 
-const setIDBSetting = async (name:string, defaultValue: boolean) => {
+const setIDBSetting:Function = async (name:string, defaultValue: boolean) => {
     let returnData:boolean;
 
     let fetchData:Promise<Boolean> = new Promise((resolve, reject) => {
@@ -56,8 +55,8 @@ const setIDBSetting = async (name:string, defaultValue: boolean) => {
     return returnData;
 }
 
+/* Bridge */
 export { 
-    storeContext,
     NavLink, 
     Link, 
     Redirect, 

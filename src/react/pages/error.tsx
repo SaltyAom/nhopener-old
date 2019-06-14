@@ -1,19 +1,21 @@
-import React,{
-    FunctionComponent,
-    ReactElement
-} from 'react'
+/* React */
+import React, { Fragment } from 'react'
+
+/* Bridge */
 import { 
     Link, 
     ButtonBase,
     Helmet
 } from '../bridge'
 
+/* CSS */
 import '../../assets/css/error.css'
 import '../../assets/css/button.css'
 
-const Error:FunctionComponent<null> = ():ReactElement<null> => {
+/* View */
+const Error = () => {
     return(
-        <>
+        <Fragment>
             <Helmet
                 title={"Not found"}
                 meta={[
@@ -48,8 +50,8 @@ const Error:FunctionComponent<null> = ():ReactElement<null> => {
                     </Link>
                 </ButtonBase>
             </div>
-        </>
+        </Fragment>
     )
 }
 
-export default Error;
+export default Error

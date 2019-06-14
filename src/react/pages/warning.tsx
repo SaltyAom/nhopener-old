@@ -1,28 +1,59 @@
+/* React */
 import React, {
-    useContext,
     useState,
-    FunctionComponent,
-    ReactElement
+    Fragment
 } from 'react'
+import { connect } from 'react-redux'
+
+/* Bridge */
 import {
-    storeContext,
     ButtonBase,
     Link,
     openerIDB,
     Helmet
 } from '../bridge'
-import {
-    Checkbox
-} from "@material-ui/core"
 
+/* Material UI */
+import { Checkbox } from "@material-ui/core"
+
+/* CSS */
 import '../../assets/css/button.css'
 import '../../assets/css/error.css'
 
-const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
-    const dispatch:any = useContext(storeContext),
-        [blur, setBlur] = useState(false);
+/* Model */
+const mapStateToProps = (store, ownProps) => {
+    return {
+        props: ownProps
+    }
+}
 
-    const allow = async(e:any) => {
+const mapDispatchToProps = (dispatch) => {
+    return{
+        dispatch:{
+
+            setAllowance: () => {
+                dispatch({
+                    type: "SetAllowance",
+                    payload: {
+                        allow: true
+                    }
+                });
+            }
+
+        }
+    }
+}
+
+/* View */
+const Warning = ({ dispatch, props }) => {
+    /* Connect */
+    const { setAllowance } = dispatch
+
+    /* Defination */
+    const [blur, setBlur] = useState(false);
+
+    /* Function */
+    const allow:Function = async(e:any) => {
         e.preventDefault();
         if(blur === true){
             await openerIDB.table("settings").put({
@@ -34,14 +65,11 @@ const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
                 value: true
             });
         }
-        dispatch({
-            type: "setAllowance",
-            allow: true
-        });
+        setAllowance();
     }
 
     return(
-        <>
+        <Fragment>
             <Helmet
                 title={"NHentai Opener"}
                 meta={[
@@ -86,8 +114,12 @@ const Warning:FunctionComponent<any> = (props: any):ReactElement<any> => {
                     </Link>
                 </ButtonBase>
             </div>
-        </>
+        </Fragment>
     )
 }
 
-export default Warning;
+/* Control */
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Warning)
