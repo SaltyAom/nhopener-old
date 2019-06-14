@@ -401,6 +401,7 @@ const Card = (props: cardProps) => {
                 setIntersected(true);
             }
         }
+        // eslint-disable-next-line
     }, [props.image]);
 
     let imageType:string;

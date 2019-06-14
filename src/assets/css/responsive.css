@@ -131,11 +131,43 @@
     }
 }
 
-@media screen and (max-height: 578px){
+@media screen and (max-height: 568px){
     #pages, #generate-page {
         justify-content: flex-start;
     }
     #warning, #error { margin: 50px 0;}
+    #redirect-page {
+        align-items: flex-start !important;
+    }
+    #warning > h1, #warning > p {
+        padding: 0 15% !important;
+    }
+    #generate-page {
+        display: flex !important;
+        flex-direction: row !important;
+        width:100% !important;
+        padding:0 5%;
+    }
+    #generate-input-wrapper {
+        width: calc(90% - 50px) !important;
+        margin:0 25px !important;
+    }
+    #generate-preview {
+        width:125px !important;
+        height: 125px !important;
+    }
+    #generate-detail {
+        display:flex !important;
+        flex-direction: column !important;
+    }
+    #generate-detail > .button-wrapper {
+        width:100%;
+        margin:15px 0 !important;
+        flex:1;
+    }
+    #redirect-page {
+        margin-top: 20px !important;
+    }
 }
 
 @media all and (display-mode: standalone){
@@ -149,16 +181,23 @@
     }
 }
 
-@supports (padding-top: constant(safe-area-inset-top)) {
+@media screen and (max-width: 865px) {
+    #redirect-page {
+        width: 100% !important;
+    }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) and ((max-device-width: 414px) or (max-device-height: 896px)) {
     #nav {
-        --safe-area-inset-top: constant(safe-area-inset-top);
+        --safe-area-inset-top: env(safe-area-inset-top);
         padding-top: calc(15px + var(--safe-area-inset-top)) !important;
+        height: calc(58px + 15px + var(--safe-area-inset-top))
     }
     #sidebar {
-        --safe-area-inset-left: constant(safe-area-inset-left);
-        --safe-area-inset-bottom: constant(safe-area-inset-bottom);
-        padding-left: var(--safe-area-inset-left);
-        width: calc(65px + var(--safe-area-inset-left));
-        padding-bottom: var(--safe-area-inset-bottom);
+        --safe-area-inset-left: env(safe-area-inset-left);
+        --safe-area-inset-bottom: env(safe-area-inset-bottom);
+        padding-left: calc(15px + var(--safe-area-inset-left)) !important;
+        width: calc(65px + 15px + var(--safe-area-inset-left)) !important;
+        padding-bottom: var(--safe-area-inset-bottom) !important;
     }
 }

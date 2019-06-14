@@ -29,12 +29,6 @@ const Redirect = (props) => {
     const [hentaiData, setHentaiData] = useState<string | boolean | any>("Fetching..."),
         [blurPreview, setBlurPreview] = useState(true);
 
-    useEffect(() => {
-        getIDBSetting("dontSaveHistory").then(data => {
-            console.log(data);
-        });
-    }, [])
-
     /* Effect */
     useEffect(() => {
         /* Retrieve Settings Value */
@@ -42,6 +36,7 @@ const Redirect = (props) => {
             setBlurPreview(data[0].value);
         });
 
+        /* Determined history function */
         OpenerAPI.getData(props.match.params.id).then((requestData:any) => {
 
             if(requestData.id === undefined) throw Object.assign({error:"not found"})
@@ -100,13 +95,13 @@ const Redirect = (props) => {
                     </div>
 
                     <div id="redirect-detail">
-                        <h6 id="redirect-code">{props.match.params.id}</h6> 
-                        <h2>{hentaiData.title.pretty}</h2>
-                        <h3 id="redirect-description">{hentaiData.title.english}</h3>
+                        <h4 id="redirect-code">{props.match.params.id}</h4> 
+                        <h1>{hentaiData.title.pretty}</h1>
+                        <h2 id="redirect-description">{hentaiData.title.english}</h2>
 
                         <div id="redirect-paper">
-                            <h4>Pages: {hentaiData.num_pages}</h4>
-                            <h4>Fav: {hentaiData.num_favorites}</h4>
+                            <h3>Pages: {hentaiData.num_pages}</h3>
+                            <h3>Fav: {hentaiData.num_favorites}</h3>
                         </div>
 
                         <div id="redirect-tag">
