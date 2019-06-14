@@ -156,7 +156,9 @@
     }
     #sidebar {
         --safe-area-inset-left: constant(safe-area-inset-left);
+        --safe-area-inset-bottom: constant(safe-area-inset-bottom);
         padding-left: var(--safe-area-inset-left);
         width: calc(65px + var(--safe-area-inset-left));
+        padding-bottom: var(--safe-area-inset-bottom);
     }
 }
