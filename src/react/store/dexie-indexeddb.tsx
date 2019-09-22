@@ -43,5 +43,4 @@ Dexie.exists("opener").then(async (exists:boolean) => {
     }
 });
 
-
 export default openerIDB

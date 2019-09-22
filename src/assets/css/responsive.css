@@ -187,7 +187,7 @@
     }
 }
 
-@supports (padding-top: env(safe-area-inset-top)) and ((max-device-width: 414px) or (max-device-height: 896px)) {
+@supports (padding-top: env(safe-area-inset-top)) and ((max-device-width: 414px) or (max-device-height: 414px)) {
     #nav {
         --safe-area-inset-top: env(safe-area-inset-top);
         padding-top: calc(15px + var(--safe-area-inset-top)) !important;

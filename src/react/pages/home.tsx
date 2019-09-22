@@ -129,6 +129,7 @@ const Home = ({ store, dispatch }) => {
 
                     if((!(Date.now() > (visitState + timeout)) && (data[0].value)[0] !== undefined) || navigator.onLine === false){
                         // Stories in IndexedDB exists
+                        console.log(data[0].value);
                         setStories(data[0].value);
                         resolve(true);
                     } else {
@@ -138,6 +139,7 @@ const Home = ({ store, dispatch }) => {
                             OpenerAPI.getRelate(randomStoriesID).then(async (stories:any) => {
                                 newSuggestStories(stories.result)
                                 setStories(stories.result);
+                                console.log(stories.result);
                                 await openerIDB.table("settings").put({
                                     title: "suggestedStories",
                                     value: stories.result
@@ -165,7 +167,7 @@ const Home = ({ store, dispatch }) => {
         })();
     }, [newSuggestStories, suggestStories, timeout]);
 
-    if(stories[0] !== undefined){
+    if(stories !== undefined){
         return(
             <Fragment>
                 <Helmet
@@ -227,13 +229,11 @@ const Home = ({ store, dispatch }) => {
                                                     {index === 1 ?
                                                         <Fragment>
                                                             <Card
-                                                                key={6}
                                                                 title="Encrypt hexcode to image"
                                                                 detail="Secure your favourite stories' id with image and share with your friend"
                                                                 to="/generate"
                                                             />
                                                             <Card
-                                                                key={7}
                                                                 title="Decrypt secret code"
                                                                 detail="Decrypt secure codes' image to link and read stories"
                                                                 to="/drop"
@@ -266,16 +266,22 @@ const Home = ({ store, dispatch }) => {
                                                         index={index}
                                                     />
                                                     
+                                                    {index === 2 ? 
+                                                        <Card
+                                                            key={9}
+                                                            title="Set your preference"
+                                                            detail="Manage stories' recommendation which will filter on recommended page"
+                                                            to="/settings/preference"
+                                                        />: null
+                                                    }
                                                     {index === 3 ?
                                                         <Card
                                                             key={8}
                                                             title="Manage what you read"
                                                             detail="Easily view/manage read story's history"
                                                             to="/history"
-                                                        />
-                                                        : null
+                                                        /> : null
                                                     }
-
                                                 </Fragment>
 
                                             : null }
@@ -388,7 +394,6 @@ const Card = (props: cardProps) => {
 
             const io = new IntersectionObserver(entries => {
                 if(entries[0].isIntersecting && !intersected){
-                    console.log("INTERSECT");
                     setIntersected(true);
                     io.unobserve(entries[0].target);
                 }
@@ -430,9 +435,9 @@ const Card = (props: cardProps) => {
                     { intersected ?
                         <Fragment>
                             { props.blur ?
-                                <div className="main-card-image blur" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                                <img className="main-card-image blur" src={`${props.image}.${imageType}`} alt={props.overlayTitle} />
                                 :
-                                <div className="main-card-image" style={{backgroundImage: `url(${props.image}.${imageType})`}}></div>
+                                <img className="main-card-image" src={`${props.image}.${imageType}`} alt={props.overlayTitle} />
                             }
                         </Fragment>
                         : <div className="main-card-image"></div>

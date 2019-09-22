@@ -118,8 +118,8 @@
 }
 
 .main-card-image {
-    background-size: cover;
-    background-position: center top;
+    object-fit: cover;
+    object-position: center top;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
 }

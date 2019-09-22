@@ -13,6 +13,7 @@ import {
     ButtonBase,
     Loading,
     Helmet,
+    Link,
     getIDBSetting,
     setIDBSetting
 } from '../bridge'
@@ -68,18 +69,35 @@ const CheckPanel = (props:CheckPanelInterface) => {
 interface LinkInterface {
     title: string,
     buttonTitle: string,
-    link: string,
+    href: string,
+    external?: boolean
 }
 
-const LinkPanel = (props:LinkInterface) =>
-    <div>
-        <p>{props.title}</p>
-        <a className="link-panel-button" href="https://api.opener.mystiar.com">
-            <ButtonBase tabIndex={-1} className="setting-button">
-                {props.buttonTitle}
-            </ButtonBase>
-        </a>
-    </div>
+const LinkPanel = (props:LinkInterface) => {
+    if(props.external){
+        return(
+            <div>
+                <p>{props.title}</p>
+                <a target="noreferrer" className="link-panel-button" href={props.href}>
+                    <ButtonBase tabIndex={-1} className="setting-button">
+                        {props.buttonTitle}
+                    </ButtonBase>
+                </a>
+            </div>
+        )
+    } else {
+        return(
+            <div>
+                <p>{props.title}</p>
+                <Link className="link-panel-button" to={props.href}>
+                    <ButtonBase tabIndex={-1} className="setting-button">
+                        {props.buttonTitle}
+                    </ButtonBase>
+                </Link>
+            </div>
+        )
+    }
+}
 
 const Settings = () => {
     /* Defination */
@@ -213,6 +231,15 @@ const Settings = () => {
                     </div>
 
                     <div className="setting-card">
+                        <h1>Personalize</h1>
+                        <LinkPanel
+                            title="Set your preference"
+                            buttonTitle="manage"
+                            href="/settings/preference"
+                        />
+                    </div>
+
+                    <div className="setting-card">
 
                         <h1>Privacy</h1>
                         <CheckPanel
@@ -277,7 +304,8 @@ const Settings = () => {
                         <LinkPanel
                             title="Opener API's documentation"
                             buttonTitle="See more"
-                            link="api.opener.mystiar.com"
+                            href="api.opener.mystiar.com"
+                            external
                         />
 
                     </div>

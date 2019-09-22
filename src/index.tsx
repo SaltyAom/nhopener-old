@@ -2,7 +2,8 @@
 /* React */
 import React, {
     useState,
-    useEffect
+    useEffect,
+    Fragment
 } from 'react'
 import { render } from "react-dom"
 
@@ -15,6 +16,7 @@ import {
 import {
     Loadable,
     Loading,
+    Helmet
 } from './react/bridge'
 
 import { Provider } from 'react-redux'
@@ -62,9 +64,13 @@ Warning:any = Loadable({
     loading: Loading
 }),
 History:any = Loadable({
-    loader: () => import('./react/pages/history' /* webpackChunkName: "searchResult" */),
+    loader: () => import('./react/pages/history' /* webpackChunkName: "history" */),
     loading: Loading
-});
+}),
+Preference:any = Loadable({
+    loader: () => import('./react/pages/preference' /* webpackChunkName: "preference" */),
+    loading: Loading
+})
 
 /* View */
 const Root = () => {
@@ -80,60 +86,75 @@ const Root = () => {
 
     /* View */
     return (
-        <Router>
-            <Provider store={store}>
-                <Nav />
-                <Sidebar  />
-                { !warning ?
-                    <Switch>
-                        <Route 
-                            exact 
-                            path="/" 
-                            component={ Home }
-                        />
-                        <Route
-                            exact 
-                            path="/redirect/:id"
-                            component={ Redirect }
-                        />
-                        <Route
-                            exact
-                            path="/drop" 
-                            component={ Drop }
-                        />
-                        <Route
-                            exact
-                            path="/generate" 
-                            component={ Generate }
-                        />
-                        <Route
-                            exact
-                            path="/generate/:id"
-                            component={ Generate }
-                        />
-                        <Route
-                            exact
-                            path="/settings"
-                            component={ Settings }
-                        />
-                        <Route
-                            exact
-                            path="/history"
-                            component={ History }
-                        />
-                        <Route
-                            exact
-                            path="/search/:id"
-                            component={ History }
-                        />
+        <Fragment>
+            <Helmet
+                meta={[
+                    {
+                        name: "referrer",
+                        content: "same-origin"
+                    }
+                ]}
+            />
+            <Router>
+                <Provider store={store}>
+                    <Nav />
+                    <Sidebar  />
+                    { !warning ?
+                        <Switch>
+                            <Route 
+                                exact 
+                                path="/" 
+                                component={ Home }
+                            />
+                            <Route
+                                exact 
+                                path="/redirect/:id"
+                                component={ Redirect }
+                            />
+                            <Route
+                                exact
+                                path="/drop" 
+                                component={ Drop }
+                            />
+                            <Route
+                                exact
+                                path="/generate" 
+                                component={ Generate }
+                            />
+                            <Route
+                                exact
+                                path="/generate/:id"
+                                component={ Generate }
+                            />
+                            <Route
+                                exact
+                                path="/settings"
+                                component={ Settings }
+                            />
+                            <Route
+                                exact
+                                path="/settings/preference"
+                                component={ Preference }
+                            />
+                            <Route
+                                exact
+                                path="/history"
+                                component={ History }
+                            />
+                            <Route
+                                exact
+                                path="/search/:id"
+                                component={ History }
+                            />
 
-                        <Route exact component={Error} />
-                    </Switch>
-                : 
-                <Warning function={() => setWarning(!warning)} />
-                }
-            </Provider>
-        </Router>
+                            <Route exact component={Error} />
+                        </Switch>
+                    : 
+                    <Warning function={() => setWarning(!warning)} />
+                    }
+                </Provider>
+            </Router>
+        </Fragment>
     )
 }
 
